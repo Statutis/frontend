@@ -1,0 +1,39 @@
+@import "../vars";
+@import "components/btn";
+
+html {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, sans-serif;
+}
+
+body {
+  margin: 0;
+  overflow-y: scroll;
+  min-height: 100%;
+
+}
+
+#root {
+  min-width: 100%;
+}
+
+* {
+  box-sizing: inherit;
+}
+
+h1{
+  color: var(--color-h1);
+  font-weight: 600;
+  font-size: 35px;
+  margin: 10px 0;
+}
+
+p{
+  margin: 4px 0;
+}
+
+.text-muted{
+  color: var(--color-muted);
+  font-style: italic;
+}

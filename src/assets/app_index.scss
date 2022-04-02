@@ -1,0 +1,36 @@
+.index-header {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+
+  & > img {
+    padding: 20px;
+  }
+
+  & > div {
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+
+  .index-title {
+
+    text-transform: uppercase;
+    display: grid;
+    grid-template-columns: 150px 410px;
+    grid-gap: 20px;
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,29 @@
+$primary-color: #5C6E80;
+$secondary-color: #78C2A4;
+
+$app-background: #F7F7F7;
+$color-text: $primary-color;
+$color-h1: #484848;
+$color-muted: #95A5A6;
+
+$colors: (
+        'primary' : $primary-color,
+        'secondary' : $secondary-color,
+        'green' : #9CC8AB,
+        'red' : #EF847C,
+        'grey' : #E4E4E4,
+        'dark-grey' : #727272,
+        'orange' : #EAA970,
+);
+
+:root {
+  @each $class, $color in $colors {
+    --color-#{$class} : #{$color};
+  }
+
+  --app-background: #{$app-background};
+  --color-text: #{$color-text};
+  --color-text_hover: #{darken($color-text, 25%)};
+  --color-h1: #{$color-h1};
+  --color-muted: #{$color-muted};
+}
