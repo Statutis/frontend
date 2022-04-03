@@ -6,6 +6,7 @@ import HeaderLeft from './../img/index_left.svg'
 import DoneImg from '../img/done.png'
 import SearchServiceBar from "../components/SearchServiceBar";
 import Select from "../components/UI/Input/Select";
+import Footer from "../components/UI/Footer";
 
 
 function Index() {
@@ -30,6 +31,7 @@ function Index() {
         <div className={"content"}>
             <SearchServiceBar/>
         </div>
+        <Footer/>
     </>
 }
 
