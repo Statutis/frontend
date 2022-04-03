@@ -13,14 +13,6 @@ function SearchServiceBar(props) {
         <span className={"material-icons"}>search</span>
         <input type="text" value={searchText} onChange={x => setSearchText(x.target.value)}
                placeholder="Titre de services ou mots clefs"/>
-        {/*<span className={"material-icons"}>style</span>*/}
-        {/*<select value={selectServiceType?.id}*/}
-        {/*        onChange={x => setSelectServiceType(serviceTypes.find(y => y.id == x.target.value))}>*/}
-        {/*    <option value={""}></option>*/}
-        {/*    {serviceTypes.map(x => {*/}
-        {/*        return <option value={x.id} key={x.id}>{x.label}</option>*/}
-        {/*    })};*/}
-        {/*</select>*/}
         <div className="search-bar-input">
             <Select values={serviceTypes} />
         </div>

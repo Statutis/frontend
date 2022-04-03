@@ -52,9 +52,18 @@ $search_bar_main_color: $color-input-border;
     align-items: center;
 
     border-left: 1px solid transparentize($search_bar_main_color, 0.4);
-    .app-selector-header{
+
+    .app-selector-header {
       border: none;
     }
+  }
+
+  & > button {
+    width: 55px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   input {
