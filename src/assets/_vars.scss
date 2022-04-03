@@ -6,6 +6,8 @@ $color-text: $primary-color;
 $color-h1: #484848;
 $color-muted: #95A5A6;
 
+$color-input-border: #BFBFBF;
+
 $colors: (
         'primary' : $primary-color,
         'secondary' : $secondary-color,
@@ -15,15 +17,3 @@ $colors: (
         'dark-grey' : #727272,
         'orange' : #EAA970,
 );
-
-:root {
-  @each $class, $color in $colors {
-    --color-#{$class} : #{$color};
-  }
-
-  --app-background: #{$app-background};
-  --color-text: #{$color-text};
-  --color-text_hover: #{darken($color-text, 25%)};
-  --color-h1: #{$color-h1};
-  --color-muted: #{$color-muted};
-}

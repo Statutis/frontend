@@ -22,16 +22,22 @@ body {
   }
 }
 
-*{
+* {
   font-family: Roboto, sans-serif;
 }
 
+.content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
 
 a:not(.btn) {
   color: var(--color-text);
   text-decoration: none;
   transition: color 0.3s;
-  &:hover{
+
+  &:hover {
     color: var(--color-text_hover);
   }
 }

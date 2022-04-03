@@ -1,0 +1,71 @@
+@import "../../../vars";
+
+$search_bar_main_color: $color-input-border;
+
+.search-service-bar {
+
+  margin: 0 auto;
+
+  border: 1px solid var(--color-input-border);
+  background: white;
+  border-radius: 10px;
+  max-width: 1600px;
+  width: 100%;
+
+  display: grid;
+  flex-direction: row;
+  align-items: center;
+  grid-template-columns: 45px 1fr 365px 80px;
+  grid-gap: 10px;
+
+  color: #BFBFBF;
+
+  & > * {
+    margin: 7px 0;
+
+    &:last-child {
+      margin-right: 15px;
+    }
+
+    &:first-child {
+      margin-left: 15px;
+    }
+  }
+
+  & > span.material-icons {
+    font-size: 30px;
+    margin-right: 0;
+
+    &:not(:first-child) {
+      border-left: 1px solid transparentize($search_bar_main_color, 0.4);
+      height: 100%;
+      display: flex;
+      padding-left: 10px;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  & > .search-bar-input {
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    border-left: 1px solid transparentize($search_bar_main_color, 0.4);
+    .app-selector-header{
+      border: none;
+    }
+  }
+
+  input {
+    border: none;
+    outline: none;
+    font-size: 22px;
+
+    &::placeholder {
+      color: var(--color-input-border);
+    }
+
+    color: var(--color-text);
+  }
+}

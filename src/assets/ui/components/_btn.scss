@@ -4,7 +4,10 @@ $hover_percent: 20%;
   box-sizing: border-box;
   display: inline-block;
   border-radius: 7px;
-
+  &.btn-small {
+    padding: 5px 10px;
+    font-size: 0.9em;
+  }
 
   font-family: Roboto, sans-serif;
 
