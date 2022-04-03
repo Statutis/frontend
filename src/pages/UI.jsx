@@ -1,4 +1,4 @@
-import NavTop from "../components/UI/NavTop";
+import NavTop from "../components/NavTop";
 import '../assets/app/app.scss'
 
 function UI() {

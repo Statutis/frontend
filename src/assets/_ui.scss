@@ -5,6 +5,9 @@
 @import "ui/material_icon";
 @import "ui/btn";
 @import "ui/select";
+@import "ui/card";
+@import "ui/progress";
+@import "ui/custom/group_card";
 
 html {
   height: 100%;
@@ -54,5 +57,8 @@ p{
   --color-text_hover: #{darken($color-text, 25%)};
   --color-h1: #{$color-h1};
   --color-muted: #{$color-muted};
-  --color-input-border : #{$color-input-border}
+  --color-input-border : #{$color-input-border};
+
+  --color-card-text: #{$card-color-text};
+  --background-color-progress: #{$progress-background-color};
 }

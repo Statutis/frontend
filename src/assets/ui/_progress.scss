@@ -1,0 +1,22 @@
+.progress {
+  height: 15px;
+  background: var(--background-color-progress);
+  border-radius: 50px;
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+
+  @each $class, $color in $colors {
+    &.progress-#{$class} > .progress-bar{
+      background: var(--color-#{$class});
+    }
+  }
+
+  & > .progress-bar {
+    position: absolute;
+    height: 15px;
+    border-radius: 50px;
+    background: var(--color-primary);
+    top: 0;
+    left: 0;
+  }
+}

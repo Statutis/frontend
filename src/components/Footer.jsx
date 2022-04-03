@@ -1,5 +1,5 @@
-import LogoTitleImage from '../../img/LogoTitle.png'
-import FooterCornerImage from '../../img/TrafficLight_Perdu_Dans_la_nature.png'
+import LogoTitleImage from '../img/LogoTitle.png'
+import FooterCornerImage from '../img/TrafficLight_Perdu_Dans_la_nature.png'
 
 const Footer = function () {
     return <footer>
