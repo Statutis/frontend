@@ -39,14 +39,16 @@ function Select(props) {
     useEffect(() => {
         function handleClickOutside(event) {
             if (containerRef.current && !containerRef.current.contains(event.target)) {
-                close()
+                if (isOpen)
+                    close()
             }
         }
+
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [containerRef, close])
+    }, [containerRef, close, isOpen])
 
 
     return <div className={"app-selector" + (isOpen ? ' app-selector-open' : '')}
