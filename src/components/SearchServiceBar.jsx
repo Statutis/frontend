@@ -1,5 +1,5 @@
 import {useState} from "react";
-import "./../assets/ui/components/custom/search_service_bar.scss"
+import "../assets/ui/custom/search_service_bar.scss"
 import Select from "./UI/Input/Select";
 
 function SearchServiceBar(props) {

@@ -1,7 +1,10 @@
-@import "../vars";
-@import "material_icon";
-@import "components/btn";
-@import "components/select";
+@import "vars";
+@import "ui/grid";
+@import "ui/spacing";
+@import "ui/stack";
+@import "ui/material_icon";
+@import "ui/btn";
+@import "ui/select";
 
 html {
   height: 100%;

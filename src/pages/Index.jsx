@@ -1,11 +1,10 @@
 import NavTop from "../components/UI/NavTop";
-import './../assets/app.scss'
-import './../assets/app_index.scss'
+import '../assets/app/app.scss'
+import '../assets/app/pages/main.scss'
 import HeaderRight from './../img/index_right.svg'
 import HeaderLeft from './../img/index_left.svg'
 import DoneImg from '../img/done.png'
 import SearchServiceBar from "../components/SearchServiceBar";
-import Select from "../components/UI/Input/Select";
 import Footer from "../components/UI/Footer";
 
 

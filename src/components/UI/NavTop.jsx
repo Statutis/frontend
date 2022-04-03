@@ -1,5 +1,5 @@
 import LogoTitle from "../../img/LogoTitle.png"
-import '../../assets/ui/navtop.scss'
+import '../../assets/app/navtop.scss'
 import {Link} from "react-router-dom";
 
 function NavTop() {

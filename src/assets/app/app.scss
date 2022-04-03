@@ -1,5 +1,8 @@
 @use "sass:math";
 
+@import "../vars";
+@import "../ui";
+
 body {
   background-color: var(--app-background);
   color: var(--color-text);

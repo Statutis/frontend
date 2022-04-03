@@ -1,0 +1,70 @@
+$stack-margin : map-get($spacers, 2);
+.stack-spacer {
+  flex-grow: 1;
+}
+
+.hstack {
+  &.stack-center {
+    justify-content: center;
+  }
+
+  &.stack-end {
+    justify-content: flex-end;
+  }
+
+  &.stack-start {
+    justify-content: flex-start;
+  }
+
+  &.stack-vcenter {
+    align-items: center;
+  }
+
+
+  &:not(.hstack-no-margin) > * {
+    margin: $stack-margin;
+  }
+
+  &.stack-nowrap {
+    flex-wrap: nowrap;
+  }
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.vstack {
+
+  &:not(.vstack-no-margin) > * {
+    margin: $stack-margin;
+  }
+
+  display: flex;
+  flex-direction: column;
+
+  &.stack-end {
+    justify-content: flex-end;
+  }
+
+  &.stack-center {
+    justify-content: center;
+  }
+
+  &.stack-start {
+    justify-content: flex-start;
+  }
+
+  &.stack-vcenter {
+    align-items: center;
+  }
+
+  &.stack-vstart {
+    align-items: flex-start;
+  }
+
+  &.stack-vend {
+    align-items: flex-end;
+  }
+
+}

@@ -1,5 +1,5 @@
 import NavTop from "../components/UI/NavTop";
-import './../assets/app.scss'
+import '../assets/app/app.scss'
 
 function UI() {
     return <>

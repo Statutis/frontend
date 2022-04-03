@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Index from "./pages/Index";
-import './assets/basic.scss'
 import UI from "./pages/UI";
 import "@fontsource/roboto"
 
