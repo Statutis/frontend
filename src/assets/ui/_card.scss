@@ -1,0 +1,20 @@
+.card {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 7px;
+
+  display: flex;
+  flex-direction: column;
+  padding: 15px 10px;
+  color: var(--color-card-text);
+
+  .card-content {
+    h2 {
+      font-size: 28px;
+      font-weight: 500;
+      margin: 4px 0;
+      text-indent: 0;
+      padding: 0;
+    }
+  }
+}

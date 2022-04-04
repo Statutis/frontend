@@ -1,0 +1,125 @@
+@use "sass:math";
+
+@import "../vars";
+@import "../ui";
+
+body {
+  background-color: var(--app-background);
+  color: var(--color-text);
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+* {
+  font-family: Roboto, sans-serif;
+}
+
+.content {
+  padding: 30px 60px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+a:not(.btn) {
+  color: var(--color-text);
+  text-decoration: none;
+  transition: color 0.3s;
+
+  &:hover {
+    color: var(--color-text_hover);
+  }
+}
+
+
+$footer_height: 100px;
+$angle: -4deg;
+
+$cosAngle: math.cos(90deg - abs($angle));
+$sinAngle: math.sin(90deg - abs($angle));
+$tanAngle: math.tan(90deg - abs($angle));
+@debug $cosAngle;
+
+footer:before {
+  position: absolute;
+  content: " ";
+  width: calc(100vw / #{$sinAngle});
+  transform: rotate($angle);
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  background-color: #E6EBEB;
+  height: calc(100vw / #{$tanAngle});
+  top: calc((100vw / #{$tanAngle} * -1) / 2);
+  z-index: 0;
+}
+
+footer {
+
+
+  position: relative;
+  margin-top: calc(100vw / #{$tanAngle});
+  min-height: calc(100vw / #{$tanAngle} * 1.5);
+  background-color: #E6EBEB;
+  display: flex;
+
+  & > .footer-right-corner {
+    position: absolute;
+    height: calc(100vw / #{$tanAngle} * 1.5);
+    bottom: 0;
+    right: 20px;
+  }
+
+  & > div.footer-container {
+    margin: 10px auto 30px auto;
+    position: relative;
+    z-index: 1;
+    //background-color: red;
+    display: grid;
+    grid-template-columns: 1fr 2px 1fr 2px 1fr;
+    max-width: 1550px;
+    grid-gap: 25px;
+
+    .footer-separator {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.16);
+    }
+
+    color: #909D9E;
+    text-align: justify;
+
+    p {
+      text-indent: 10px;
+    }
+
+    a {
+      color: #909D9E;
+    }
+
+    img {
+      width: 250px;
+      object-fit: contain;
+    }
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    & > div > ul {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 15px 10px;
+
+
+    }
+
+  }
+
+}

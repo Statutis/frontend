@@ -1,0 +1,64 @@
+@import "vars";
+@import "ui/grid";
+@import "ui/spacing";
+@import "ui/stack";
+@import "ui/material_icon";
+@import "ui/btn";
+@import "ui/select";
+@import "ui/card";
+@import "ui/progress";
+@import "ui/custom/group_card";
+
+html {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, sans-serif;
+}
+
+body {
+  margin: 0;
+  overflow-y: scroll;
+  min-height: 100%;
+
+}
+
+#root {
+  min-width: 100%;
+}
+
+* {
+  box-sizing: inherit;
+}
+
+h1{
+  color: var(--color-h1);
+  font-weight: 600;
+  font-size: 35px;
+  margin: 10px 0;
+}
+
+p{
+  margin: 4px 0;
+}
+
+.text-muted{
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+
+:root {
+  @each $class, $color in $colors {
+    --color-#{$class} : #{$color};
+  }
+
+  --app-background: #{$app-background};
+  --color-text: #{$color-text};
+  --color-text_hover: #{darken($color-text, 25%)};
+  --color-h1: #{$color-h1};
+  --color-muted: #{$color-muted};
+  --color-input-border : #{$color-input-border};
+
+  --color-card-text: #{$card-color-text};
+  --background-color-progress: #{$progress-background-color};
+}

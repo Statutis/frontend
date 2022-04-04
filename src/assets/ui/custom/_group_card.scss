@@ -1,0 +1,47 @@
+.card.group-card {
+  display: grid;
+  grid-template-columns: 64px minmax(300px, 1fr) minmax(160px, 1fr);
+  grid-gap: 7px;
+
+  .card-media {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card-content {
+    p {
+      font-weight: 300;
+    }
+  }
+
+  .card-footer {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+
+    div.group-progress {
+      height: 15px;
+      background: var(--background-color-progress);
+      border-radius: 50px;
+      position: relative;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+
+      & > .group-progress-bar {
+        position: absolute;
+        height: 15px;
+        border-radius: 50px;
+        background: var(--color-primary);
+        top: 0;
+        left: 0;
+      }
+    }
+
+    p {
+      font-size: 14px;
+      font-weight: 300;
+    }
+  }
+}
