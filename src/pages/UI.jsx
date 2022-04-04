@@ -1,9 +1,11 @@
-import NavTop from "../components/NavTop";
 import '../assets/app/app.scss'
+import useDocumentTitle from "../useDocumentTitle";
 
 function UI() {
+
+    useDocumentTitle("Element Graphiques")
+
     return <>
-        <NavTop/>
 
         {["primary",
             "secondary",
@@ -11,8 +13,8 @@ function UI() {
             "red",
             "grey",
             "dark-grey",
-            "orange"].map(x=>{
-                return <button className={"btn btn-"+x}>.btn .btn-{x}</button>
+            "orange"].map(x => {
+            return <button className={"btn btn-" + x} key={x}>.btn .btn-{x}</button>
         })}
 
 

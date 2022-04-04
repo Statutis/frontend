@@ -41,6 +41,13 @@ p{
   margin: 4px 0;
 }
 
+hr{
+  width: 250px;
+  height: 6px;
+  background: var(--color-h1);
+  border-radius: 50px;
+}
+
 .text-muted{
   color: var(--color-muted);
   font-style: italic;
