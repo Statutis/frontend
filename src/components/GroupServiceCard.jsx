@@ -17,7 +17,7 @@ const GroupServiceCard = function (props) {
     const [value, setValue] = useState(props.value ?? defaultValue);
 
     useEffect(() => {
-        setValue(props.value)
+        setValue({...defaultValue, ...props.value})
     }, [props.value])
 
 

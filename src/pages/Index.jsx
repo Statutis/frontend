@@ -31,7 +31,7 @@ function Index() {
             </div>
             <img src={HeaderRight} alt="Logo Droit"/>
         </div>
-        <div className={"content"}>
+        <div className={"fluid-content"}>
             <SearchServiceBar/>
             <div id="service-group-list" className="mt-5">
                 {Array(9).fill(null).map((el, i) => {

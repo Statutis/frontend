@@ -30,25 +30,71 @@ body {
   box-sizing: inherit;
 }
 
-h1{
+h1, .h1 {
   color: var(--color-h1);
   font-weight: 600;
   font-size: 35px;
   margin: 10px 0;
 }
 
-p{
+h2, .h2 {
+  color: var(--color-h2);
+  font-weight: 600;
+  font-size: 30px;
+  margin: 8px 0;
+}
+
+h3, .h3 {
+  color: var(--color-h3);
+  font-weight: 500;
+  font-size: 26px;
+  margin: 8px 0;
+}
+
+h4, .h4 {
+  color: var(--color-h4);
+  font-weight: 500;
+  font-size: 22px;
+  margin: 8px 0;
+}
+
+p {
   margin: 4px 0;
 }
 
-hr{
+.hero-title {
+  color: var(--color-h1);
+  font-weight: 600;
+  font-size: 45px;
+  margin: 10px 0;
+}
+
+.hero-text {
+  color: var(--color-text);
+  font-weight: 400;
+  font-size: 25px;
+  text-indent: 25px;
+  margin: 10px 0;
+}
+
+.section-title {
+  font-weight: 500;
+  font-size: 22px;
+}
+
+.text-danger {
+  color: var(--color-red);
+  font-weight: 500;
+}
+
+hr {
   width: 250px;
   height: 6px;
   background: var(--color-h1);
   border-radius: 50px;
 }
 
-.text-muted{
+.text-muted {
   color: var(--color-muted);
   font-style: italic;
 }
@@ -63,8 +109,11 @@ hr{
   --color-text: #{$color-text};
   --color-text_hover: #{darken($color-text, 25%)};
   --color-h1: #{$color-h1};
+  --color-h2: var(--color-h1);
+  --color-h3: var(--color-h1);
+  --color-h4: var(--color-h1);
   --color-muted: #{$color-muted};
-  --color-input-border : #{$color-input-border};
+  --color-input-border: #{$color-input-border};
 
   --color-card-text: #{$card-color-text};
   --background-color-progress: #{$progress-background-color};

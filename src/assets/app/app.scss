@@ -19,7 +19,7 @@ body {
   font-family: Roboto, sans-serif;
 }
 
-.content {
+.content, .fluid-content {
   padding: 30px 60px;
   display: flex;
   flex-direction: column;
@@ -74,7 +74,6 @@ footer:before {
   top: calc((100vw / #{$tanAngle} * -1) / 2);
   z-index: 0;
 }
-
 
 
 footer {

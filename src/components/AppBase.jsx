@@ -23,9 +23,7 @@ const AppBase = function () {
             </div>
             <img src={HeaderRight} alt="Logo Droit"/>
         </div>
-        <div className={"content"}>
-            <Outlet/>
-        </div>
+        <Outlet/>
         <Footer/>
     </>
 }
