@@ -3,16 +3,13 @@ import NavTop from "./NavTop";
 import HeaderLeft from "../img/base_left.svg";
 import HeaderRight from "../img/base_right.svg";
 import Footer from "./Footer";
-import {useEffect, useState} from "react";
+import {useContext} from "react";
+import {AppContext} from "../AppProvider";
 
 
-const AppBase = function (props) {
+const AppBase = function () {
 
-    const [title, setTitle] = useState("")
-
-    useEffect(() => {
-        setTitle(document.title)
-    }, [document.title])
+    const {pageTitle} = useContext(AppContext);
 
     return <>
         <NavTop/>
@@ -20,7 +17,7 @@ const AppBase = function (props) {
             <img src={HeaderLeft} alt="Logo Gauche"/>
             <div>
                 <div>
-                    <h1>{title}</h1>
+                    <h1>{pageTitle}</h1>
                     <hr/>
                 </div>
             </div>

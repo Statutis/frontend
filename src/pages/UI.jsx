@@ -3,7 +3,7 @@ import useDocumentTitle from "../useDocumentTitle";
 
 function UI() {
 
-    useDocumentTitle("Element Graphiques")
+    useDocumentTitle("Elements Graphiques")
 
     return <>
 

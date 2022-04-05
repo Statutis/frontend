@@ -10,7 +10,7 @@ function NavTop() {
         <div className={"nav-spacer"}/>
         <nav>
             <ul>
-                <li><a href="">Accueil</a></li>
+                <li><Link to={"/_ui"}>Accueil</Link></li>
                 <li><a href="">A propos</a></li>
                 <li><a href="" className={"btn"}>Connexion</a></li>
             </ul>
