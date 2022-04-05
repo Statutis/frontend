@@ -52,12 +52,13 @@ a:not(.btn) {
     justify-content: center;
     align-items: center;
     display: flex;
+    text-align: center;
   }
 }
 
 
 $footer_height: 100px;
-$angle: -4deg;
+$angle: -2.5deg;
 
 $cosAngle: math.cos(90deg - abs($angle));
 $sinAngle: math.sin(90deg - abs($angle));
@@ -84,6 +85,7 @@ footer {
   min-height: calc(100vw / #{$tanAngle} * 1.5);
   background-color: #E6EBEB;
   display: flex;
+  padding-top: 30px;
 
   & > .footer-right-corner {
     position: absolute;
