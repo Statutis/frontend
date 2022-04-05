@@ -7,13 +7,16 @@ import "@fontsource/roboto"
 import "@fontsource/roboto/500.css"
 import "@fontsource/roboto/400.css"
 import "@fontsource/roboto/300.css"
+import AppBase from "./components/AppBase";
 
 ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
             <Routes>
-                <Route path="/_ui" element={<UI/>}/>
                 <Route path="/" element={<Index/>}/>
+                <Route element={<AppBase/>}>
+                    <Route path="/_ui" element={<UI/>}/>
+                </Route>
             </Routes>
         </BrowserRouter>
     </React.StrictMode>,
