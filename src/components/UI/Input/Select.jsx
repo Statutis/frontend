@@ -54,7 +54,7 @@ function Select(props) {
     return <div className={"app-selector" + (isOpen ? ' app-selector-open' : '')}
                 ref={containerRef}>
         <div className={"app-selector-header"}>
-            <span className={"material-icons"}>style</span>
+            <span className={"material-icons"}>{props.icon ?? "style"}</span>
             <input type="text"
                    placeholder={props.placeholder ?? "Choisissez une valeur"}
                    value={inputSelect} onChange={updateInputSelect}
