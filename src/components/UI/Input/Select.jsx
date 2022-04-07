@@ -9,10 +9,18 @@ function Select(props) {
     const [isOpen, setIsOpen] = useState(false)
 
 
+    useEffect(()=>{
+        setSelectValue(props.value ?? undefined)
+    }, [props.value])
+
+
+
     const updateValue = value => {
         setSelectValue(value)
         setIsOpen(false)
         setInputSelect(value.label)
+         if (props.hasOwnProperty("onChange"))
+            props.onChange(value)
     }
     const updateInputSelect = value => {
         if (!isOpen)

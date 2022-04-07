@@ -12,6 +12,8 @@ const Search = function(){
 
     const [searchValue, setSearchValue] = useState("")
     const [selectTypeService, setSelectTypeService] = useState(null)
+    const [selectCheckType, setSelectCheckType] = useState(null)
+    const [selectTeam, setSelectTeam] = useState(null)
 
     return <div className="fluid-content">
             <div className="grid4">
@@ -24,15 +26,15 @@ const Search = function(){
                     </div>
                     <div className="form-group">
                         <label>Type du service :</label>
-                        <Select values={serviceTypes} icon="style"/>
+                        <Select values={serviceTypes} icon="style" value={selectTypeService} onChange={setSelectTypeService}/>
                     </div>
                     <div className="form-group">
                         <label>Mode de vérification :</label>
-                        <Select values={serviceTypes} icon="task_alt"/>
+                        <Select values={serviceTypes} icon="task_alt" value={selectCheckType} onChange={setSelectCheckType}/>
                     </div>
                     <div className="form-group">
                         <label>Equipe :</label>
-                        <Select values={serviceTypes} icon="groups"/>
+                        <Select values={serviceTypes} icon="groups"  value={selectTeam} onChange={setSelectTeam}/>
                     </div>
                 </div>
                 <div className="grid-cspan-3">
