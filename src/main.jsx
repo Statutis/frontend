@@ -9,6 +9,7 @@ import "@fontsource/roboto/400.css"
 import "@fontsource/roboto/300.css"
 import AppBase from "./components/AppBase";
 import AppProvider from "./AppProvider";
+import Search from './pages/Search';
 
 ReactDOM.render(
     <React.StrictMode>
@@ -18,6 +19,7 @@ ReactDOM.render(
                     <Route path="/" element={<Index/>}/>
                     <Route element={<AppBase/>}>
                         <Route path="/_ui" element={<UI/>}/>
+                        <Route path="/search" element={<Search/>}/>
                     </Route>
                 </Routes>
             </BrowserRouter>
