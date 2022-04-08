@@ -7,7 +7,7 @@ import {useContext} from "react";
 import {AppContext} from "../AppProvider";
 
 
-const AppBase = function () {
+const AppBase = function ({children}) {
 
     const {pageTitle} = useContext(AppContext);
 
@@ -23,7 +23,7 @@ const AppBase = function () {
             </div>
             <img src={HeaderRight} alt="Logo Droit"/>
         </div>
-        <Outlet/>
+        {children}
         <Footer/>
     </>
 }
