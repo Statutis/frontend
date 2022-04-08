@@ -3,6 +3,7 @@ import Input from './../components/UI/Input/Input'
 import GroupServiceCard from "./../components/GroupServiceCard";
 import useDocumentTitle from "../useDocumentTitle";
 import { useState } from 'react';
+import Switch from "../components/UI/Input/Switch";
 
 const Search = function(){
 
@@ -14,6 +15,8 @@ const Search = function(){
     const [selectTypeService, setSelectTypeService] = useState(null)
     const [selectCheckType, setSelectCheckType] = useState(null)
     const [selectTeam, setSelectTeam] = useState(null)
+    const [displayPublicGroup, setDisplayPublicGroup] = useState(false)
+    const [displayOnlineGroup, setDisplayOnlineGroup] = useState(true)
 
     return <div className="fluid-content">
             <div className="grid4">
@@ -36,6 +39,8 @@ const Search = function(){
                         <label>Equipe :</label>
                         <Select values={serviceTypes} icon="groups"  value={selectTeam} onChange={setSelectTeam}/>
                     </div>
+                    <Switch value={displayPublicGroup} onChange={setDisplayPublicGroup} label="Afficher les groupes publics"/>
+                    <Switch value={displayOnlineGroup} onChange={setDisplayOnlineGroup} label="Afficher les groupes en lignes"/>
                 </div>
                 <div className="grid-cspan-3">
                     <div id='service-group-list'>
