@@ -1,0 +1,79 @@
+@use "sass:math";
+
+$switch-height: 30px;
+$circle_diff: 3.5px;
+$switch-circle-height: $switch-height - $circle_diff * 2;
+$switch-width: 50px;
+
+.app-switch {
+  position: relative;
+
+  label span:not(:first-child) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--color-text);
+    font-weight: 400;
+  }
+
+  @each $class, $color in $colors {
+    &.app-switch-#{$class} {
+      input + label .switch::before {
+        background: darken($color, 10%);
+      }
+
+      input:checked + label .switch {
+        background: darken($color, 10%);
+      }
+    }
+  }
+
+  input:checked + label .switch {
+    background: var(--color-primary);
+
+    &::before {
+      transform: translateX($switch-width - $switch-height);
+      background: var(--color-input-border);
+    }
+  }
+
+  input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  label {
+    display: inline-flex;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+
+    .switch {
+      margin-right: 6px;
+      display: inline-block;
+      flex: none;
+      width: $switch-width;
+      height: $switch-height;
+
+      background: var(--color-input-border);
+      border-radius: $switch-width;
+      transition: background .3s;
+      position: relative;
+
+      &:before {
+        position: absolute;
+        top: calc(50% - #{math.div($switch-circle-height, 2)});
+        left: $circle_diff;
+        content: "";
+        display: block;
+        height: $switch-circle-height;
+        width: $switch-circle-height;
+        background: var(--color-primary);
+        border-radius: 100px;
+        transition: transform .3s;
+      }
+    }
+  }
+}

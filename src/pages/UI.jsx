@@ -2,12 +2,15 @@ import '../assets/app/app.scss'
 import useDocumentTitle from "../useDocumentTitle";
 import GroupServiceCard from "../components/GroupServiceCard";
 import ProgressBar from "../components/ProgressBar";
+import Input from "../components/UI/Input/Input";
+import Select from "../components/UI/Input/Select";
 
 function UI() {
 
     useDocumentTitle("Elements Graphiques")
 
     const colors = ["primary", "secondary", "green", "red", "grey", "dark-grey", "orange"];
+    let serviceTypes = [{id: 1, label: "Site Web"}, {id: 2, label: "Reverse Proxy"}];
 
     return <div className={"content"}>
 
@@ -88,6 +91,34 @@ function UI() {
             <div className="vstack">
                 {colors.map(x => {
                     return <ProgressBar key={x} className={"progress-" + x} progress={75}/>
+                })}
+            </div>
+        </div>
+        <div>
+            <h2 className="h1 mt-5">Formulaire</h2>
+            <h3 className="h3 mt-5">Input</h3>
+            <div className={"htsack"}>
+                <div className={"form-group"}>
+                    <label htmlFor="inputtext">Mon input : </label>
+                    <Input placeholder={"Saisir une valeur"} id="inputtext"/>
+                </div>
+            </div>
+            <h3 className="h3 mt-5">Select : </h3>
+            <div className={"htsack"}>
+                <div className={"form-group"}>
+                    <label htmlFor="text">Mon Select : </label>
+                    <Select placeholder={"Choisir une valeur"} id="select-text" values={serviceTypes}/>
+                </div>
+            </div>
+            <h3 className="h3 mt-5">Switch</h3>
+            <div className="hstack">
+                {colors.map(x => {
+                    return <div key={x} className={"app-switch app-switch-" + x}>
+                        <input type="checkbox" id={"switch" + x}/>
+                        <label htmlFor={"switch" + x}>
+                            <div className="switch"/>
+                            <span>.app-switch .app-switch-{x}</span></label>
+                    </div>
                 })}
             </div>
         </div>
