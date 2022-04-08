@@ -33,7 +33,7 @@ $switch-width: 50px;
 
     &::before {
       transform: translateX($switch-width - $switch-height);
-      background: var(--color-input-border);
+      background: var(--color-switch-background);
     }
   }
 
@@ -57,7 +57,7 @@ $switch-width: 50px;
       width: $switch-width;
       height: $switch-height;
 
-      background: var(--color-input-border);
+      background: var(--color-switch-background);
       border-radius: $switch-width;
       transition: background .3s;
       position: relative;
