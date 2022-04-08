@@ -1,0 +1,32 @@
+$error-color:#253646;
+
+#error-container {
+  display: grid;
+  grid-template-columns: minmax(280px, 450px) 1fr;
+  grid-gap: 20px;
+  color: $error-color;
+
+  h1 {
+    font-weight: 500;
+    font-size: 225px;
+    color: $error-color;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  p{
+    font-size: 48px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: $error-color;
+  }
+}
