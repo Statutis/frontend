@@ -4,6 +4,7 @@ import GroupServiceCard from "../components/GroupServiceCard";
 import ProgressBar from "../components/ProgressBar";
 import Input from "../components/UI/Input/Input";
 import Select from "../components/UI/Input/Select";
+import Switch from "../components/UI/Input/Switch";
 
 function UI() {
 
@@ -113,12 +114,7 @@ function UI() {
             <h3 className="h3 mt-5">Switch</h3>
             <div className="hstack">
                 {colors.map(x => {
-                    return <div key={x} className={"app-switch app-switch-" + x}>
-                        <input type="checkbox" id={"switch" + x}/>
-                        <label htmlFor={"switch" + x}>
-                            <div className="switch"/>
-                            <span>.app-switch .app-switch-{x}</span></label>
-                    </div>
+                    return <Switch key={x} label={".app-switch .app-switch-"+x} className={"app-switch-" + x}/>
                 })}
             </div>
         </div>
