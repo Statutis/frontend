@@ -12,6 +12,7 @@ import AppProvider from "./AppProvider";
 import Search from './pages/Search';
 import RouteBase from "./components/RouteBase";
 import Error from "./pages/Error";
+import Login from "./pages/Login";
 
 ReactDOM.render(
     <React.StrictMode>
@@ -22,6 +23,7 @@ ReactDOM.render(
                     <Route element={<RouteBase/>}>
                         <Route path="/_ui" element={<UI/>}/>
                         <Route path="/search" element={<Search/>}/>
+                        <Route path="/login" element={<Login/>}/>
                     </Route>
                     <Route path="*" element={<Error code={404}/>}/>
                 </Routes>
