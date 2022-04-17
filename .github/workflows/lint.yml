@@ -52,5 +52,5 @@ jobs:
         with:
           path: node_modules/
           key: node_modules
-      - name: Lint
+      - name: Build
         run: yarn build
