@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import NavTop from "../components/NavTop";
 import '../assets/app/app.scss'
 import '../assets/app/pages/main.scss'
@@ -9,11 +9,20 @@ import SearchServiceBar from "../components/SearchServiceBar";
 import Footer from "../components/Footer";
 import GroupServiceCard from "../components/GroupServiceCard";
 import useDocumentTitle from "../useDocumentTitle";
+import {getServiceTypes} from "../api/ServiceTypesRepository";
 
 
 function Index() {
 
+    const [servicesTypes, setServiceTypes] = useState([])
+    const [selectServiceType, setSelectServiceType] = useState(undefined)
+    const [searchService, setSearchService] = useState("")
     useDocumentTitle("Page d'accueil")
+
+
+    useEffect(() => {
+        getServiceTypes().then(setServiceTypes)
+    }, [])
 
     return <>
         <NavTop/>
@@ -33,7 +42,10 @@ function Index() {
             <img src={HeaderRight} alt="Logo Droit"/>
         </div>
         <div className={"fluid-content"}>
-            <SearchServiceBar/>
+            <SearchServiceBar serviceTypes={servicesTypes} searchText={searchService} selectServiceType={selectServiceType}
+                              onChangeSearchText={setSearchService} onChangeServiceType={setSelectServiceType}
+
+            />
             <div id="service-group-list" className="mt-5">
                 {Array(9).fill(null).map((el, i) => {
                     let v = {
