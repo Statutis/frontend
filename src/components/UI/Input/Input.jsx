@@ -1,23 +1,33 @@
-import { useState, useEffect } from "react";
+import React from "react";
+import {useState, useEffect} from "react";
+import PropTypes from "prop-types";
 
-const Input = function(props){
+const Input = function ({onChange = undefined, value = undefined, icon = undefined, placeholder = undefined}) {
 
-    const [value, setValue] = useState("")
+    const [stateValue, setValue] = useState("")
 
     const updateValue = value => {
         setValue(value.target.value)
-        if (props.hasOwnProperty("onChange"))
-            props.onChange(value.target.value)
+        if (onChange !== undefined)
+            onChange(value.target.value)
     }
 
-    useEffect(()=>{
-        setValue(props.value ?? "")
-    }, [props.value])
+    useEffect(() => {
+        setValue(value ?? "")
+    }, [value])
 
     return <div className="app-input">
-        <span className={"material-icons"}>{props.icon ?? "style"}</span>
-        <input type="text" placeholder={props.placeholder ?? ""} value={value} onChange={updateValue}/>
+        <span className={"material-icons"}>{icon ?? "style"}</span>
+        <input type="text" placeholder={placeholder ?? ""} value={stateValue} onChange={updateValue}/>
     </div>
 }
 
 export default Input;
+
+
+Input.propTypes = {
+    onChange: PropTypes.func,
+    value: PropTypes.string,
+    icon: PropTypes.string,
+    placeholder : PropTypes.string,
+}

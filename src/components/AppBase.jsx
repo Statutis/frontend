@@ -1,10 +1,10 @@
-import {Outlet} from "react-router-dom";
+import React, {useContext} from "react";
 import NavTop from "./NavTop";
 import HeaderLeft from "../img/base_left.svg";
 import HeaderRight from "../img/base_right.svg";
 import Footer from "./Footer";
-import {useContext} from "react";
 import {AppContext} from "../AppProvider";
+import PropTypes from "prop-types";
 
 
 const AppBase = function ({children}) {
@@ -29,3 +29,7 @@ const AppBase = function ({children}) {
 }
 
 export default AppBase;
+
+AppBase.propTypes = {
+    children: PropTypes.node.isRequired,
+};

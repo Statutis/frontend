@@ -1,3 +1,4 @@
+import React from 'react';
 import NavTop from "../components/NavTop";
 import '../assets/app/app.scss'
 import '../assets/app/pages/main.scss'

@@ -1,6 +1,8 @@
+import React from "react";
 import {useCallback, useEffect, useRef, useState} from "react";
+import PropTypes from "prop-types";
 
-function Select(props) {
+function Select({value = undefined, onChange = undefined, values = [], icon = undefined, placeholder = undefined}) {
 
     const containerRef = useRef()
 
@@ -9,18 +11,17 @@ function Select(props) {
     const [isOpen, setIsOpen] = useState(false)
 
 
-    useEffect(()=>{
-        setSelectValue(props.value ?? undefined)
-    }, [props.value])
-
+    useEffect(() => {
+        setSelectValue(value ?? undefined)
+    }, [value])
 
 
     const updateValue = value => {
         setSelectValue(value)
         setIsOpen(false)
         setInputSelect(value.label)
-         if (props.hasOwnProperty("onChange"))
-            props.onChange(value)
+        if (onChange !== undefined)
+            onChange(value)
     }
     const updateInputSelect = value => {
         if (!isOpen)
@@ -28,18 +29,17 @@ function Select(props) {
         setInputSelect(value.target.value)
     }
 
-    const open = _ => {
+    const open = () => {
         setIsOpen(true)
         setInputSelect("")
     }
 
-    const close = _ => {
+    const close = () => {
         setIsOpen(false)
         setInputSelect(selectValue?.label)
     }
 
     const filterValues = useCallback((filter) => {
-        let values = props.values ?? []
         return values.filter(x => x.label.toLowerCase().includes(filter?.toLowerCase()));
     })
 
@@ -62,21 +62,29 @@ function Select(props) {
     return <div className={"app-selector" + (isOpen ? ' app-selector-open' : '')}
                 ref={containerRef}>
         <div className={"app-selector-header"}>
-            <span className={"material-icons"}>{props.icon ?? "style"}</span>
+            <span className={"material-icons"}>{icon ?? "style"}</span>
             <input type="text"
-                   placeholder={props.placeholder ?? "Choisissez une valeur"}
+                   placeholder={placeholder ?? "Choisissez une valeur"}
                    value={inputSelect} onChange={updateInputSelect}
                    onFocus={open}
             />
 
-            <span className={"material-icons"}>expand_more</span>
+            <span className={"material-icons"} onClick={isOpen ? close : open}>{isOpen ? "expand_less" : "expand_more"}</span>
         </div>
         <ul>
             {filterValues(inputSelect).map(x => {
-                return <li key={x.id} onClick={_ => updateValue(x)}>{x.label}</li>
+                return <li key={x.id} onClick={() => updateValue(x)}>{x.label}</li>
             })}
         </ul>
     </div>
 }
 
 export default Select;
+
+Select.propTypes = {
+    onChange: PropTypes.func,
+    value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    placeholder: PropTypes.string,
+    icon: PropTypes.string,
+    values: PropTypes.arrayOf(PropTypes.object)
+}

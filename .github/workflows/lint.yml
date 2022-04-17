@@ -1,0 +1,56 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Build & Lint
+
+on: [push, pull_request]
+
+jobs:
+  install:
+    name: Install
+    runs-on: ubuntu-latest
+    container: node
+    steps:
+      - uses: actions/checkout@master
+      - name: Install
+        run: yarn install --ignore-engines
+      - name: Cache node_modules
+        id: cache-primes
+        uses: actions/cache@v2
+        with:
+          path: node_modules/
+          key: node_modules
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    container: node
+    needs: install
+    steps:
+      - uses: actions/checkout@master
+      - name: Cache node_modules
+        id: cache-primes
+        uses: actions/cache@v2
+        with:
+          path: node_modules/
+          key: node_modules
+      - name: Lint
+        run: yarn lint
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    container: node
+    needs: install
+    steps:
+      - uses: actions/checkout@master
+      - name: Cache node_modules
+        id: cache-primes
+        uses: actions/cache@v2
+        with:
+          path: node_modules/
+          key: node_modules
+      - name: Build
+        run: yarn build

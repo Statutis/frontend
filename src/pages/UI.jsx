@@ -1,3 +1,4 @@
+import React from 'react';
 import '../assets/app/app.scss'
 import useDocumentTitle from "../useDocumentTitle";
 import GroupServiceCard from "../components/GroupServiceCard";
@@ -6,7 +7,7 @@ import Input from "../components/UI/Input/Input";
 import Select from "../components/UI/Input/Select";
 import Switch from "../components/UI/Input/Switch";
 
-function UI() {
+const UI = function() {
 
     useDocumentTitle("Elements Graphiques")
 
@@ -114,7 +115,7 @@ function UI() {
             <h3 className="h3 mt-5">Switch</h3>
             <div className="hstack">
                 {colors.map(x => {
-                    return <Switch key={x} label={".app-switch .app-switch-"+x} className={"app-switch-" + x}/>
+                    return <Switch key={x} label={".app-switch .app-switch-" + x} className={"app-switch-" + x}/>
                 })}
             </div>
         </div>

@@ -1,4 +1,5 @@
 import React, {createContext, useState} from "react";
+import PropTypes from "prop-types";
 
 export const AppContext = createContext({
     pageTitle: "Pas de titre",
@@ -13,3 +14,7 @@ const AppProvider = function ({children}) {
 }
 
 export default AppProvider
+
+AppProvider.propTypes = {
+    children: PropTypes.node.isRequired,
+};
