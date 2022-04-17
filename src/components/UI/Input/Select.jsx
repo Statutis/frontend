@@ -2,7 +2,15 @@ import React from "react";
 import {useCallback, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 
-function Select({value = undefined, onChange = undefined, values = [], icon = undefined, placeholder = undefined}) {
+function Select({
+                    value = undefined,
+                    onChange = undefined,
+                    values = [],
+                    icon = undefined,
+                    placeholder = undefined,
+                    labelField = "label",
+                    refField = "ref",
+                }) {
 
     const containerRef = useRef()
 
@@ -19,7 +27,7 @@ function Select({value = undefined, onChange = undefined, values = [], icon = un
     const updateValue = value => {
         setSelectValue(value)
         setIsOpen(false)
-        setInputSelect(value.label)
+        setInputSelect(value[labelField])
         if (onChange !== undefined)
             onChange(value)
     }
@@ -36,11 +44,11 @@ function Select({value = undefined, onChange = undefined, values = [], icon = un
 
     const close = () => {
         setIsOpen(false)
-        setInputSelect(selectValue?.label)
+        setInputSelect(selectValue[labelField])
     }
 
     const filterValues = useCallback((filter) => {
-        return values.filter(x => x.label.toLowerCase().includes(filter?.toLowerCase()));
+        return values.filter(x => x[labelField].toLowerCase().includes(filter?.toLowerCase()));
     })
 
 
@@ -69,11 +77,12 @@ function Select({value = undefined, onChange = undefined, values = [], icon = un
                    onFocus={open}
             />
 
-            <span className={"material-icons"} onClick={isOpen ? close : open}>{isOpen ? "expand_less" : "expand_more"}</span>
+            <span className={"material-icons"}
+                  onClick={isOpen ? close : open}>{isOpen ? "expand_less" : "expand_more"}</span>
         </div>
         <ul>
             {filterValues(inputSelect).map(x => {
-                return <li key={x.id} onClick={() => updateValue(x)}>{x.label}</li>
+                return <li key={x[refField]} onClick={() => updateValue(x)}>{x[labelField]}</li>
             })}
         </ul>
     </div>
@@ -86,5 +95,7 @@ Select.propTypes = {
     value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     placeholder: PropTypes.string,
     icon: PropTypes.string,
-    values: PropTypes.arrayOf(PropTypes.object)
+    values: PropTypes.arrayOf(PropTypes.object),
+    labelField: PropTypes.string,
+    refField: PropTypes.string
 }
