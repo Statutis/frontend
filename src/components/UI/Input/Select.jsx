@@ -44,7 +44,8 @@ function Select({
 
     const close = () => {
         setIsOpen(false)
-        setInputSelect(selectValue[labelField])
+        if (selectValue !== undefined)
+            setInputSelect(selectValue[labelField])
     }
 
     const filterValues = useCallback((filter) => {
