@@ -18,5 +18,13 @@ module.exports = {
         "react"
     ],
     "rules": {
+        "react/no-unescaped-entities": 0,
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+    },
+    "settings":{
+        "react": {
+            "version": "detect",
+        },
     }
 }

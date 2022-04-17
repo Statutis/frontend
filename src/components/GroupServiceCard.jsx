@@ -1,24 +1,13 @@
+import React, {useCallback} from "react";
+import PropTypes from "prop-types";
 import RackServerImage from "../img/rack_server.png";
 import ProgressBar from "./ProgressBar";
-import {useCallback, useEffect, useState} from "react";
+import Group from "../api/Models/Group";
 
 
-const defaultValue = {
-    id: -1,
-    name: undefined,
-    description: undefined,
-    countService: 0,
-    countServiceOnline: -1,
-    lastCheck: "jamais"
-}
+const defaultValue = new Group()
 
-const GroupServiceCard = function (props) {
-
-    const [value, setValue] = useState(props.value ?? defaultValue);
-
-    useEffect(() => {
-        setValue({...defaultValue, ...props.value})
-    }, [props.value])
+const GroupServiceCard = function ({value = defaultValue}) {
 
 
     const percent = useCallback(() => Math.min(value.countServiceOnline / value.countService * 100, 100), [value]);
@@ -54,3 +43,7 @@ const GroupServiceCard = function (props) {
 }
 
 export default GroupServiceCard;
+
+GroupServiceCard.propTypes = {
+    value: PropTypes.instanceOf(Group)
+}

@@ -1,3 +1,4 @@
+import React from "react";
 import LogoTitleImage from '../img/LogoTitle.png'
 import FooterCornerImage from '../img/TrafficLight_Perdu_Dans_la_nature.png'
 
