@@ -6,6 +6,7 @@ import useDocumentTitle from "../useDocumentTitle";
 import {useState} from 'react';
 import Switch from "../components/UI/Input/Switch";
 import {getServiceTypes} from "../api/ServiceTypesRepository";
+import {getTeams} from "../api/TeamRepository";
 
 const Search = function () {
 
@@ -13,6 +14,7 @@ const Search = function () {
 
 
     const [serviceTypes, setServiceTypes] = useState([])
+    const [teams, setTeams] = useState([])
     const [searchValue, setSearchValue] = useState("")
     const [selectTypeService, setSelectTypeService] = useState(null)
     const [selectCheckType, setSelectCheckType] = useState(null)
@@ -22,6 +24,7 @@ const Search = function () {
 
     useEffect(() => {
         getServiceTypes().then(setServiceTypes)
+        getTeams().then(setTeams)
     }, [])
 
     return <div className="fluid-content">
@@ -45,7 +48,7 @@ const Search = function () {
                 </div>
                 <div className="form-group">
                     <label>Equipe :</label>
-                    <Select values={serviceTypes} labelField="name" icon="groups" value={selectTeam}
+                    <Select values={teams} labelField="name" icon="groups" value={selectTeam}
                             onChange={setSelectTeam}/>
                 </div>
                 <Switch value={displayPublicGroup} onChange={setDisplayPublicGroup}
