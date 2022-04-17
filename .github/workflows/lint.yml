@@ -12,7 +12,6 @@ jobs:
     name: lint
     runs-on: ubuntu-latest
     container: node
-    needs: install
     steps:
       - uses: actions/checkout@master
       - name: Install
@@ -27,6 +26,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     container: node
+    needs: install
     steps:
       - uses: actions/download-artifact@v2
         with:
