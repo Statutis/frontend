@@ -12,6 +12,10 @@ import Search from './pages/Search';
 import RouteBase from "./components/RouteBase";
 import Error from "./pages/Error";
 import Login from "./pages/Login";
+import axios from "axios";
+
+
+axios.defaults.baseURL = import.meta.env.APP_API_URL
 
 ReactDOM.render(
     <React.StrictMode>
