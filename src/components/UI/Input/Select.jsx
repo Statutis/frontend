@@ -69,7 +69,7 @@ function Select({value = undefined, onChange = undefined, values = [], icon = un
                    onFocus={open}
             />
 
-            <span className={"material-icons"}>expand_more</span>
+            <span className={"material-icons"} onClick={isOpen ? close : open}>{isOpen ? "expand_less" : "expand_more"}</span>
         </div>
         <ul>
             {filterValues(inputSelect).map(x => {
