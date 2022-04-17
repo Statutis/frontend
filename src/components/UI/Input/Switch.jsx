@@ -33,7 +33,7 @@ export default Switch;
 
 Switch.propTypes = {
     onChange: PropTypes.func,
-    value: undefined,
+    value: PropTypes.any,
     className: PropTypes.string,
     label: PropTypes.string,
 }

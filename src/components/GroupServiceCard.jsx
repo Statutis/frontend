@@ -9,7 +9,6 @@ const defaultValue = new Group()
 
 const GroupServiceCard = function ({value = defaultValue}) {
 
-
     const percent = useCallback(() => Math.min(value.countServiceOnline / value.countService * 100, 100), [value]);
     const styleClassProgress = useCallback(() => {
         if (percent() < 75)
@@ -45,5 +44,5 @@ const GroupServiceCard = function ({value = defaultValue}) {
 export default GroupServiceCard;
 
 GroupServiceCard.propTypes = {
-    value: PropTypes.instanceOf(Group)
+    value: PropTypes.oneOfType([PropTypes.object, PropTypes.instanceOf(Group)])
 }
