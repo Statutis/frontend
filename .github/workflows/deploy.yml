@@ -16,8 +16,6 @@ on:
 
 jobs:
   trigger-deploy:
-    runs-on: ubuntu-latest
-    environment: production
     uses: Statutis/docker-compose/.github/workflows/deploy.yml@main
     secrets:
       Git: ${{ secrets.Git }}
