@@ -6,13 +6,12 @@
 name: Docker image
 
 on:
-  push:
-    branches:
-      - main # or the name of your main branch
   workflow_run:
     workflows: ["Build & Lint"]
     types:
       - completed
+    branches:
+      - main # or the name of your main branch
   
     
 

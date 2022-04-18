@@ -109,7 +109,7 @@ const UI = function() {
             <div className={"htsack"}>
                 <div className={"form-group"}>
                     <label htmlFor="text">Mon Select : </label>
-                    <Select placeholder={"Choisir une valeur"} id="select-text" values={serviceTypes}/>
+                    <Select placeholder={"Choisir une valeur"} id="select-text" values={serviceTypes} refField="id"/>
                 </div>
             </div>
             <h3 className="h3 mt-5">Switch</h3>

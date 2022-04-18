@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@fontsource/roboto": "^4.5.5",
+    "axios": "^0.26.1",
     "install": "^0.13.0",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
