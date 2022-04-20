@@ -45,6 +45,8 @@ a:not(.btn) {
 
   & > img {
     padding: 20px;
+    width: 450px;
+    object-fit: contain;
   }
 
   & > div {
