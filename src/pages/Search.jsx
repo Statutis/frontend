@@ -8,6 +8,7 @@ import Switch from "../components/UI/Input/Switch";
 import {getServiceTypes} from "../api/ServiceTypesRepository";
 import {getTeams} from "../api/TeamRepository";
 import {getPublicGroups} from "../api/GroupRepository";
+import {getCheckTypes} from "../api/ServiceRepository";
 
 const Search = function () {
 
@@ -15,7 +16,9 @@ const Search = function () {
 
     const [groups, setGroups] = useState([])
     const [serviceTypes, setServiceTypes] = useState([])
+    const [checkTypes, setCheckTypes] = useState([])
     const [teams, setTeams] = useState([])
+
     const [searchValue, setSearchValue] = useState("")
     const [selectTypeService, setSelectTypeService] = useState(undefined)
     const [selectCheckType, setSelectCheckType] = useState(undefined)
@@ -27,6 +30,15 @@ const Search = function () {
         getServiceTypes().then(setServiceTypes)
         getTeams().then(setTeams)
         getPublicGroups().then(setGroups)
+        getCheckTypes().then(x => {
+            let res = x.map(y => {
+                return {
+                    ref: y,
+                    label: y,
+                }
+            })
+            setCheckTypes(res)
+        })
     }, [])
 
     return <div className="fluid-content">
@@ -45,7 +57,7 @@ const Search = function () {
                 </div>
                 <div className="form-group">
                     <label>Mode de vérification :</label>
-                    <Select values={serviceTypes} labelField="name" icon="task_alt" value={selectCheckType}
+                    <Select values={checkTypes} labelField="label" icon="task_alt" value={selectCheckType}
                             onChange={setSelectCheckType}/>
                 </div>
                 <div className="form-group">
@@ -60,7 +72,8 @@ const Search = function () {
             </div>
             <div className="grid-cspan-3">
                 <div id='service-group-list'>
-                    {groups.filter(x=>x.isInFilter(searchValue, selectTypeService, selectTeam?.ref, selectCheckType?.name, displayPublicGroup, !displayOnlineGroup)).map(x => <GroupServiceCard key={x.ref} value={x}/>)}
+                    {groups.filter(x => x.isInFilter(searchValue, selectTypeService, selectTeam?.ref, selectCheckType?.name, displayPublicGroup, !displayOnlineGroup)).map(x =>
+                        <GroupServiceCard key={x.ref} value={x}/>)}
                 </div>
             </div>
         </div>

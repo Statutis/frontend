@@ -12,7 +12,7 @@ import Footer from "../components/Footer";
 import GroupServiceCard from "../components/GroupServiceCard";
 import useDocumentTitle from "../useDocumentTitle";
 import {getServiceTypes} from "../api/ServiceTypesRepository";
-import {GetMainState, MainState} from "../api/ServiceRepository";
+import {getMainState, MainState} from "../api/ServiceRepository";
 import {getPublicGroups} from "../api/GroupRepository";
 import {displayDelay} from "../Utils/DateManager";
 
@@ -30,7 +30,7 @@ function Index() {
 
     useEffect(() => {
         getServiceTypes().then(setServiceTypes)
-        GetMainState().then(setMainState)
+        getMainState().then(setMainState)
         getPublicGroups().then(setGroups)
     }, [])
 

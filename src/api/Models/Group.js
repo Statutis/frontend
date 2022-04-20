@@ -15,7 +15,7 @@ export default class Group {
         return this.services.filter(x => x.state.toLowerCase() == "online")
     }
 
-    isInFilter(text, serviceType = undefined, team = undefined, checkType = undefined, hideIsPublic = true, hideFullOnline = false) {
+    isInFilter(text, serviceType = undefined, team = undefined, checkType = undefined, hideIsPublic = false, hideFullOnline = false) {
         if (text !== undefined && text.trim() != "") {
             if (!this.name.toLowerCase().includes(text.toLowerCase()) && !this.description.toLowerCase().includes(text.toLowerCase()))
                 return false;
@@ -27,7 +27,6 @@ export default class Group {
         if (serviceType !== undefined && this.services.filter(x => x.serviceTypeRef == serviceType.ref).length === 0)
             return false
 
-        console.log(this.services.map(x=>x.checkType), checkType)
         if (checkType !== undefined && this.services.filter(x => x.checkType.toLowerCase() == checkType?.toLowerCase()).length === 0)
             return false
 

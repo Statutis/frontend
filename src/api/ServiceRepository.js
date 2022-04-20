@@ -5,7 +5,7 @@ export class MainState {
     state = "Unknown"
 }
 
-export async function GetMainState() {
+export async function getMainState() {
     const response = await axios.get("/api/services/state")
     let state = new MainState()
 
@@ -13,4 +13,9 @@ export async function GetMainState() {
     state.state = response.data.state
 
     return state;
+}
+
+export async function getCheckTypes() {
+    const response = await axios.get("/api/services/checks")
+    return response.data;
 }
