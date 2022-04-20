@@ -9,7 +9,7 @@ const defaultValue = new Group()
 
 const GroupServiceCard = function ({value = defaultValue}) {
 
-    const percent = useCallback(() => Math.min(value.countServiceOnline / value.countService * 100, 100), [value]);
+    const percent = useCallback(() => Math.min(value.onlineServices() / value.services.length * 100, 100), [value]);
     const styleClassProgress = useCallback(() => {
         if (percent() < 75)
             return "progress-red"
@@ -28,15 +28,15 @@ const GroupServiceCard = function ({value = defaultValue}) {
         </div>
         <div className="card-footer">
             <div className="hstack stack-nowrap stack-vcenter w-100">
-                {value.countService <= value.countServiceOnline ?
+                {value.services.length <= value.onlineServices() ?
                     <span className={"material-icons text-muted"}>check</span>
-                    : <span className="text-muted">{value.countServiceOnline} / {value.countService}</span>
+                    : <span className="text-muted">{value.onlineServices()} / {value.services.length}</span>
 
                 }
                 <ProgressBar className={"stack-spacer " + styleClassProgress()}
                              progress={percent()}/>
             </div>
-            <p className="text-muted">Dernière vérification : {value.lastCheck}</p>
+            {/*<p className="text-muted">Dernière vérification : {value.lastCheck}</p>*/}
         </div>
     </div>
 }

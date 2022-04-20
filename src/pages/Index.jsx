@@ -10,6 +10,7 @@ import Footer from "../components/Footer";
 import GroupServiceCard from "../components/GroupServiceCard";
 import useDocumentTitle from "../useDocumentTitle";
 import {getServiceTypes} from "../api/ServiceTypesRepository";
+import Group from "../api/Models/Group";
 
 
 function Index() {
@@ -48,14 +49,19 @@ function Index() {
             />
             <div id="service-group-list" className="mt-5">
                 {Array(9).fill(null).map((el, i) => {
-                    let v = {
-                        id: i,
-                        name: "ClusterWeb",
-                        description: "Lorem ipsum dolor sit amet, consetetur sadipscing ..",
-                        countService: 9,
-                        countServiceOnline: i + 1,
-                        lastCheck: "5 min"
-                    };
+                    let v = new Group();
+                    // {
+                    //     id: i,
+                    //         name: "ClusterWeb",
+                    //     description: "Lorem ipsum dolor sit amet, consetetur sadipscing ..",
+                    //     countService: 9,
+                    //     countServiceOnline: i + 1,
+                    //     lastCheck: "5 min"
+                    // }
+                    v.id = i;
+                    v.name = "ClusterWeb";
+                    v.description = "Lorem ipsum dolor sit amet, consetetur sadipscing ..";
+                    v.lastCheck = new Date();
                     return <GroupServiceCard key={i} value={v}/>
                 })}
             </div>

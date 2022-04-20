@@ -1,11 +1,22 @@
 export default class Group {
-    id = -1;
+    ref = "";
+    mainGroupRef = "";
     name = undefined;
     description = undefined;
-    countService = 0;
-    countServiceOnline = -1;
-    lastCheck = "jamais"
+    lastCheck = new Date()
+    services = []
 
     constructor() {
     }
+
+
+    onlineServices(){
+        return this.services.filter(x => x.state = "Online")
+    }
+}
+
+export class GroupService {
+    ref = "";
+    state = ""
+    lastCheck = new Date()
 }
