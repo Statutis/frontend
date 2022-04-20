@@ -7,12 +7,13 @@ import {useState} from 'react';
 import Switch from "../components/UI/Input/Switch";
 import {getServiceTypes} from "../api/ServiceTypesRepository";
 import {getTeams} from "../api/TeamRepository";
+import {getPublicGroups} from "../api/GroupRepository";
 
 const Search = function () {
 
     useDocumentTitle("Liste des groupes de services")
 
-
+    const [groups, setGroups] = useState([])
     const [serviceTypes, setServiceTypes] = useState([])
     const [teams, setTeams] = useState([])
     const [searchValue, setSearchValue] = useState("")
@@ -25,6 +26,7 @@ const Search = function () {
     useEffect(() => {
         getServiceTypes().then(setServiceTypes)
         getTeams().then(setTeams)
+        getPublicGroups().then(setGroups)
     }, [])
 
     return <div className="fluid-content">
@@ -58,17 +60,7 @@ const Search = function () {
             </div>
             <div className="grid-cspan-3">
                 <div id='service-group-list'>
-                    {Array(9).fill(null).map((el, i) => {
-                        let v = {
-                            id: i,
-                            name: "ClusterWeb",
-                            description: "Lorem ipsum dolor sit amet, consetetur sadipscing ..",
-                            countService: 9,
-                            countServiceOnline: i + 1,
-                            lastCheck: "5 min"
-                        };
-                        return <GroupServiceCard key={i} value={v}/>
-                    })}
+                    {groups.map(x => <GroupServiceCard key={x.ref} value={x}/>)}
                 </div>
             </div>
         </div>
