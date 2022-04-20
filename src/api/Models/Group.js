@@ -10,8 +10,8 @@ export default class Group {
     }
 
 
-    onlineServices(){
-        return this.services.filter(x => x.state = "Online")
+    onlineServices() {
+        return this.services.filter(x => x.state.toLowerCase() == "online")
     }
 }
 

@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import RackServerImage from "../img/rack_server.png";
 import ProgressBar from "./ProgressBar";
 import Group from "../api/Models/Group";
+import {displayDelay} from "../Utils/DateManager";
 
 
 const defaultValue = new Group()
 
 const GroupServiceCard = function ({value = defaultValue}) {
 
-    const percent = useCallback(() => Math.min(value.onlineServices() / value.services.length * 100, 100), [value]);
+    const percent = useCallback(() => Math.min(value.onlineServices().length / value.services.length * 100, 100), [value]);
     const styleClassProgress = useCallback(() => {
         if (percent() < 75)
             return "progress-red"
@@ -28,15 +29,15 @@ const GroupServiceCard = function ({value = defaultValue}) {
         </div>
         <div className="card-footer">
             <div className="hstack stack-nowrap stack-vcenter w-100">
-                {value.services.length <= value.onlineServices() ?
+                {value.services.length <= value.onlineServices().length ?
                     <span className={"material-icons text-muted"}>check</span>
-                    : <span className="text-muted">{value.onlineServices()} / {value.services.length}</span>
+                    : <span className="text-muted" style={{color: "var(--color-red)"}}>{value.onlineServices().length} / {value.services.length}</span>
 
                 }
                 <ProgressBar className={"stack-spacer " + styleClassProgress()}
                              progress={percent()}/>
             </div>
-            {/*<p className="text-muted">Dernière vérification : {value.lastCheck}</p>*/}
+            <p className="text-muted">Dernière vérification : {displayDelay(value.lastCheck, new Date())}</p>
         </div>
     </div>
 }

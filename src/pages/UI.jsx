@@ -6,6 +6,7 @@ import ProgressBar from "../components/ProgressBar";
 import Input from "../components/UI/Input/Input";
 import Select from "../components/UI/Input/Select";
 import Switch from "../components/UI/Input/Switch";
+import Group, {GroupService} from "../api/Models/Group";
 
 const UI = function() {
 
@@ -13,6 +14,21 @@ const UI = function() {
 
     const colors = ["primary", "secondary", "green", "red", "grey", "dark-grey", "orange"];
     let serviceTypes = [{id: 1, label: "Site Web"}, {id: 2, label: "Reverse Proxy"}];
+
+
+    let g =  new Group();
+    g.name = "Titre du groupe"
+    g.description = "Ceci est la description du groupe, qui contient des services."
+    g.services = []
+
+    let gs = new GroupService()
+    gs.state = "Error"
+    g.services = g.services.concat([gs])
+
+    gs = new GroupService()
+    gs.state = "Online"
+    g.services = g.services.concat([gs])
+
 
     return <div className={"content"}>
 
@@ -81,10 +97,7 @@ const UI = function() {
                 </div>
                 <div className={"m-4"}>
                     <small className="text-muted">Carte pour les groupes de services</small>
-                    <GroupServiceCard value={{
-                        name: "Titre du groupe de service",
-                        description: "Lorem ipsum dolor sit amet, consetetur sadipscing ..",
-                    }}/>
+                    <GroupServiceCard value={g}/>
                 </div>
             </div>
         </div>
