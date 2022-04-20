@@ -14,17 +14,19 @@ import useDocumentTitle from "../useDocumentTitle";
 import {getServiceTypes} from "../api/ServiceTypesRepository";
 import {getMainState, MainState} from "../api/ServiceRepository";
 import {getPublicGroups} from "../api/GroupRepository";
-import {displayDelay} from "../Utils/DateManager";
+import Group from "../api/Models/Group";
+import ServiceType from "../api/Models/Service/ServiceType";
 
 
 function Index() {
 
-    const [mainState, setMainState] = useState(new MainState())
-    const [groups, setGroups] = useState([])
+    const [mainState, setMainState] = useState<MainState | undefined>()
 
-    const [servicesTypes, setServiceTypes] = useState([])
-    const [selectServiceType, setSelectServiceType] = useState(undefined)
-    const [searchService, setSearchService] = useState("")
+    const [groups, setGroups] = useState<Group[]>([])
+    const [servicesTypes, setServiceTypes] = useState<ServiceType[]>([])
+
+    const [selectServiceType, setSelectServiceType] = useState<ServiceType | undefined>(undefined)
+    const [searchService, setSearchService] = useState<string>("")
     useDocumentTitle("Page d'accueil")
 
 
@@ -35,8 +37,17 @@ function Index() {
     }, [])
 
     const HeaderTitle = function HeaderTitle() {
+        if (!mainState)
+            return <div className={"index-title"}>
+                <img src={UnknownImg} alt="Unknonw"/>
+                <div>
+                    <h1>Etats des services inconnues</h1>
+                    <p className={"text-muted"}>Dernière vérification : en cours</p>
+                </div>
+            </div>
 
-        const verificationTime = displayDelay(mainState.lastUpdate, new Date());
+        // const verificationTime = displayDelay(mainState.lastUpdate, new Date());
+        const verificationTime = "jamai";
 
         switch (mainState.state) {
             case "Online":
@@ -83,7 +94,7 @@ function Index() {
 
             />
             <div id="service-group-list" className="mt-5">
-                {groups.filter(x=>x.isInFilter(searchService, selectServiceType)).map(x => {
+                {groups.filter(x => x.isInFilter(searchService, selectServiceType)).map(x => {
                     return <GroupServiceCard key={x.ref} value={x}/>
                 })}
             </div>

@@ -2,18 +2,17 @@ import axios from "axios";
 import Group from "./Models/Group";
 import {Service} from "./Models/Service/Service";
 
-export async function getPublicGroups() {
-    const response = await axios.get("/api/groups/public")
-
+export async function getPublicGroups(): Promise<Group[]> {
+    const response = await axios.get<Group[]>("/api/groups/public")
     return response.data.map(x => {
-        let g = new Group();
+        const g = new Group();
         g.ref = x.ref
         g.mainGroupRef = x.mainGroupRef
         g.name = x.name
         g.description = x.description
         g.lastCheck = new Date(x.lastCheck)
         g.services = x.services.map(y => {
-            let s = new Service()
+            const s = new Service()
             s.ref = y.ref;
             s.serviceTypeRef = y.serviceTypeRef;
             s.checkType = y.checkType;
@@ -26,9 +25,7 @@ export async function getPublicGroups() {
             return s;
         })
 
-        g.teamsRef = x.teams;
-
-
-        return g;
+        g.teamsRef = x.teamsRef;
+        return g
     })
 }

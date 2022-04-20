@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
-import Select from './../components/UI/Input/Select'
-import Input from './../components/UI/Input/Input'
-import GroupServiceCard from "./../components/GroupServiceCard";
+import Select from '../components/UI/Input/Select'
+import Input from '../components/UI/Input/Input'
+import GroupServiceCard from "../components/GroupServiceCard";
 import useDocumentTitle from "../useDocumentTitle";
 import {useState} from 'react';
 import Switch from "../components/UI/Input/Switch";
@@ -9,36 +9,32 @@ import {getServiceTypes} from "../api/ServiceTypesRepository";
 import {getTeams} from "../api/TeamRepository";
 import {getPublicGroups} from "../api/GroupRepository";
 import {getCheckTypes} from "../api/ServiceRepository";
+import Group from "../api/Models/Group";
+import ServiceType from "../api/Models/Service/ServiceType";
+import Team from "../api/Models/Team";
+
 
 const Search = function () {
 
     useDocumentTitle("Liste des groupes de services")
 
-    const [groups, setGroups] = useState([])
-    const [serviceTypes, setServiceTypes] = useState([])
-    const [checkTypes, setCheckTypes] = useState([])
-    const [teams, setTeams] = useState([])
+    const [groups, setGroups] = useState<Group[]>([])
+    const [serviceTypes, setServiceTypes] = useState<ServiceType[]>([])
+    const [checkTypes, setCheckTypes] = useState<string[]>([])
+    const [teams, setTeams] = useState<Team[]>([])
 
-    const [searchValue, setSearchValue] = useState("")
-    const [selectTypeService, setSelectTypeService] = useState(undefined)
-    const [selectCheckType, setSelectCheckType] = useState(undefined)
-    const [selectTeam, setSelectTeam] = useState(undefined)
-    const [displayPublicGroup, setDisplayPublicGroup] = useState(false)
-    const [displayOnlineGroup, setDisplayOnlineGroup] = useState(true)
+    const [searchValue, setSearchValue] = useState<string>("")
+    const [selectTypeService, setSelectTypeService] = useState<ServiceType | undefined>(undefined)
+    const [selectCheckType, setSelectCheckType] = useState<string | undefined>(undefined)
+    const [selectTeam, setSelectTeam] = useState<Team | undefined>(undefined)
+    const [displayPublicGroup, setDisplayPublicGroup] = useState<boolean>(false)
+    const [displayOnlineGroup, setDisplayOnlineGroup] = useState<boolean>(true)
 
     useEffect(() => {
         getServiceTypes().then(setServiceTypes)
         getTeams().then(setTeams)
         getPublicGroups().then(setGroups)
-        getCheckTypes().then(x => {
-            let res = x.map(y => {
-                return {
-                    ref: y,
-                    label: y,
-                }
-            })
-            setCheckTypes(res)
-        })
+        getCheckTypes().then(setCheckTypes)
     }, [])
 
     return <div className="fluid-content">
@@ -52,18 +48,20 @@ const Search = function () {
                 </div>
                 <div className="form-group">
                     <label>Type du service :</label>
-                    <Select values={serviceTypes} labelField="name" icon="style" value={selectTypeService}
-                            onChange={setSelectTypeService}/>
+                    <Select options={serviceTypes} labelField="name" icon="style" value={selectTypeService}
+                            onChange={setSelectTypeService} mapOptionToLabel={(option: ServiceType) => option.name}
+                            mapOptionToValue={(option: ServiceType) => option.ref ?? ""}/>
                 </div>
                 <div className="form-group">
                     <label>Mode de vérification :</label>
-                    <Select values={checkTypes} labelField="label" icon="task_alt" value={selectCheckType}
+                    <Select options={checkTypes} labelField="label" icon="task_alt" value={selectCheckType}
                             onChange={setSelectCheckType}/>
                 </div>
                 <div className="form-group">
                     <label>Equipe :</label>
-                    <Select values={teams} labelField="name" icon="groups" value={selectTeam}
-                            onChange={setSelectTeam}/>
+                    <Select options={teams} labelField="name" icon="groups" value={selectTeam}
+                            onChange={setSelectTeam} mapOptionToLabel={(option: Team) => option.name}
+                            mapOptionToValue={(option: Team) => option.ref ?? ""}/>
                 </div>
                 <Switch value={displayOnlineGroup} onChange={setDisplayOnlineGroup}
                         label="Afficher les groupes en lignes"/>
@@ -72,7 +70,7 @@ const Search = function () {
             </div>
             <div className="grid-cspan-3">
                 <div id='service-group-list'>
-                    {groups.filter(x => x.isInFilter(searchValue, selectTypeService, selectTeam?.ref, selectCheckType?.name, displayPublicGroup, !displayOnlineGroup)).map(x =>
+                    {groups.filter(x => x.isInFilter(searchValue, selectTypeService, selectTeam, selectCheckType, displayPublicGroup, !displayOnlineGroup)).map(x =>
                         <GroupServiceCard key={x.ref} value={x}/>)}
                 </div>
             </div>
