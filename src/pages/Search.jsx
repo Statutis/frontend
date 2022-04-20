@@ -60,7 +60,7 @@ const Search = function () {
             </div>
             <div className="grid-cspan-3">
                 <div id='service-group-list'>
-                    {groups.map(x => <GroupServiceCard key={x.ref} value={x}/>)}
+                    {groups.filter(x=>x.isInFilter(searchValue, selectTypeService, selectTeam, selectCheckType, displayPublicGroup, !displayOnlineGroup)).map(x => <GroupServiceCard key={x.ref} value={x}/>)}
                 </div>
             </div>
         </div>

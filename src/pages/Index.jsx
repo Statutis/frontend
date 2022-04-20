@@ -83,7 +83,7 @@ function Index() {
 
             />
             <div id="service-group-list" className="mt-5">
-                {groups.map(x => {
+                {groups.filter(x=>x.isInFilter(searchService, selectServiceType)).map(x => {
                     return <GroupServiceCard key={x.ref} value={x}/>
                 })}
             </div>
