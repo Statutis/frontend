@@ -5,6 +5,7 @@ export default class Group {
     description = undefined;
     lastCheck = new Date()
     services = []
+    teamsRef = []
 
     constructor() {
     }
@@ -14,15 +15,24 @@ export default class Group {
         return this.services.filter(x => x.state.toLowerCase() == "online")
     }
 
-    isInFilter(text, serviceType = undefined, team = undefined, checkType = undefined, isPublic = true, hideFullOnline = false) {
+    isInFilter(text, serviceType = undefined, team = undefined, checkType = undefined, hideIsPublic = true, hideFullOnline = false) {
         if (text !== undefined && text.trim() != "") {
             if (!this.name.toLowerCase().includes(text.toLowerCase()) && !this.description.toLowerCase().includes(text.toLowerCase()))
                 return false;
         }
 
-        //TODO Filtre par type de service (serviceType)
-        //TODO Filtre par visibilité (isPublic)
-        //TODO Filtre par checkType
+        if (team !== undefined && !this.teamsRef.includes(team))
+            return false
+
+        if (serviceType !== undefined && this.services.filter(x => x.serviceTypeRef == serviceType.ref).length === 0)
+            return false
+
+        console.log(this.services.map(x=>x.checkType), checkType)
+        if (checkType !== undefined && this.services.filter(x => x.checkType.toLowerCase() == checkType?.toLowerCase()).length === 0)
+            return false
+
+        if (hideIsPublic === true && this.services.filter(x => x.isPublic).length === this.services.length)
+            return false
 
         if (hideFullOnline === true && this.onlineServices().length === this.services.length)
             return false
@@ -31,8 +41,3 @@ export default class Group {
     }
 }
 
-export class GroupService {
-    ref = "";
-    state = ""
-    lastCheck = new Date()
-}

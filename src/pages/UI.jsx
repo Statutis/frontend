@@ -6,7 +6,8 @@ import ProgressBar from "../components/ProgressBar";
 import Input from "../components/UI/Input/Input";
 import Select from "../components/UI/Input/Select";
 import Switch from "../components/UI/Input/Switch";
-import Group, {GroupService} from "../api/Models/Group";
+import Group from "../api/Models/Group";
+import {Service} from "../api/Models/Service/Service";
 
 const UI = function() {
 
@@ -21,11 +22,11 @@ const UI = function() {
     g.description = "Ceci est la description du groupe, qui contient des services."
     g.services = []
 
-    let gs = new GroupService()
+    let gs = new Service()
     gs.state = "Error"
     g.services = g.services.concat([gs])
 
-    gs = new GroupService()
+    gs = new Service()
     gs.state = "Online"
     g.services = g.services.concat([gs])
 

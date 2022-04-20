@@ -17,9 +17,9 @@ const Search = function () {
     const [serviceTypes, setServiceTypes] = useState([])
     const [teams, setTeams] = useState([])
     const [searchValue, setSearchValue] = useState("")
-    const [selectTypeService, setSelectTypeService] = useState(null)
-    const [selectCheckType, setSelectCheckType] = useState(null)
-    const [selectTeam, setSelectTeam] = useState(null)
+    const [selectTypeService, setSelectTypeService] = useState(undefined)
+    const [selectCheckType, setSelectCheckType] = useState(undefined)
+    const [selectTeam, setSelectTeam] = useState(undefined)
     const [displayPublicGroup, setDisplayPublicGroup] = useState(false)
     const [displayOnlineGroup, setDisplayOnlineGroup] = useState(true)
 
@@ -53,14 +53,14 @@ const Search = function () {
                     <Select values={teams} labelField="name" icon="groups" value={selectTeam}
                             onChange={setSelectTeam}/>
                 </div>
-                <Switch value={displayPublicGroup} onChange={setDisplayPublicGroup}
-                        label="Afficher les groupes publics"/>
                 <Switch value={displayOnlineGroup} onChange={setDisplayOnlineGroup}
                         label="Afficher les groupes en lignes"/>
+                <Switch value={displayPublicGroup} onChange={setDisplayPublicGroup}
+                        label="Masquer les groupes publics"/>
             </div>
             <div className="grid-cspan-3">
                 <div id='service-group-list'>
-                    {groups.filter(x=>x.isInFilter(searchValue, selectTypeService, selectTeam, selectCheckType, displayPublicGroup, !displayOnlineGroup)).map(x => <GroupServiceCard key={x.ref} value={x}/>)}
+                    {groups.filter(x=>x.isInFilter(searchValue, selectTypeService, selectTeam?.ref, selectCheckType?.name, displayPublicGroup, !displayOnlineGroup)).map(x => <GroupServiceCard key={x.ref} value={x}/>)}
                 </div>
             </div>
         </div>
