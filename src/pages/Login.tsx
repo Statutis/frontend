@@ -1,6 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
 import useDocumentTitle from "../useDocumentTitle";
-import {useState} from "react";
 import Input from "../components/UI/Input/Input";
 import './../assets/app/pages/login.scss'
 
