@@ -14,6 +14,7 @@ import Error from "./pages/Error";
 import Login from "./pages/Login";
 import axios from "axios";
 import LegalNotice from "./pages/Legal/LegalNotice";
+import GroupOverview from "./pages/Group/GroupOverview";
 
 axios.defaults.baseURL = import.meta.env.APP_API_URL
 
@@ -28,6 +29,7 @@ ReactDOM.render(
                         <Route path="/search" element={<Search/>}/>
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/legal/notice" element={<LegalNotice/>}/>
+                        <Route path={"/groups/:id"} element={<GroupOverview/>}/>
                     </Route>
                     <Route path="*" element={<Error code={404}/>}/>
                 </Routes>

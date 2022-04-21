@@ -1,0 +1,25 @@
+.group-overview-card {
+  display: flex;
+  flex-direction: column;
+
+  &>.overview {
+    width: 400px;
+    &>p {
+      font-family: "Roboto Light", sans-serif;
+      font-size: 14px;
+      color: var(--color-dark-grey);
+    }
+    &>.badges {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      &>.badge{
+        display: flex;
+        align-items: center;
+        border-radius: 20px;
+        margin: 0 5px;
+      }
+    }
+  }
+}
