@@ -7,8 +7,8 @@ import './../assets/app/pages/login.scss'
 const Login = function () {
     useDocumentTitle("Connection")
 
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
+    const [username, setUsername] = useState<string>("")
+    const [password, setPassword] = useState<string>("")
 
     return <div className="content" id={"form-login"}>
         <div className="form-group">

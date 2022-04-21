@@ -6,8 +6,13 @@ import Footer from "./Footer";
 import {AppContext} from "../AppProvider";
 import PropTypes from "prop-types";
 
+interface AppBaseProps {
+    children: JSX.Element
+}
 
-const AppBase = function ({children}) {
+
+
+const AppBase = function ({children}:AppBaseProps) {
 
     const {pageTitle} = useContext(AppContext);
 

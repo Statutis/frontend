@@ -1,6 +1,7 @@
 import React from "react";
 import LogoTitleImage from '../img/LogoTitle.png'
 import FooterCornerImage from '../img/TrafficLight_Perdu_Dans_la_nature.png'
+import {Link} from "react-router-dom";
 
 const Footer = function () {
     return <footer>
@@ -20,7 +21,7 @@ const Footer = function () {
                     <li><a href="">Accueil</a></li>
                     <li><a href="">À propos</a></li>
                     <li><a href="">Connexion</a></li>
-                    <li><a href="">Mentions Légales</a></li>
+                    <li><Link to="/legal/notice">Mentions Légales</Link></li>
                     <li><a href="">Inscription</a></li>
                     <li><a href="">Liste des équipes</a></li>
                     <li><a href="">Dépôts</a></li>

@@ -13,7 +13,7 @@ import RouteBase from "./components/RouteBase";
 import Error from "./pages/Error";
 import Login from "./pages/Login";
 import axios from "axios";
-
+import LegalNotice from "./pages/Legal/LegalNotice";
 
 axios.defaults.baseURL = import.meta.env.APP_API_URL
 
@@ -27,6 +27,7 @@ ReactDOM.render(
                         <Route path="/_ui" element={<UI/>}/>
                         <Route path="/search" element={<Search/>}/>
                         <Route path="/login" element={<Login/>}/>
+                        <Route path="/legal/notice" element={<LegalNotice/>}/>
                     </Route>
                     <Route path="*" element={<Error code={404}/>}/>
                 </Routes>

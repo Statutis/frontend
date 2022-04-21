@@ -3,11 +3,19 @@ import {useEffect, useRef, useState} from "react";
 import _uniqueId from "../../../Utils/IdGenerator";
 import PropTypes from "prop-types";
 
-const Switch = function ({onChange = undefined, value, label, className}) {
+
+interface SwitchProps {
+    onChange?: ((value: boolean) => void) | undefined
+    value?: boolean
+    label: string
+    className?: string | undefined
+}
+
+const Switch = function ({onChange = undefined, value, label, className}: SwitchProps) {
 
     const {current: inputId} = useRef(_uniqueId("switch"));
 
-    const [stateValue, setStateValue] = useState("")
+    const [stateValue, setStateValue] = useState<boolean>(false)
 
     const updateValue = () => {
         const new_value = !stateValue

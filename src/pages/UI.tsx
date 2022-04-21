@@ -6,13 +6,30 @@ import ProgressBar from "../components/ProgressBar";
 import Input from "../components/UI/Input/Input";
 import Select from "../components/UI/Input/Select";
 import Switch from "../components/UI/Input/Switch";
+import Group from "../api/Models/Group";
+import {Service, ServiceState} from "../api/Models/Service/Service";
 
-const UI = function() {
+const UI = function () {
 
     useDocumentTitle("Elements Graphiques")
 
     const colors = ["primary", "secondary", "green", "red", "grey", "dark-grey", "orange"];
-    let serviceTypes = [{id: 1, label: "Site Web"}, {id: 2, label: "Reverse Proxy"}];
+    const serviceTypes = ["Site Web", "Reverse Proxy"];
+
+
+    const g = new Group();
+    g.name = "Titre du groupe"
+    g.description = "Ceci est la description du groupe, qui contient des services."
+    g.services = []
+
+    let gs = new Service()
+    gs.state = ServiceState.Error
+    g.services = g.services.concat([gs])
+
+    gs = new Service()
+    gs.state = ServiceState.Online
+    g.services = g.services.concat([gs])
+
 
     return <div className={"content"}>
 
@@ -81,10 +98,7 @@ const UI = function() {
                 </div>
                 <div className={"m-4"}>
                     <small className="text-muted">Carte pour les groupes de services</small>
-                    <GroupServiceCard value={{
-                        name: "Titre du groupe de service",
-                        description: "Lorem ipsum dolor sit amet, consetetur sadipscing ..",
-                    }}/>
+                    <GroupServiceCard value={g}/>
                 </div>
             </div>
         </div>
@@ -102,14 +116,14 @@ const UI = function() {
             <div className={"htsack"}>
                 <div className={"form-group"}>
                     <label htmlFor="inputtext">Mon input : </label>
-                    <Input placeholder={"Saisir une valeur"} id="inputtext"/>
+                    <Input placeholder={"Saisir une valeur"}/>
                 </div>
             </div>
             <h3 className="h3 mt-5">Select : </h3>
             <div className={"htsack"}>
                 <div className={"form-group"}>
                     <label htmlFor="text">Mon Select : </label>
-                    <Select placeholder={"Choisir une valeur"} id="select-text" values={serviceTypes} refField="id"/>
+                    <Select placeholder={"Choisir une valeur"} options={serviceTypes}/>
                 </div>
             </div>
             <h3 className="h3 mt-5">Switch</h3>
