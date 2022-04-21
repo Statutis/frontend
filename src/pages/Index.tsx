@@ -16,6 +16,7 @@ import {getMainState, MainState} from "../api/ServiceRepository";
 import {getPublicGroups} from "../api/GroupRepository";
 import Group from "../api/Models/Group";
 import ServiceType from "../api/Models/Service/ServiceType";
+import {displayDelay} from "../Utils/DateManager";
 
 
 function Index() {
@@ -46,8 +47,10 @@ function Index() {
                 </div>
             </div>
 
-        // const verificationTime = displayDelay(mainState.lastUpdate, new Date());
-        const verificationTime = "jamai";
+        let verificationTime = "jamais";
+        if (mainState && mainState.lastUpdate)
+            verificationTime = displayDelay(mainState.lastUpdate, new Date());
+
 
         switch (mainState.state) {
             case "Online":
