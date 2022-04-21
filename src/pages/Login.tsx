@@ -9,7 +9,7 @@ import {useNavigate} from "react-router-dom";
 
 
 const Login = function () {
-    useDocumentTitle("Connection")
+    useDocumentTitle("Connexion")
 
     const dispatcher = useAppDispatch()
     const navigate = useNavigate()
@@ -54,7 +54,7 @@ const Login = function () {
         </div>
         <div className="hstack stack-center mt-5">
             <a href="" className="btn btn-secondary">Inscription</a>
-            <button className="btn btn-primary" onClick={handleLogin}>Connection</button>
+            <button className="btn btn-primary" onClick={handleLogin}>Connexion</button>
         </div>
     </div>
 }

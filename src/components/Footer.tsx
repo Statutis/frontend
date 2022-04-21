@@ -20,7 +20,7 @@ const Footer = function () {
                 <ul>
                     <li><a href="">Accueil</a></li>
                     <li><a href="">À propos</a></li>
-                    <li><a href="">Connexion</a></li>
+                    <li><Link to="/login">Connexion</Link></li>
                     <li><Link to="/legal/notice">Mentions Légales</Link></li>
                     <li><a href="">Inscription</a></li>
                     <li><a href="">Liste des équipes</a></li>

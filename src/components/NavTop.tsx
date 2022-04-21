@@ -22,7 +22,7 @@ function NavTop() {
 
     const connectionSection = (user: User | undefined) => {
         if (!user)
-            return <li><Link to="/login" className={"btn"}>Connection</Link></li>
+            return <li><Link to="/login" className={"btn"}>Connexion</Link></li>
         return <>
             <li><Link to="/login" title={user.email}>Mon profil</Link></li>
             <li>
