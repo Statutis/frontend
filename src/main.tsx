@@ -14,7 +14,6 @@ import Error from "./pages/Error";
 import Login from "./pages/Login";
 import axios from "axios";
 import LegalNotice from "./pages/Legal/LegalNotice";
-import ProtectedPath from "./ProtectedPath";
 import store from './Store/store'
 import {Provider} from 'react-redux'
 import {tokenLocalStorageKey} from "./Store/AuthSlice";
@@ -60,7 +59,6 @@ ReactDOM.render(
                         <Route path="/" element={<Index/>}/>
                         <Route element={<RouteBase/>}>
                             <Route path="/_ui" element={<UI/>}/>
-                            <Route path="/_ui2" element={<ProtectedPath role={"ROLE_NO"}><UI/></ProtectedPath>}/>
                             <Route path="/search" element={<Search/>}/>
                             <Route path="/login" element={<Login/>}/>
                             <Route path="/legal/notice" element={<LegalNotice/>}/>
