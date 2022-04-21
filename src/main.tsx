@@ -19,6 +19,7 @@ import {Provider} from 'react-redux'
 import {tokenLocalStorageKey} from "./Store/AuthSlice";
 import AuthService from "./Services/AuthService";
 import AppBase from "./components/AppBase";
+import Register from "./pages/Register";
 
 axios.defaults.baseURL = import.meta.env.APP_API_URL
 
@@ -61,6 +62,7 @@ ReactDOM.render(
                             <Route path="/_ui" element={<UI/>}/>
                             <Route path="/search" element={<Search/>}/>
                             <Route path="/login" element={<Login/>}/>
+                            <Route path="/register" element={<Register/>}/>
                             <Route path="/legal/notice" element={<LegalNotice/>}/>
                         </Route>
                         <Route path="*" element={<AppBase><Error code={404}/></AppBase>}/>
