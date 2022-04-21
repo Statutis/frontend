@@ -1,39 +1,16 @@
-import React, {HTMLInputTypeAttribute} from "react";
-import {useState, useEffect} from "react";
+import React, {DetailedHTMLProps} from "react";
 import PropTypes from "prop-types";
 
-interface InputProps {
-    onChange?: ((value: string) => void) | undefined;
-    value?: string | undefined;
+export interface InputProps extends DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
     icon?: string | undefined;
-    placeholder?: string | undefined;
-    type?: HTMLInputTypeAttribute
 }
 
-const Input = function ({
-                            onChange = undefined,
-                            value = undefined,
-                            icon = undefined,
-                            placeholder = undefined,
-                            type = "text",
-                        }: InputProps) {
 
-    const [stateValue, setValue] = useState("")
-
-
-    const updateValue = (value: React.SyntheticEvent<HTMLInputElement>) => {
-        setValue(value.currentTarget.value)
-        if (onChange !== undefined)
-            onChange(value.currentTarget.value)
-    }
-
-    useEffect(() => {
-        setValue(value ?? "")
-    }, [value])
+const Input = function ({icon = undefined, ...props}: InputProps) {
 
     return <div className="app-input">
         <span className={"material-icons"}>{icon ?? "style"}</span>
-        <input type={type} placeholder={placeholder ?? ""} value={stateValue} onChange={updateValue}/>
+        <input {...(props)}/>
     </div>
 }
 
