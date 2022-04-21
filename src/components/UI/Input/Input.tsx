@@ -1,4 +1,4 @@
-import React from "react";
+import React, {HTMLInputTypeAttribute} from "react";
 import {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 
@@ -7,13 +7,15 @@ interface InputProps {
     value?: string | undefined;
     icon?: string | undefined;
     placeholder?: string | undefined;
+    type?: HTMLInputTypeAttribute
 }
 
 const Input = function ({
                             onChange = undefined,
                             value = undefined,
                             icon = undefined,
-                            placeholder = undefined
+                            placeholder = undefined,
+                            type = "text",
                         }: InputProps) {
 
     const [stateValue, setValue] = useState("")
@@ -31,7 +33,7 @@ const Input = function ({
 
     return <div className="app-input">
         <span className={"material-icons"}>{icon ?? "style"}</span>
-        <input type="text" placeholder={placeholder ?? ""} value={stateValue} onChange={updateValue}/>
+        <input type={type} placeholder={placeholder ?? ""} value={stateValue} onChange={updateValue}/>
     </div>
 }
 
