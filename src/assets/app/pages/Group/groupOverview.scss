@@ -1,6 +1,6 @@
 .group-overview-card {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 
   &>.overview {
     width: 400px;
@@ -20,6 +20,15 @@
         border-radius: 20px;
         margin: 0 5px;
       }
+    }
+  }
+
+  &>.services {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    &>.service {
+      margin: 5px 0;
     }
   }
 }

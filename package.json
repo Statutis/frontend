@@ -12,9 +12,11 @@
     "@fontsource/roboto": "^4.5.5",
     "autoprefixer": "^10.4.4",
     "axios": "^0.26.1",
+    "chart.js": "^3.7.1",
     "install": "^0.13.0",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
+    "react-chartjs-2": "^4.1.0",
     "react-dom": "^17.0.2",
     "react-router-dom": "6"
   },

@@ -12,3 +12,8 @@ export async function getServiceTypes(): Promise<ServiceType[]> {
         return s;
     });
 }
+
+export async function getServiceTypesByRef(ref:string) : Promise<ServiceType> {
+    const res = await axios.get<ServiceType>(ref);
+    return res.data;
+}
