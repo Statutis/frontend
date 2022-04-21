@@ -13,7 +13,7 @@ function NavTop() {
             <ul>
                 <li><Link to={"/_ui"}>Accueil</Link></li>
                 <li><a href="">A propos</a></li>
-                <li><Link to="/login" className={"btn"}>Connection</Link></li>
+                <li><Link to="/login" className={"btn"}>Connexion</Link></li>
             </ul>
         </nav>
     </div>

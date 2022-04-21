@@ -5,7 +5,7 @@ import Input from "../components/UI/Input/Input";
 import './../assets/app/pages/login.scss'
 
 const Login = function () {
-    useDocumentTitle("Connection")
+    useDocumentTitle("Connexion")
 
     const [username, setUsername] = useState<string>("")
     const [password, setPassword] = useState<string>("")
@@ -24,7 +24,7 @@ const Login = function () {
         <div className="hstack stack-end"><a href="" className="text-muted">Mot de passe oublié ?</a></div>
         <div className="hstack stack-center mt-5">
             <a href="" className="btn btn-secondary">Inscription</a>
-            <button className="btn btn-primary">Connection</button>
+            <button className="btn btn-primary">Connexion</button>
         </div>
     </div>
 }
