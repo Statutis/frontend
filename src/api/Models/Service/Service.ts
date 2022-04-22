@@ -14,7 +14,6 @@ export class Service {
     name: string;
     description: string | undefined;
     host: string;
-    isPublic: boolean;
     state: ServiceState;
     lastCheck: Date;
     historyRef: string;
@@ -27,7 +26,6 @@ export class Service {
         this.name = "???";
         this.host = "???";
         this.description = undefined;
-        this.isPublic = true;
         this.state = ServiceState.Unknown;
         this.lastCheck = new Date()
     }
