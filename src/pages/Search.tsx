@@ -7,7 +7,7 @@ import {useState} from 'react';
 import Switch from "../components/UI/Input/Switch";
 import {getServiceTypes} from "../api/ServiceTypesRepository";
 import {getTeams} from "../api/TeamRepository";
-import {getPublicGroups} from "../api/GroupRepository";
+import {getGroups} from "../api/GroupRepository";
 import {getCheckTypes} from "../api/ServiceRepository";
 import Group from "../api/Models/Group";
 import ServiceType from "../api/Models/Service/ServiceType";
@@ -33,7 +33,7 @@ const Search = function () {
     useEffect(() => {
         getServiceTypes().then(setServiceTypes)
         getTeams().then(setTeams)
-        getPublicGroups().then(setGroups)
+        getGroups().then(setGroups)
         getCheckTypes().then(setCheckTypes)
     }, [])
 
