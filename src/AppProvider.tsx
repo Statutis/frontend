@@ -1,6 +1,7 @@
 import React, {createContext, useEffect, useState} from "react";
-import {useAppDispatch} from "./Store/store";
-import {refresh} from "./Store/AuthSlice";
+import {AppDispatch, useAppDispatch} from "./Store/store";
+import {logout, refresh} from "./Store/AuthSlice";
+import User from "./api/Models/User";
 
 
 interface AppContextInterface {
@@ -19,30 +20,37 @@ interface AppProviderProps {
     children: JSX.Element
 }
 
-export class UserRefreshEvent extends Event {
+export class UserAuthEvent extends Event {
     token: string | undefined = undefined
+    user: User | undefined = undefined
 
-    constructor(type: string, token: string | undefined, eventInitDict?: EventInit) {
+    constructor(type: string, token: string | undefined, user: User | undefined, eventInitDict?: EventInit) {
         super(type, eventInitDict);
         this.token = token
+        this.user = user
     }
 }
 
 const AppProvider = function ({children}: AppProviderProps) {
     const [title, setTitle] = useState<string>("")
-    const dispatcher = useAppDispatch()
+    const dispatcher: AppDispatch = useAppDispatch()
 
     useEffect(() => {
 
-        function handleClickOutside(event: UserRefreshEvent) {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            dispatcher(refresh(event.token))
+        function handleUserRefresh(event: UserAuthEvent) {
+            if (event.user && event.token)
+                dispatcher(refresh({user: event.user, token: event.token}))
         }
 
-        document.addEventListener("onUserRefresh", handleClickOutside as EventListener);
+        function handleUserLogout() {
+            dispatcher(logout())
+        }
+
+        document.addEventListener("onUserRefresh", handleUserRefresh as EventListener);
+        document.addEventListener("onUserLogout", handleUserLogout as EventListener);
         return () => {
-            document.removeEventListener("onUserRefresh", handleClickOutside as EventListener);
+            document.removeEventListener("onUserRefresh", handleUserRefresh as EventListener);
+            document.removeEventListener("onUserLogout", handleUserLogout as EventListener);
         };
 
     }, [])
