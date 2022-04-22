@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {Service} from "../api/Models/Service/Service";
+import {Service, ServiceState} from "../api/Models/Service/Service";
 import {HistoryEntry} from "../api/Models/History/HistoryEntry";
 import {getHistoryByRef} from "../api/HistoryEntryRepository";
 import {Line} from "react-chartjs-2";
@@ -13,7 +13,7 @@ import {
     LineElement,
     PointElement,
     Title,
-    Tooltip,
+    Tooltip, TooltipItem,
 } from 'chart.js';
 
 ChartJS.register(
@@ -26,17 +26,17 @@ ChartJS.register(
     Legend
 );
 
-const defaultValue:Service = new Service();
+const defaultValue: Service = new Service();
 
-const valueToY = {
-    "Online" : 1,
-    "Unknown" : 2,
-    "Unreachable" : 3,
-    "Error" : 0,
+const valueToY : {[index: string]: number} = {
+    "Online": 1,
+    "Unknown": 2,
+    "Unreachable": 3,
+    "Error": 0,
 }
 
 
-const ServiceCard = function({value = defaultValue}) {
+const ServiceCard = function ({value = defaultValue}) {
 
     const [history, setHistory] = useState<HistoryEntry[]>();
     const [labels, setLabels] = useState<string[]>([]);
@@ -65,7 +65,7 @@ const ServiceCard = function({value = defaultValue}) {
         labels,
         datasets: [
             {
-                label: 'Dataset 1',
+                label: 'Uptime',
                 data: values,
                 borderColor: 'black',
                 backgroundColor: '#FFFFFF'
@@ -81,6 +81,21 @@ const ServiceCard = function({value = defaultValue}) {
             title: {
                 display: false,
             },
+            tooltip: {
+                callbacks: {
+                    label: (context: TooltipItem<never>): string | string[] => {
+                        let keyRes = "";
+                        Object.entries(ServiceState).forEach(function([, value])
+                        {
+                            console.log(valueToY[value.toString()], value)
+                            if (valueToY[value.toString()] == context.raw) {
+                                keyRes = value
+                            }
+                        })
+                        return keyRes;
+                    }
+                }
+            }
         },
         scales: {
             x: {
@@ -88,22 +103,7 @@ const ServiceCard = function({value = defaultValue}) {
             },
             y: {
                 display: false,
-                ticks: {
-                    callback: (value:number) => {
-                        switch (value) {
-                            case 1:
-                                return "Online";
-                            case 2:
-                                return "Unknown"
-                            case 3:
-                                return "Unreachable"
-                            case 0:
-                                return "Error"
-                            default:
-                                return ""
-                        }
-                    }
-                }
+
             }
         }
     };
@@ -113,7 +113,7 @@ const ServiceCard = function({value = defaultValue}) {
 
         <div className={"chart"}>
 
-            <Line data={data} options={options} />
+            <Line data={data} options={options}/>
 
         </div>
     </div>
