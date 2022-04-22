@@ -21,6 +21,7 @@ import {displayDelay} from "../Utils/DateManager";
 
 function Index() {
 
+
     const [mainState, setMainState] = useState<MainState | undefined>()
 
     const [groups, setGroups] = useState<Group[]>([])

@@ -44,7 +44,7 @@ const Search = function () {
                 <div className="form-group">
                     <label>Recherche :</label>
                     <Input placeholder="Titre de services ou mots clès" icon="search"
-                           value={searchValue} onChange={setSearchValue}/>
+                           value={searchValue} onChange={x=> setSearchValue(x.currentTarget.value)}/>
                 </div>
                 <div className="form-group">
                     <label>Type du service :</label>
