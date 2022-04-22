@@ -17,6 +17,7 @@ import {getGroups} from "../api/GroupRepository";
 import Group from "../api/Models/Group";
 import ServiceType from "../api/Models/Service/ServiceType";
 import {displayDelay} from "../Utils/DateManager";
+import {Link} from "react-router-dom";
 
 
 function Index() {
@@ -100,6 +101,9 @@ function Index() {
                 {groups.filter(x => x.isInFilter(searchService, selectServiceType)).map(x => {
                     return <GroupServiceCard key={x.ref} value={x}/>
                 })}
+            </div>
+            <div className="hstack stack-center mt-6">
+                <Link to="/search" className="btn btn-secondary">Faire une recherche plus avancée</Link>
             </div>
         </div>
         <Footer/>
