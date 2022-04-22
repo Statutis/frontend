@@ -4,8 +4,8 @@ import Team from "./Team";
 
 export default class Group {
     ref: string | undefined = undefined;
-    mainGroupRef = "";
     name = "??";
+    isPublic = true;
     description: string | undefined = undefined;
     lastCheck: Date = new Date()
     services: Array<Service> = []
@@ -36,7 +36,7 @@ export default class Group {
         if (checkType !== undefined && this.services.filter(x => x.checkType.toLowerCase() == checkType?.toLowerCase()).length === 0)
             return false
 
-        if (hideIsPublic && this.services.filter(x => x.isPublic).length === this.services.length)
+        if (hideIsPublic && this.isPublic)
             return false
 
         if (hideFullOnline && this.onlineServices().length === this.services.length)
