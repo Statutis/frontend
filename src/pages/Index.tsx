@@ -22,6 +22,7 @@ import {Link} from "react-router-dom";
 
 function Index() {
 
+
     const [mainState, setMainState] = useState<MainState | undefined>()
 
     const [groups, setGroups] = useState<Group[]>([])
