@@ -21,6 +21,14 @@
         margin: 0 5px;
       }
     }
+    &>.chart {
+      margin: 50px 0;
+      &>canvas {
+        border-radius: 3px;
+        border: 1px solid #C1C1C1;
+        background: white;
+      }
+    }
   }
 
   &>.services {

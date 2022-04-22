@@ -10,6 +10,9 @@ import Team from "../../api/Models/Team";
 import {getTeamsByRef} from "../../api/TeamRepository";
 import {getServiceTypesByRef} from "../../api/ServiceTypesRepository";
 import ServiceCard from "../../components/ServiceCard";
+import {getHistoryOfAGroup} from "../../api/HistoryEntryRepository";
+import {ServiceState} from "../../api/Models/Service/Service";
+import {Line} from "react-chartjs-2";
 
 
 const GroupOverview = () => {
@@ -24,11 +27,16 @@ const GroupOverview = () => {
     const [serviceType, setServiceType] = useState<ServiceType[]>([])
     const [team, setTeam] = useState<Team[]>([]);
 
+    //Charts
+    const [labels, setLabels] = useState<string[]>([])
+    const [data, setData] = useState<number[]>([])
+
     useEffect(() => {
         getGroup(id).then(setGroups)
     }, []);
 
     useEffect(() => {
+        //Get type of service
         groups.services.map(x => {
             getServiceTypesByRef(x.serviceTypeRef).then(x => setServiceType(prevState => {
                 if (!prevState.find(search => search.ref === x.ref)) {
@@ -37,7 +45,7 @@ const GroupOverview = () => {
                 return prevState;
             }));
         });
-
+        //Get linked teams
         groups.teamsRef.map(x => {
             getTeamsByRef(x).then(x => setTeam(prevState => {
                 if (!prevState.find(search => search.ref === x.ref)) {
@@ -46,7 +54,74 @@ const GroupOverview = () => {
                 return prevState;
             }))
         });
+        //Get History of services
+        getHistoryOfAGroup(id).then(x => {
+            const labelsChart: string[] = []
+            const dataChart: number[] = []
+            x.forEach((elt) => {
+
+                if (!labelsChart.find(x => x == elt.dateTime.toString())) {
+                    labelsChart.push(elt.dateTime.toString());
+                }
+                const idxLabel = labelsChart.indexOf(elt.dateTime.toString());
+                if (dataChart.at(idxLabel) == undefined) {
+                    dataChart[idxLabel] = 0
+                }
+                if (elt.state == ServiceState.Online) {
+
+                    dataChart[idxLabel] += 1;
+                }
+
+
+            })
+
+            setLabels(labelsChart)
+            setData(dataChart)
+        })
+
     }, [groups])
+
+
+    const chart = {
+        labels,
+        datasets: [
+            {
+                label: 'Online',
+                data: data,
+                fill: true,
+                borderColor: '#5C6E80',
+                backgroundColor: '#484848',
+                pointBackgroundColor: '#5C6E80',
+                borderWidth: 1,
+            }
+        ]
+    }
+
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            },
+            title: {
+                display: false,
+            },
+        },
+        scales: {
+            x: {
+                display: false,
+                gridLines: {
+                    display: false
+                }
+            },
+            y: {
+                display: false,
+                gridLines: {
+                    display: false
+                }
+            }
+        }
+    }
 
     return <div className={"content group-overview-card"}>
         <div className={"overview"}>
@@ -70,11 +145,14 @@ const GroupOverview = () => {
                 }
 
             </div>
+            <div className={"chart"}>
+                <Line data={chart} options={options}/>
+            </div>
         </div>
         <div className={"services"}>
             {
                 groups.services.map(x => {
-                  return <ServiceCard key={x.ref} value={x} />
+                    return <ServiceCard key={x.ref} value={x}/>
                 })
             }
         </div>
