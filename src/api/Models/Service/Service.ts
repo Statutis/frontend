@@ -17,10 +17,12 @@ export class Service {
     isPublic: boolean;
     state: ServiceState;
     lastCheck: Date;
+    historyRef: string;
 
     constructor() {
         this.ref = undefined;
         this.serviceTypeRef = "";
+        this.historyRef = "";
         this.checkType = "Unknown";
         this.name = "???";
         this.host = "???";

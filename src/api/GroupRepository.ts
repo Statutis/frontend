@@ -49,6 +49,7 @@ export async function getGroup(guid:string): Promise<Group> {
         s.isPublic = y.isPublic;
         s.state = y.state;
         s.lastCheck = new Date(y.lastCheck);
+        s.historyRef = y.historyRef
         return s;
     })
 
