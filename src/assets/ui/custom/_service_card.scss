@@ -1,14 +1,16 @@
 .service {
   background: #FFFFFF;
   border: 1px solid rgba(0, 0, 0, 0.12);
-  padding: 5px;
+  padding: 10px;
   border-radius: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  &>p {
+    margin: 0 10px;
+  }
   &>.chart {
-    &>canvas {
-      width: 100px;
-    }
+    width: 100px;
+    height: 25px;
   }
 }

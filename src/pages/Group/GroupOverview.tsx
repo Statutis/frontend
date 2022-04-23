@@ -12,8 +12,12 @@ import {getServiceTypesByRef} from "../../api/ServiceTypesRepository";
 import ServiceCard from "../../components/ServiceCard";
 import {getHistoryOfAGroup} from "../../api/HistoryEntryRepository";
 import {ServiceState} from "../../api/Models/Service/Service";
-import {Line} from "react-chartjs-2";
+import {ResponsiveLineCanvas, Serie} from "@nivo/line";
+import {BasicTooltip} from '@nivo/tooltip';
 
+const convertDate = (date: Date) => {
+    return date.getFullYear().toString() + "-" + date.getMonth().toString() + "-" + date.getUTCDate().toString() + " " + date.getHours() + "h" + date.getMinutes() + "m";
+}
 
 const GroupOverview = () => {
 
@@ -28,8 +32,8 @@ const GroupOverview = () => {
     const [team, setTeam] = useState<Team[]>([]);
 
     //Charts
-    const [labels, setLabels] = useState<string[]>([])
-    const [data, setData] = useState<number[]>([])
+    const [data, setData] = useState<Serie[]>([])
+    const [maxY, setMaxy] = useState<number>(0)
 
     useEffect(() => {
         getGroup(id).then(setGroups)
@@ -56,74 +60,45 @@ const GroupOverview = () => {
         });
         //Get History of services
         getHistoryOfAGroup(id).then(x => {
-            const labelsChart: string[] = []
-            const dataChart: number[] = []
+            const serie: Serie = {
+                id: "Service online",
+                data: [],
+                color: "black"
+            }
+            let maxYTmp = 0;
             x.forEach((elt) => {
 
-                if (!labelsChart.find(x => x == elt.dateTime.toString())) {
-                    labelsChart.push(elt.dateTime.toString());
-                }
-                const idxLabel = labelsChart.indexOf(elt.dateTime.toString());
-                if (dataChart.at(idxLabel) == undefined) {
-                    dataChart[idxLabel] = 0
-                }
-                if (elt.state == ServiceState.Online) {
+                const idserie = serie.data.findIndex(x => {
+                    return x.x == convertDate(new Date(elt.dateTime));
+                });
 
-                    dataChart[idxLabel] += 1;
+                if (idserie !== -1) {
+
+                    const checkY = serie.data[idserie].y
+                    if (typeof (checkY) === "number") {
+                        serie.data[idserie].y = checkY + 1
+                        if (checkY + 1 > maxYTmp) {
+                            maxYTmp = checkY + 1
+                        }
+                    }
+
+                } else {
+
+                    serie.data.push({
+                        x: convertDate(new Date(elt.dateTime)),
+                        y: (elt.state === ServiceState.Online) ? 1 : 0
+                    })
                 }
-
-
             })
 
-            setLabels(labelsChart)
-            setData(dataChart)
+            setMaxy(maxYTmp)
+            setData([serie])
+
         })
 
     }, [groups])
 
-
-    const chart = {
-        labels,
-        datasets: [
-            {
-                label: 'Online',
-                data: data,
-                fill: true,
-                borderColor: '#5C6E80',
-                backgroundColor: '#484848',
-                pointBackgroundColor: '#5C6E80',
-                borderWidth: 1,
-            }
-        ]
-    }
-
-    const options = {
-        responsive: true,
-        plugins: {
-            legend: {
-                display: false
-            },
-            title: {
-                display: false,
-            },
-        },
-        scales: {
-            x: {
-                display: false,
-                gridLines: {
-                    display: false
-                }
-            },
-            y: {
-                display: false,
-                gridLines: {
-                    display: false
-                }
-            }
-        }
-    }
-
-    return <div className={"content group-overview-card"}>
+    return <div className={"fluid-content group-overview-card"}>
         <div className={"overview"}>
             <h2>{groups.name}</h2>
             <p>{groups.description}</p>
@@ -146,7 +121,36 @@ const GroupOverview = () => {
 
             </div>
             <div className={"chart"}>
-                <Line data={chart} options={options}/>
+                <h3>Évolution des services</h3>
+                <div>
+                    <ResponsiveLineCanvas data={data} enableGridX={false} enableGridY={false}
+                                          enableArea={true} yScale={{type: 'linear', stacked: true, max: maxY + 1}}
+                                          enableCrosshair={false}
+                                          curve="monotoneX"
+                                          xScale={{type: 'point'}}
+                                          legends={[
+                                              {
+                                                  anchor: 'bottom-right',
+                                                  direction: 'column',
+                                                  itemWidth: 0,
+                                                  itemHeight: 0,
+                                                  effects: [{
+                                                      on: 'hover',
+                                                      style: {
+                                                          itemOpacity: 0
+                                                      }
+                                                  }]
+                                              }
+                                          ]}
+                                          tooltip={(v) => {
+                                              return <BasicTooltip value={""} id={""} color={"black"}
+                                                                   renderContent={() => {
+                                                                       return <>{v.point.data.y} service en ligne
+                                                                           le <br/> {v.point.data.x}</>
+                                                                   }}/>
+                                          }}
+                    />
+                </div>
             </div>
         </div>
         <div className={"services"}>

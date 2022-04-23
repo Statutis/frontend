@@ -3,117 +3,46 @@ import PropTypes from "prop-types";
 import {Service, ServiceState} from "../api/Models/Service/Service";
 import {HistoryEntry} from "../api/Models/History/HistoryEntry";
 import {getHistoryByRef} from "../api/HistoryEntryRepository";
-import {Line} from "react-chartjs-2";
-
-import {
-    CategoryScale,
-    Chart as ChartJS,
-    Legend,
-    LinearScale,
-    LineElement,
-    PointElement,
-    Title,
-    Tooltip, TooltipItem,
-} from 'chart.js';
-
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-);
+import {ResponsiveLineCanvas, Serie} from "@nivo/line";
 
 const defaultValue: Service = new Service();
-
-const valueToY : {[index: string]: number} = {
-    "Online": 1,
-    "Unknown": 2,
-    "Unreachable": 3,
-    "Error": 0,
-}
-
 
 const ServiceCard = function ({value = defaultValue}) {
 
     const [history, setHistory] = useState<HistoryEntry[]>();
-    const [labels, setLabels] = useState<string[]>([]);
-    const [values, setValues] = useState<number[]>([]);
+    const [data, setdata] = useState<Serie[]>([]);
     useEffect(() => {
         getHistoryByRef(value.historyRef).then(setHistory);
     }, []);
 
 
     useEffect(() => {
+        const tmpData: Serie = {
+            id: "Online Services",
+            color: "black",
+            data: []
+        }
 
-        history?.forEach((x) => {
-            setLabels(prevState => [...prevState, x.dateTime.toString()])
-            setValues(prevState => [...prevState, valueToY["Online"]])
+        history?.reverse().forEach((x) => {
 
-            console.log(x.state.toString());
-
-            return;
+            tmpData.data.push(
+                {
+                    "x": new Date(x.dateTime).getTime(),
+                    "y": (x.state === ServiceState.Online) ? 1 : 0
+                }
+            )
         })
 
-        return;
+        setdata(() => [tmpData])
 
     }, [history])
 
-    const data = {
-        labels,
-        datasets: [
-            {
-                label: 'Uptime',
-                data: values,
-                borderColor: 'black',
-                backgroundColor: '#FFFFFF'
-            }
-        ],
-    };
-    const options = {
-        responsive: true,
-        plugins: {
-            legend: {
-                display: false
-            },
-            title: {
-                display: false,
-            },
-            tooltip: {
-                callbacks: {
-                    label: (context: TooltipItem<never>): string | string[] => {
-                        let keyRes = "";
-                        Object.entries(ServiceState).forEach(function([, value])
-                        {
-                            console.log(valueToY[value.toString()], value)
-                            if (valueToY[value.toString()] == context.raw) {
-                                keyRes = value
-                            }
-                        })
-                        return keyRes;
-                    }
-                }
-            }
-        },
-        scales: {
-            x: {
-                display: false
-            },
-            y: {
-                display: false,
-
-            }
-        }
-    };
-
     return <div className={"service"}>
-        {value.name}
+        <p>{value.name}</p>
 
         <div className={"chart"}>
 
-            <Line data={data} options={options}/>
+            <ResponsiveLineCanvas data={data} enableGridX={false} enableGridY={false} yScale={{ type: 'linear', min: 0, max: 1 }} enableArea={true} enableCrosshair={false} isInteractive={false}/>
 
         </div>
     </div>
