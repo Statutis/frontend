@@ -26,9 +26,11 @@ function NavTop() {
         if (!user)
             return <li><Link to="/login" className={"btn"}>Connexion</Link></li>
         return <>
-            <li className="profil-section">
-                <UserAvatar/>
-                <span>{user.email}</span>
+            <li>
+                <Link to="/profil" className="profil-section">
+                    <UserAvatar/>
+                    <span>{user.email}</span>
+                </Link>
             </li>
             <li>
                 <button className={"btn btn-secondary"} onClick={handleLogout}>Déconnection</button>
