@@ -6,6 +6,8 @@ import {useAppDispatch, useAppSelector} from "../Store/store";
 import User from "../api/Models/User";
 import AuthService from "../Services/AuthService";
 import {logout} from "../Store/AuthSlice";
+import ImageLoader from "./UI/ImageLoader";
+import UserAvatar from './../img/user_avatar.png';
 
 function NavTop() {
 
@@ -24,7 +26,10 @@ function NavTop() {
         if (!user)
             return <li><Link to="/login" className={"btn"}>Connexion</Link></li>
         return <>
-            <li><Link to="/login" title={user.email}>Mon profil</Link></li>
+            <li className="profil-section">
+                { user.avatarRef ? <ImageLoader src={user.avatarRef} alt={user.email}/> : <img src={UserAvatar} alt={user.email}/>}
+                <span>{user.email}</span>
+            </li>
             <li>
                 <button className={"btn btn-secondary"} onClick={handleLogout}>Déconnection</button>
             </li>
