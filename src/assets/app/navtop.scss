@@ -24,7 +24,26 @@
       align-items: center;
     }
 
+    .profil-section {
+      display: flex;
+      align-items: center;
+      background: #E4E4E4;
+      padding: 5px 20px;
+      border-radius: 25px;
+
+      img {
+        margin-right: 5px;
+        max-width: 32px;
+        max-height: 32px;
+        object-fit: contain;
+        border-radius: 100%;
+      }
+    }
+
     & > * {
+      &.profil-section{
+        margin: 4px 0;
+      }
       margin: 4px 30px;
     }
 

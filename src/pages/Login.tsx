@@ -31,7 +31,6 @@ const Login = function () {
                 .required("Ce champs est requis."),
         }),
         onSubmit: async values => {
-            console.log(values)
             let res
             try {
                 res = await AuthService.login(values.username, values.password);
