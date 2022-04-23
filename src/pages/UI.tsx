@@ -132,6 +132,12 @@ const UI = function () {
                     return <Switch key={x} label={".app-switch .app-switch-" + x} className={"app-switch-" + x}/>
                 })}
             </div>
+            <h3 className="h3 mt-5">Badge</h3>
+            <div className="hstack">
+                {colors.map(x => {
+                    return <div key={x} className={"badge badge-" + x}>.badge .badge-{x}</div>
+                })}
+            </div>
         </div>
 
 

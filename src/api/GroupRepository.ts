@@ -28,3 +28,29 @@ export async function getGroups(): Promise<Group[]> {
         return g
     })
 }
+
+export async function getGroup(guid:string): Promise<Group> {
+    const response = await axios.get<Group>(`/api/groups/${guid}`);
+    const g = new Group();
+    g.ref = response.data.ref
+    g.name = response.data.name
+    g.description = response.data.description
+    g.lastCheck = new Date(response.data.lastCheck)
+    g.services = response.data.services.map(y => {
+        const s = new Service()
+        s.ref = y.ref;
+        s.serviceTypeRef = y.serviceTypeRef;
+        s.checkType = y.checkType;
+        s.name = y.name;
+        s.description = y.description;
+        s.host = y.host;
+        s.state = y.state;
+        s.lastCheck = new Date(y.lastCheck);
+        s.historyRef = y.historyRef
+        return s;
+    })
+
+    g.teamsRef = response.data.teamsRef;
+    return g
+
+}

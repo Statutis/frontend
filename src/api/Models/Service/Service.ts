@@ -16,10 +16,12 @@ export class Service {
     host: string;
     state: ServiceState;
     lastCheck: Date;
+    historyRef: string;
 
     constructor() {
         this.ref = undefined;
         this.serviceTypeRef = "";
+        this.historyRef = "";
         this.checkType = "Unknown";
         this.name = "???";
         this.host = "???";
