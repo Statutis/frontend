@@ -12,12 +12,13 @@ const ImageLoader = ({alt, src, ...props}: ImageLoaderProps) => {
     const [imgData, setImgData] = useState("");
 
     useEffect(() => {
-        axios.get(src, {responseType: "blob"}).then(resp => {
-            const reader = new window.FileReader();
-            reader.readAsDataURL(resp.data);
-            reader.onload = function () {
-                setImgData(reader.result?.toString() ?? "")
-            }
+        axios.get(src, {responseType: "blob"}).then(async resp => {
+            const result_base64: string | undefined = await new Promise((resolve) => {
+                const fileReader = new FileReader();
+                fileReader.onload = () => resolve(fileReader.result as string | undefined);
+                fileReader.readAsDataURL(resp.data);
+            });
+            setImgData(result_base64 ?? "")
         })
     }, [src])
 
