@@ -6,8 +6,10 @@ button.btn{
 .btn {
   padding: 10px 15px;
   box-sizing: border-box;
-  display: inline-block;
+  display: inline-flex;
   border-radius: 7px;
+  justify-content: center;
+  align-items: center;
   &.btn-small {
     padding: 5px 10px;
     font-size: 0.9em;
@@ -23,7 +25,8 @@ button.btn{
   cursor: pointer;
   outline: none;
 
-  & > img {
+  & > img, .material-icons {
+    font-size: 18px;
     width: 18px;
   }
 
