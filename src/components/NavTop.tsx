@@ -6,12 +6,12 @@ import {useAppDispatch, useAppSelector} from "../Store/store";
 import User from "../api/Models/User";
 import AuthService from "../Services/AuthService";
 import {logout} from "../Store/AuthSlice";
-import ImageLoader from "./UI/ImageLoader";
-import UserAvatar from './../img/user_avatar.png';
+import UserAvatar from "./UserAvatar";
 
 function NavTop() {
 
     const user = useAppSelector(state => state.auth.user)
+
     const dispatcher = useAppDispatch()
     const navigate = useNavigate()
 
@@ -27,7 +27,7 @@ function NavTop() {
             return <li><Link to="/login" className={"btn"}>Connexion</Link></li>
         return <>
             <li className="profil-section">
-                { user.avatarRef ? <ImageLoader src={user.avatarRef} alt={user.email}/> : <img src={UserAvatar} alt={user.email}/>}
+                <UserAvatar/>
                 <span>{user.email}</span>
             </li>
             <li>
