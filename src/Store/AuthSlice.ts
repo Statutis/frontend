@@ -46,12 +46,10 @@ export const AuthSlice = createSlice({
     initialState: await initialState(),
     reducers: {
         login: (state, action: PayloadAction<AuthUser>) => {
-            console.log(action.payload, state)
             state.token = action.payload.token
             state.user = action.payload.user
         },
         refresh: (state, action: PayloadAction<AuthUser>) => {
-            console.log(action.payload, state)
             state.token = action.payload.token
             state.user = action.payload.user
         },
