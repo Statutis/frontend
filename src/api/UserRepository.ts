@@ -23,3 +23,15 @@ export async function getMe(): Promise<User | undefined> {
 
     return response.data
 }
+
+export async function updateAvatar(file: File | undefined, user: User): Promise<void> {
+    const formData = new FormData();
+    if (file)
+        formData.append("form", file);
+
+    await axios.put(`api/users/avatar/${user.email}`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
+}
