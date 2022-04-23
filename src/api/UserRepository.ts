@@ -14,6 +14,8 @@ export async function getMe(): Promise<User | undefined> {
     const u = new User();
     u.ref = response.data.ref
     u.avatarRef = response.data.avatarRef
+    u.name = response.data.name
+    u.firstname = response.data.firstname
     u.username = response.data.username
     u.email = response.data.email
     u.roles = response.data.roles
