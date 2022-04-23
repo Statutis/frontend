@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@fontsource/roboto": "^4.5.5",
+    "@nivo/core": "^0.79.0",
+    "@nivo/line": "^0.79.1",
     "@reduxjs/toolkit": "^1.8.1",
     "autoprefixer": "^10.4.4",
     "axios": "^0.26.1",

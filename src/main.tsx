@@ -20,6 +20,7 @@ import {tokenLocalStorageKey} from "./Store/AuthSlice";
 import authService from "./Services/AuthService";
 import AppBase from "./components/AppBase";
 import Register from "./pages/Register";
+import GroupOverview from "./pages/Group/GroupOverview";
 
 axios.defaults.baseURL = import.meta.env.APP_API_URL
 
@@ -52,6 +53,7 @@ ReactDOM.render(
                             <Route path="/login" element={<Login/>}/>
                             <Route path="/register" element={<Register/>}/>
                             <Route path="/legal/notice" element={<LegalNotice/>}/>
+                            <Route path={"/groups/:id"} element={<GroupOverview/>}/>
                         </Route>
                         <Route path="*" element={<AppBase><Error code={404}/></AppBase>}/>
                     </Routes>
