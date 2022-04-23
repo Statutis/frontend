@@ -9,6 +9,7 @@ import Team from "../api/Models/Team";
 import {getTeamsByRef} from "../api/TeamRepository";
 import Badge from "../components/UI/Badge";
 import ChangePersonalData from "../components/Profil/ChangePersonalData";
+import ChangePassword from "../components/Profil/ChangePassword";
 
 const imagesContentType = ["image/gif", "image/png", "image/jpeg", "image/bmp", "image/webp"]
 
@@ -73,6 +74,8 @@ const Profil = () => {
         <div>
             <h2>Vos informations personnelles :</h2>
             <ChangePersonalData user={user}/>
+            <h2 className="mt-6">Changer votre mot de passe :</h2>
+            <ChangePassword user={user}/>
         </div>
     </div>
 }
