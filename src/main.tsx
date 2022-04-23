@@ -7,7 +7,7 @@ import "@fontsource/roboto"
 import "@fontsource/roboto/500.css"
 import "@fontsource/roboto/400.css"
 import "@fontsource/roboto/300.css"
-import AppProvider, {UserRefreshEvent} from "./AppProvider";
+import AppProvider from "./AppProvider";
 import Search from './pages/Search';
 import RouteBase from "./components/RouteBase";
 import Error from "./pages/Error";
@@ -17,35 +17,23 @@ import LegalNotice from "./pages/Legal/LegalNotice";
 import store from './Store/store'
 import {Provider} from 'react-redux'
 import {tokenLocalStorageKey} from "./Store/AuthSlice";
-import AuthService from "./Services/AuthService";
+import authService from "./Services/AuthService";
 import AppBase from "./components/AppBase";
 import Register from "./pages/Register";
 
 axios.defaults.baseURL = import.meta.env.APP_API_URL
 
 axios.interceptors.request.use(async function (config) {
-    let token = localStorage.getItem(tokenLocalStorageKey);
+    let token: string | false | undefined | null = localStorage.getItem(tokenLocalStorageKey);
 
 
     if (token && config.headers) {
-        if (!config.url?.includes("refresh")) {
-            const expTimeStamp: number | undefined = AuthService.parseJwt(token)?.exp ?? undefined;
-            if (!expTimeStamp)
-                return
-            const exp = new Date(expTimeStamp * 1000)
-
-            if ((exp.getTime() - (new Date()).getTime()) / 1000 < 900) {
-                const refresh = await AuthService.refresh()
-                if (refresh) {
-
-                    token = refresh.token;
-                    const event = new UserRefreshEvent("onUserRefresh", refresh.token)
-                    document.dispatchEvent(event)
-                }
-            }
+        if (!config.url?.includes("refresh") && !config.url?.includes("users/me")) {
+            token = await authService.fixToken(token)
         }
 
-        config.headers.Authorization = "Bearer " + token;
+        if (token)
+            config.headers.Authorization = "Bearer " + token;
     }
 
     return config;
