@@ -8,6 +8,7 @@ import UserAvatar from "../components/UserAvatar";
 import Team from "../api/Models/Team";
 import {getTeamsByRef} from "../api/TeamRepository";
 import Badge from "../components/UI/Badge";
+import ChangePersonalData from "../components/Profil/ChangePersonalData";
 
 const imagesContentType = ["image/gif", "image/png", "image/jpeg", "image/bmp", "image/webp"]
 
@@ -34,7 +35,6 @@ const Profil = () => {
     const clearAvatar = () => UserService.updateAvatar(undefined, user)
 
     useEffect(() => {
-        console.log("cououc")
         const prom = user.teamsRef.map(async x => await getTeamsByRef(x));
         Promise.all(prom).then(setTeams)
     }, [user])
@@ -70,7 +70,10 @@ const Profil = () => {
             </div>
 
         </div>
-        <div>b</div>
+        <div>
+            <h2>Vos informations personnelles :</h2>
+            <ChangePersonalData user={user}/>
+        </div>
     </div>
 }
 export default Profil;
