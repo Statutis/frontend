@@ -1,4 +1,4 @@
-import {update, updateAvatar as repositoryUpdateAvatar} from "../api/UserRepository";
+import {update, updateAvatar as repositoryUpdateAvatar, updatePassword} from "../api/UserRepository";
 import User from "../api/Models/User";
 
 export enum UserServiceEvent {
@@ -21,7 +21,7 @@ export class AvatarUpdateEvent extends Event {
 export class UserUpdateEvent extends Event {
     user: User
 
-    constructor( user: User, eventInitDict?: EventInit) {
+    constructor(user: User, eventInitDict?: EventInit) {
         super(UserServiceEvent.UpdateUser, eventInitDict);
         this.user = user
     }
@@ -29,7 +29,10 @@ export class UserUpdateEvent extends Event {
 
 export interface UserServiceInterface {
     updateAvatar(file: File, user: User): Promise<string | undefined | false>
+
     update(user: User): Promise<void>
+
+    updatePassword(password: string, user: User): Promise<void>
 }
 
 
@@ -56,6 +59,11 @@ class UserService implements UserServiceInterface {
 
     async update(user: User): Promise<void> {
         await update(user);
+        document.dispatchEvent(new UserUpdateEvent(user))
+    }
+
+    async updatePassword(password: string, user: User): Promise<void> {
+        await updatePassword(user, password);
         document.dispatchEvent(new UserUpdateEvent(user))
     }
 }

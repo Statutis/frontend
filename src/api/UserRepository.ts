@@ -43,3 +43,8 @@ export async function update(user: User): Promise<void> {
         "firstname": user.firstname,
     })
 }
+export async function updatePassword(user: User, password :string): Promise<void> {
+    await axios.patch(`api/users/${user.email}`, {
+        "password": password,
+    })
+}
