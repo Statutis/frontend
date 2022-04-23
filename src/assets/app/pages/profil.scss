@@ -1,0 +1,12 @@
+#my-profil {
+  display: grid;
+  grid-gap: 30px;
+  grid-template-columns: 450px 1fr;
+}
+
+#avatarProfil {
+  img {
+    margin: 0;
+    max-height: 250px;
+  }
+}
