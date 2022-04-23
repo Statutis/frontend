@@ -9,7 +9,7 @@ interface ProtectedPathProps {
 
 const ProtectedPath = ({role = undefined, children}: ProtectedPathProps) => {
     const user = useAppSelector(state => state.auth.user)
-    if (user == undefined || (role == undefined || !user.isGranted(role)))
+    if (user == undefined || (role != undefined && !user.isGranted(role)))
         return <Error code={403}/>
 
     return <>{children}</>
