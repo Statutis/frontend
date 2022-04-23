@@ -1,10 +1,13 @@
-import React, {createRef, LegacyRef, SyntheticEvent} from "react";
+import React, {createRef, LegacyRef, SyntheticEvent, useEffect, useState} from "react";
 import './../assets/app/pages/profil.scss'
 import useDocumentTitle from "../useDocumentTitle";
 import {useAppSelector} from "../Store/store";
 import User from "../api/Models/User";
 import UserService from "../Services/UserService";
 import UserAvatar from "../components/UserAvatar";
+import Team from "../api/Models/Team";
+import {getTeamsByRef} from "../api/TeamRepository";
+import Badge from "../components/UI/Badge";
 
 const imagesContentType = ["image/gif", "image/png", "image/jpeg", "image/bmp", "image/webp"]
 
@@ -12,6 +15,8 @@ const Profil = () => {
     const user: User = useAppSelector(state => state.auth.user) as User
     const inputFileRef: LegacyRef<HTMLInputElement> = createRef()
 
+
+    const [teams, setTeams] = useState<Team[]>([]);
 
     useDocumentTitle("Votre profil")
 
@@ -26,15 +31,26 @@ const Profil = () => {
         }
     }
 
-    const clearAvatar = async () => {
-        await UserService.updateAvatar(undefined, user)
-    }
+    const clearAvatar = () => UserService.updateAvatar(undefined, user)
+
+    useEffect(() => {
+        console.log("cououc")
+        const prom = user.teamsRef.map(async x => await getTeamsByRef(x));
+        Promise.all(prom).then(setTeams)
+    }, [user])
 
 
     return <div className="fluid-content" id="my-profil">
         <div>
             <h1>{user.completeName()}</h1>
 
+            <div className={"hstack"}>
+                {teams.map(x => {
+                    return <Badge key={x.ref} value={`Equipe: ${x.name}`} icon={"group"} color={"grey"}
+                                  customClass={"badge-reverse"}/>
+                })}
+            </div>
+            <h2 className="h3 mt-5">Votre Avatar : </h2>
             <div className="card" id="avatarProfil">
                 <div className="card-content vstack stack-vcenter stack-center">
                     <UserAvatar/>
