@@ -1,11 +1,17 @@
 .badge {
   padding: 10px;
   color: white;
-  border-radius: 5px;
+
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  margin: 10px 5px;
 }
+
 .badge-reverse {
   color: var(--color-dark-grey)
 }
+
 @each $class, $color in $colors {
   .badge-#{$class} {
     background: $color;
