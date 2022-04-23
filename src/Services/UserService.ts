@@ -1,8 +1,9 @@
-import {updateAvatar as repositoryUpdateAvatar} from "../api/UserRepository";
+import {update, updateAvatar as repositoryUpdateAvatar} from "../api/UserRepository";
 import User from "../api/Models/User";
 
 export enum UserServiceEvent {
-    UpdateAvatar = "UpdateUserAvatar"
+    UpdateAvatar = "UpdateUserAvatar",
+    UpdateUser = "UpdateUser",
 
 }
 
@@ -17,8 +18,18 @@ export class AvatarUpdateEvent extends Event {
     }
 }
 
+export class UserUpdateEvent extends Event {
+    user: User
+
+    constructor( user: User, eventInitDict?: EventInit) {
+        super(UserServiceEvent.UpdateUser, eventInitDict);
+        this.user = user
+    }
+}
+
 export interface UserServiceInterface {
     updateAvatar(file: File, user: User): Promise<string | undefined | false>
+    update(user: User): Promise<void>
 }
 
 
@@ -41,6 +52,11 @@ class UserService implements UserServiceInterface {
 
         return result_base64 ?? false
 
+    }
+
+    async update(user: User): Promise<void> {
+        await update(user);
+        document.dispatchEvent(new UserUpdateEvent(user))
     }
 }
 

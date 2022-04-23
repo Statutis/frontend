@@ -35,3 +35,11 @@ export async function updateAvatar(file: File | undefined, user: User): Promise<
         }
     })
 }
+
+export async function update(user: User): Promise<void> {
+    await axios.patch(`api/users/${user.email}`, {
+        "username": user.username,
+        "name": user.name,
+        "firstname": user.firstname,
+    })
+}
