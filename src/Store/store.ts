@@ -5,7 +5,10 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 const store = configureStore({
     reducer: {
         auth: AuthReducer
-    }
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck: false
+    })
 })
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
