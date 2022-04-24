@@ -16,11 +16,12 @@ import Group from "../api/Models/Group";
 import ServiceType from "../api/Models/Service/ServiceType";
 import {displayDelay} from "../Utils/DateManager";
 import {Link} from "react-router-dom";
+import {useAppSelector} from "../Store/store";
 
 
 function Index() {
 
-
+    const user = useAppSelector(state => state.auth.user)
     const [mainState, setMainState] = useState<MainState | undefined>()
 
     const [groups, setGroups] = useState<Group[]>([])
@@ -35,7 +36,7 @@ function Index() {
         getServiceTypes().then(setServiceTypes)
         getMainState().then(setMainState)
         getGroups().then(setGroups)
-    }, [])
+    }, [user])
 
     const HeaderTitle = function HeaderTitle() {
         if (!mainState)

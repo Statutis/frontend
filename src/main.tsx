@@ -24,6 +24,7 @@ import ProtectedPath from "./ProtectedPath";
 import Profil from "./pages/Profil";
 import NavTop from "./components/NavTop";
 import Footer from "./components/Footer";
+import GroupForm from "./pages/Group/GroupForm";
 
 const GroupOverview = React.lazy(() => import("./pages/Group/GroupOverview"))
 
@@ -61,7 +62,13 @@ ReactDOM.render(
                                 <Route path="/legal/notice" element={<LegalNotice/>}/>
                                 <Route path="/groups/:id"
                                        element={<React.Suspense fallback={<>...</>}><GroupOverview/></React.Suspense>}/>
-                                <Route path="/profil" element={<ProtectedPath><Profil/></ProtectedPath>}/>
+
+                                <Route element={<ProtectedPath><Outlet/></ProtectedPath>}>
+                                    <Route path="/groups/:id/edit" element={<GroupForm/>}/>
+                                    <Route path="/groups/add" element={<GroupForm/>}/>
+                                    <Route path="/profil" element={<Profil/>}/>
+                                </Route>
+
                             </Route>
                             <Route path="*" element={<AppBase><Error code={404}/></AppBase>}/>
                         </Route>

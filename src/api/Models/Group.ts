@@ -3,6 +3,7 @@ import ServiceType from "./Service/ServiceType";
 import Team from "./Team";
 
 export default class Group {
+    id: string | undefined = undefined;
     ref: string | undefined = undefined;
     name = "??";
     isPublic = true;

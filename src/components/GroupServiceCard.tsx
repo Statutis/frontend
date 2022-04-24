@@ -25,7 +25,7 @@ const GroupServiceCard = function ({value = defaultValue}) {
             <img src={RackServerImage} alt="Rack Server"/>
         </div>
         <div className={"card-content"}>
-            <Link className="h2" to={"/groups/" + value.ref?.replace("/api/groups/", "")}>{value.name}</Link>
+            <Link className="h2" to={"/groups/" + value.id}>{value.name}</Link>
             <p>{value.description}</p>
         </div>
         <div className="card-footer">

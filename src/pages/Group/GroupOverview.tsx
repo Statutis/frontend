@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import useDocumentTitle from "../../useDocumentTitle";
 import {getGroup} from "../../api/GroupRepository";
 import Group from "../../api/Models/Group";
-import {Navigate, useParams} from "react-router-dom";
+import {Link, Navigate, useParams} from "react-router-dom";
 import "../../assets/app/pages/Group/groupOverview.scss"
 import Badge from "../../components/UI/Badge";
 import ServiceType from "../../api/Models/Service/ServiceType";
@@ -14,6 +14,7 @@ import {getHistoryOfAGroup} from "../../api/HistoryEntryRepository";
 import {ServiceState} from "../../api/Models/Service/Service";
 import {ResponsiveLineCanvas, Serie} from "@nivo/line";
 import {BasicTooltip} from '@nivo/tooltip';
+import {useAppSelector} from "../../Store/store";
 
 const convertDate = (date: Date) => {
     return date.getFullYear().toString() + "-" + date.getMonth().toString() + "-" + date.getUTCDate().toString() + " " + date.getHours() + "h" + date.getMinutes() + "m";
@@ -22,6 +23,8 @@ const convertDate = (date: Date) => {
 const GroupOverview = () => {
 
     useDocumentTitle("Groupes")
+
+    const user = useAppSelector(state => state.auth.user);
 
     const id = useParams<"id">().id;
     if (id === undefined)
@@ -120,45 +123,74 @@ const GroupOverview = () => {
                 }
 
             </div>
+
+
+            <div className={"hstack stack-end stack-vcenter"}>
+                {user && <>
+                    <Link to={"/groups/" + groups.id + "/delete"} className="btn btn-red">
+                        <span className="material-icons">delete</span>
+                        Supprimer le groupe
+                    </Link>
+                    <Link to={"/groups/" + groups.id + "/edit"} className="btn">
+                        <span className="material-icons">edit</span>
+                        Editer le groupe
+                    </Link>
+                </>
+                }
+            </div>
+
             <div className={"chart"}>
                 <h3>Évolution des services</h3>
                 <div>
-                    <ResponsiveLineCanvas data={data} enableGridX={false} enableGridY={false}
-                                          enableArea={true} yScale={{type: 'linear', stacked: true, max: maxY + 1}}
-                                          enableCrosshair={false}
-                                          curve="monotoneX"
-                                          xScale={{type: 'point'}}
-                                          legends={[
-                                              {
-                                                  anchor: 'bottom-right',
-                                                  direction: 'column',
-                                                  itemWidth: 0,
-                                                  itemHeight: 0,
-                                                  effects: [{
-                                                      on: 'hover',
-                                                      style: {
-                                                          itemOpacity: 0
-                                                      }
-                                                  }]
-                                              }
-                                          ]}
-                                          tooltip={(v) => {
-                                              return <BasicTooltip value={""} id={""} color={"black"}
-                                                                   renderContent={() => {
-                                                                       return <>{v.point.data.y} service en ligne
-                                                                           le <br/> {v.point.data.x}</>
-                                                                   }}/>
-                                          }}
-                    />
+                    {data[0].data.length == 0 ?
+                        <div className="hstack stack-vcenter h-100"><p>Pas encore de donneés ;(</p></div> :
+                        <ResponsiveLineCanvas data={data} enableGridX={false} enableGridY={false}
+                                              enableArea={true} yScale={{type: 'linear', stacked: true, max: maxY + 1}}
+                                              enableCrosshair={false}
+                                              curve="monotoneX"
+                                              xScale={{type: 'point'}}
+                                              legends={[
+                                                  {
+                                                      anchor: 'bottom-right',
+                                                      direction: 'column',
+                                                      itemWidth: 0,
+                                                      itemHeight: 0,
+                                                      effects: [{
+                                                          on: 'hover',
+                                                          style: {
+                                                              itemOpacity: 0
+                                                          }
+                                                      }]
+                                                  }
+                                              ]}
+                                              tooltip={(v) => {
+                                                  return <BasicTooltip value={""} id={""} color={"black"}
+                                                                       renderContent={() => {
+                                                                           return <>{v.point.data.y} service en ligne
+                                                                               le <br/> {v.point.data.x}</>
+                                                                       }}/>
+                                              }}
+
+                        />
+                    }
                 </div>
             </div>
         </div>
         <div className={"services"}>
+            <h2>Liste de services : </h2>
             {
-                groups.services.map(x => {
-                    return <ServiceCard key={x.ref} value={x}/>
-                })
+                groups.services.length == 0 ? <p>Ce groupe ne contient aucun service.</p> :
+                    groups.services.map(x => {
+                        return <ServiceCard key={x.ref} value={x}/>
+                    })
             }
+            <div className={"hstack stack-end mt-5"}>
+                {user && <Link to={"/groups/" + groups.id + "/service/add"} className="btn btn-green">
+                    <span className="material-icons">add</span> &nbsp;
+                    Ajouter un service
+                </Link>
+                }
+            </div>
         </div>
     </div>
 }
