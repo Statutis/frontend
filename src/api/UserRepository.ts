@@ -21,7 +21,7 @@ export async function getMe(): Promise<User | undefined> {
     u.roles = response.data.roles
     u.teamsRef = response.data.teamsRef
 
-    return response.data
+    return u
 }
 
 export async function updateAvatar(file: File | undefined, user: User): Promise<void> {
