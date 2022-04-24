@@ -4,6 +4,10 @@ import {Service, ServiceState} from "../api/Models/Service/Service";
 import {HistoryEntry} from "../api/Models/History/HistoryEntry";
 import {getHistoryByRef} from "../api/HistoryEntryRepository";
 import {ResponsiveLineCanvas, Serie} from "@nivo/line";
+import ServiceType from "../api/Models/Service/ServiceType";
+import {getServiceTypeByRef} from "../api/ServiceTypesRepository";
+import Badge from "./UI/Badge";
+import {Link} from "react-router-dom";
 
 const defaultValue: Service = new Service();
 
@@ -11,9 +15,13 @@ const ServiceCard = function ({value = defaultValue}) {
 
     const [history, setHistory] = useState<HistoryEntry[]>();
     const [data, setdata] = useState<Serie[]>([]);
+    const [serviceType, setServiceType] = useState<ServiceType | undefined>(undefined);
+
+
     useEffect(() => {
         getHistoryByRef(value.historyRef).then(setHistory);
-    }, []);
+        getServiceTypeByRef(value.serviceTypeRef ?? "").then(setServiceType)
+    }, [value]);
 
 
     useEffect(() => {
@@ -37,12 +45,31 @@ const ServiceCard = function ({value = defaultValue}) {
 
     }, [history])
 
-    return <div className={"service"}>
-        <p>{value.name}</p>
+
+    return <div className={"service card"}>
+        <div className={"vstack"}>
+            <div className="hstack stack-vend">
+                <Link className="h4" to="#">{value.name} </Link>
+                <span className="text-muted">{value.checkType}</span>
+            </div>
+
+            <div className={"hstack stack-vcenter"}>
+                {serviceType &&
+                    <Badge customClass={"badge-reverse"} color={"grey"} icon={"style"}
+                           value={"Type : " + serviceType.name}/>}
+                <Badge customClass={"badge-reverse"} color={"grey"} icon={"update"}
+                       value={"Dernière vérification : " + (value.lastCheck ? value.lastCheck.toLocaleDateString() + " " + value.lastCheck.toLocaleTimeString() : "jamais")}/>
+                <Badge customClass={"badge-reverse"} color={"grey"} icon={"crisis_alert"}
+                       value={"Hôte : " + value.host}/>
+
+            </div>
+        </div>
 
         <div className={"chart"}>
 
-            <ResponsiveLineCanvas data={data} enableGridX={false} enableGridY={false} yScale={{ type: 'linear', min: 0, max: 1 }} enableArea={true} enableCrosshair={false} isInteractive={false}/>
+            <ResponsiveLineCanvas data={data} enableGridX={false} enableGridY={false}
+                                  yScale={{type: 'linear', min: 0, max: 1}} enableArea={true} enableCrosshair={false}
+                                  isInteractive={false}/>
 
         </div>
     </div>

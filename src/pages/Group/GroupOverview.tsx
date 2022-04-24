@@ -8,7 +8,7 @@ import Badge from "../../components/UI/Badge";
 import ServiceType from "../../api/Models/Service/ServiceType";
 import Team from "../../api/Models/Team";
 import {getTeamsByRef} from "../../api/TeamRepository";
-import {getServiceTypesByRef} from "../../api/ServiceTypesRepository";
+import {getServiceTypeByRef} from "../../api/ServiceTypesRepository";
 import ServiceCard from "../../components/ServiceCard";
 import {getHistoryOfAGroup} from "../../api/HistoryEntryRepository";
 import {ServiceState} from "../../api/Models/Service/Service";
@@ -49,7 +49,7 @@ const GroupOverview = () => {
             return
         //Get type of service
         groups.services.map(x => {
-            getServiceTypesByRef(x.serviceTypeRef).then(x => setServiceType(prevState => {
+            getServiceTypeByRef(x.serviceTypeRef).then(x => setServiceType(prevState => {
                 if (!prevState.find(search => search.ref === x.ref)) {
                     return [...prevState, x];
                 }
@@ -190,8 +190,8 @@ const GroupOverview = () => {
                 </div>
             </div>
         </div>
-        <div className={"services"}>
-            <h2>Liste de services : </h2>
+        <div className={"services mt-4"}>
+            <h3>Liste de services : </h3>
             {
                 groups.services.length == 0 ? <p>Ce groupe ne contient aucun service.</p> :
                     groups.services.map(x => {

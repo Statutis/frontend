@@ -1,4 +1,4 @@
-$stack-margin : map-get($spacers, 2);
+$stack-margin: map-get($spacers, 2);
 .stack-spacer {
   flex-grow: 1;
 }
@@ -18,6 +18,14 @@ $stack-margin : map-get($spacers, 2);
 
   &.stack-vcenter {
     align-items: center;
+  }
+
+  &.stack-vstart {
+    align-items: start;
+  }
+
+  &.stack-vend {
+    align-items: end;
   }
 
 
