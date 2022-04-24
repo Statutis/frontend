@@ -10,6 +10,7 @@ import {getTeams, getTeamsByRef} from "../../api/TeamRepository";
 import MultipleSelect from "../../components/UI/Input/MultipleSelect";
 import * as Yup from 'yup'
 import Group from "../../api/Models/Group";
+import Error from "../Error";
 
 interface GroupForm {
     name: string;
@@ -21,22 +22,25 @@ interface GroupForm {
 
 const GroupForm = () => {
 
-    const [teams, setTeams] = useState<Team[]>([])
-    const [group, setGroup] = useState<Group>(new Group())
-
     const navigate = useNavigate();
-
-    useEffect(() => {
-        getTeams().then(setTeams)
-    }, [])
 
     const id = useParams<"id">().id;
     const addMode = id === undefined
+
+
+    const [teams, setTeams] = useState<Team[]>([])
+    const [group, setGroup] = useState<Group | undefined | false>(addMode ? new Group() : undefined)
 
     if (addMode)
         useDocumentTitle("Ajout d'un nouveau groupe")
     else
         useDocumentTitle("Edition d'un groupe")
+
+
+    useEffect(() => {
+        getTeams().then(setTeams)
+    }, [])
+
 
     const form = useFormik<GroupForm>({
         initialValues: {
@@ -94,10 +98,18 @@ const GroupForm = () => {
                 })
 
 
-            });
+            }).catch(()=>setGroup(false));
         }
     }, [id])
 
+    if (group === undefined)
+        return <div className={"fluid-content hstack stack-center"}>
+            <p>Chargement en cours ....</p>
+        </div>
+
+
+    if (group === false)
+        return <Error code={404}/>
 
     return <div className="content">
         <form className="" onSubmit={form.handleSubmit}>
@@ -131,7 +143,7 @@ const GroupForm = () => {
                     <span className="material-icons">cancel</span>&nbsp;
                     Annuler
                 </Link>
-                <button className="btn btn-primary">
+                <button className="btn btn-primary" type="submit">
                     <span className="material-icons">save</span>&nbsp;
                     Enregistrer
                 </button>

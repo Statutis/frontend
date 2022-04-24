@@ -15,6 +15,7 @@ import {ServiceState} from "../../api/Models/Service/Service";
 import {ResponsiveLineCanvas, Serie} from "@nivo/line";
 import {BasicTooltip} from '@nivo/tooltip';
 import {useAppSelector} from "../../Store/store";
+import Error from "../Error";
 
 const convertDate = (date: Date) => {
     return date.getFullYear().toString() + "-" + date.getMonth().toString() + "-" + date.getUTCDate().toString() + " " + date.getHours() + "h" + date.getMinutes() + "m";
@@ -30,7 +31,7 @@ const GroupOverview = () => {
     if (id === undefined)
         return <Navigate to={"/"}/>
 
-    const [groups, setGroups] = useState<Group>(new Group())
+    const [groups, setGroups] = useState<Group | undefined | false>(undefined)
     const [serviceType, setServiceType] = useState<ServiceType[]>([])
     const [team, setTeam] = useState<Team[]>([]);
 
@@ -40,9 +41,12 @@ const GroupOverview = () => {
 
     useEffect(() => {
         getGroup(id).then(setGroups)
+            .catch(()=> setGroups(false))
     }, []);
 
     useEffect(() => {
+        if (!groups)
+            return
         //Get type of service
         groups.services.map(x => {
             getServiceTypesByRef(x.serviceTypeRef).then(x => setServiceType(prevState => {
@@ -100,6 +104,16 @@ const GroupOverview = () => {
         })
 
     }, [groups])
+
+    if (groups === undefined)
+        return <div className={"fluid-content hstack stack-center"}>
+            <p>Chargement en cours ....</p>
+        </div>
+
+
+    if (groups === false)
+        return <Error code={404}/>
+
 
     return <div className={"fluid-content group-overview-card"}>
         <div className={"overview"}>
