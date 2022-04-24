@@ -2,6 +2,8 @@ export default class User {
     ref: string
     avatarRef: string | undefined
     username: string
+    firstname: string | undefined
+    name: string | undefined
     email: string
     roles: string[]
     teamsRef: string[]
@@ -9,6 +11,8 @@ export default class User {
     constructor() {
         this.ref = ""
         this.avatarRef = undefined
+        this.name = undefined
+        this.firstname = undefined
         this.username = "unknown"
         this.email = "unknown"
         this.roles = []
@@ -17,5 +21,10 @@ export default class User {
 
     isGranted(role: string | string[]): boolean {
         return (typeof role === "string" && this.roles.includes(role)) || (Array.isArray(role) && role.every(x => this.roles.includes(x)));
+    }
+
+
+    completeName(): string {
+        return !this.firstname || !this.name ? this.username : this.firstname + " " + this.name;
     }
 }

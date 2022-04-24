@@ -19,15 +19,15 @@ const initialState = async (): Promise<AuthState> => {
             const response = await axios.get<User>(import.meta.env.APP_API_URL + "/api/users/me", {
                 headers: {Authorization: "Bearer " + token}
             });
-
-
             user = new User();
-            user.ref = response.data.ref
+            user.ref = "/api/users/" + response.data.email
             user.avatarRef = response.data.avatarRef
             user.username = response.data.username
             user.email = response.data.email
             user.roles = response.data.roles
             user.teamsRef = response.data.teamsRef
+            user.firstname = response.data.firstname
+            user.name = response.data.name
         } catch (e) {
             token = false;
             user = undefined;

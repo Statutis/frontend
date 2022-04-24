@@ -1,7 +1,8 @@
 import React, {createContext, useEffect, useState} from "react";
-import {AppDispatch, useAppDispatch} from "./Store/store";
+import {AppDispatch, useAppDispatch, useAppSelector} from "./Store/store";
 import {logout, refresh} from "./Store/AuthSlice";
 import User from "./api/Models/User";
+import {UserServiceEvent, UserUpdateEvent} from "./Services/UserService";
 
 
 interface AppContextInterface {
@@ -33,7 +34,10 @@ export class UserAuthEvent extends Event {
 
 const AppProvider = function ({children}: AppProviderProps) {
     const [title, setTitle] = useState<string>("")
+
     const dispatcher: AppDispatch = useAppDispatch()
+    const user = useAppSelector(state => state.auth.user)
+    const token = useAppSelector(state => state.auth.token)
 
     useEffect(() => {
 
@@ -42,18 +46,25 @@ const AppProvider = function ({children}: AppProviderProps) {
                 dispatcher(refresh({user: event.user, token: event.token}))
         }
 
+        function handleUserUpdate(event: UserUpdateEvent) {
+            if (user?.ref == event.user.ref)
+                dispatcher(refresh({user: event.user, token: token ? token : ""}))
+        }
+
         function handleUserLogout() {
             dispatcher(logout())
         }
 
         document.addEventListener("onUserRefresh", handleUserRefresh as EventListener);
         document.addEventListener("onUserLogout", handleUserLogout as EventListener);
+        document.addEventListener(UserServiceEvent.UpdateUser, handleUserUpdate as EventListener);
         return () => {
             document.removeEventListener("onUserRefresh", handleUserRefresh as EventListener);
             document.removeEventListener("onUserLogout", handleUserLogout as EventListener);
+            document.removeEventListener(UserServiceEvent.UpdateUser, handleUserUpdate as EventListener);
         };
 
-    }, [])
+    }, [token, user])
 
 
     return <AppContext.Provider value={{pageTitle: title, setPageTitle: setTitle}}>{children}</AppContext.Provider>;

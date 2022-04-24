@@ -14,7 +14,14 @@ export async function getTeams(): Promise<Team[]> {
     });
 }
 
-export async function getTeamsByRef(ref:string) : Promise<Team> {
+export async function getTeamsByRef(ref: string): Promise<Team> {
     const res = await axios.get<Team>(ref);
-    return res.data;
+
+    const s = new Team()
+    s.name = res.data.name
+    s.color = res.data.color
+    s.ref = res.data.ref
+    s.groupRef = res.data.groupRef
+    s.userRef = res.data.userRef
+    return s;
 }

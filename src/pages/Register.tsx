@@ -63,8 +63,8 @@ const Register = () => {
         <div className="grid2">
             <FieldInput formik={form} field={"username"} label={"Nom d'utilisateur"} placeholder={"Nom d'utilisateur"}/>
             <FieldInput formik={form} field={"email"} label={"Adresse mail"} placeholder={"Adresse mail"}/>
-            <FieldInput formik={form} field={"password"} label={"Mot de passe"} placeholder={"Mot de passe"}/>
-            <FieldInput formik={form} field={"confirmPassword"} label={"Confirmer votre mot de passe"}
+            <FieldInput formik={form} field={"password"} label={"Mot de passe"} placeholder={"Mot de passe"} type="password"/>
+            <FieldInput formik={form} field={"confirmPassword"} label={"Confirmer votre mot de passe"} type="password"
                         placeholder={"Confirmer votre mot de passe"}/>
         </div>
 
