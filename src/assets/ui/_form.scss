@@ -7,7 +7,7 @@
 label {
   color: var(--color-input);
   margin: 10px 0 5px 15px;
-  font-family: Roboto,sans-serif;
+  font-family: Roboto, sans-serif;
   font-weight: 400;
   font-size: 18px;
 
@@ -52,4 +52,27 @@ label {
 
     color: var(--color-input-select);
   }
+}
+
+textarea {
+  border: 1px solid var(--color-input-border);
+  border-radius: 7px;
+  padding: 10px 15px;
+
+  background: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  outline: none;
+  font-size: 20px;
+  max-width: calc(100% - 30px);
+  min-width: calc(100% - 30px);
+
+  min-height: 100px;
+
+  &::placeholder {
+    color: var(--color-input-border);
+  }
+
+  color: var(--color-input-select);
 }
