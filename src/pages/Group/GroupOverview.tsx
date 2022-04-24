@@ -41,7 +41,7 @@ const GroupOverview = () => {
 
     useEffect(() => {
         getGroup(id).then(setGroups)
-            .catch(()=> setGroups(false))
+            .catch(() => setGroups(false))
     }, []);
 
     useEffect(() => {
@@ -138,21 +138,6 @@ const GroupOverview = () => {
 
             </div>
 
-
-            <div className={"hstack stack-end stack-vcenter"}>
-                {user && <>
-                    <Link to={"/groups/" + groups.id + "/delete"} className="btn btn-red">
-                        <span className="material-icons">delete</span>
-                        Supprimer le groupe
-                    </Link>
-                    <Link to={"/groups/" + groups.id + "/edit"} className="btn">
-                        <span className="material-icons">edit</span>
-                        Editer le groupe
-                    </Link>
-                </>
-                }
-            </div>
-
             <div className={"chart"}>
                 <h3>Évolution des services</h3>
                 <div>
@@ -188,6 +173,21 @@ const GroupOverview = () => {
                         />
                     }
                 </div>
+            </div>
+
+
+            <div className={"hstack stack-end stack-vcenter"}>
+                {user && <>
+                    <Link to={"/groups/" + groups.id + "/delete"} className="btn btn-red">
+                        <span className="material-icons">delete</span>
+                        Supprimer le groupe
+                    </Link>
+                    <Link to={"/groups/" + groups.id + "/edit"} className="btn">
+                        <span className="material-icons">edit</span>
+                        Editer le groupe
+                    </Link>
+                </>
+                }
             </div>
         </div>
         <div className={"services mt-4"}>
