@@ -142,7 +142,7 @@ const GroupOverview = () => {
             <div className={"chart"}>
                 <h3>Évolution des services</h3>
                 <div>
-                    {data[0].data.length == 0 ?
+                    {!data[0] || data[0].data.length == 0 ?
                         <div className="hstack stack-vcenter h-100"><p>Pas encore de donneés ;(</p></div> :
                         <ResponsiveLineCanvas data={data} enableGridX={false} enableGridY={false}
                                               enableArea={true} yScale={{type: 'linear', stacked: true, max: maxY + 1}}
