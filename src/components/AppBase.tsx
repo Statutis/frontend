@@ -1,8 +1,6 @@
 import React, {useContext} from "react";
-import NavTop from "./NavTop";
 import HeaderLeft from "../img/base_left.svg";
 import HeaderRight from "../img/base_right.svg";
-import Footer from "./Footer";
 import {AppContext} from "../AppProvider";
 import PropTypes from "prop-types";
 
@@ -11,13 +9,11 @@ interface AppBaseProps {
 }
 
 
-
-const AppBase = function ({children}:AppBaseProps) {
+const AppBase = function ({children}: AppBaseProps) {
 
     const {pageTitle} = useContext(AppContext);
 
     return <>
-        <NavTop/>
         <div className={"app-header"}>
             <img src={HeaderLeft} alt="Logo Gauche"/>
             <div>
@@ -29,7 +25,6 @@ const AppBase = function ({children}:AppBaseProps) {
             <img src={HeaderRight} alt="Logo Droit"/>
         </div>
         {children}
-        <Footer/>
     </>
 }
 
