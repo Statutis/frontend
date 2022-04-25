@@ -4,12 +4,14 @@ import "../../assets/app/pages/Service/checkType.scss"
 import rackServer from "../../img/rack_server.png"
 import checked from "../../img/done.png"
 import {getCheckTypes} from "../../api/ServiceRepository";
-const ServicePickUpCheckType = function (){
+
+const ServicePickUpCheckType = function () {
 
     useDocumentTitle("Type de vérification")
 
 
     const [serviceTypes, setServiceTypes] = useState<string[]>([]);
+    const [checkState, setCheckedState] = useState<string|undefined>(undefined);
 
     useEffect(() => {
         getCheckTypes().then(setServiceTypes);
@@ -17,17 +19,23 @@ const ServicePickUpCheckType = function (){
 
     return <div className={"content"}>
         <div className={"checkType"}>
-        {
-            serviceTypes.map(x => {
-                return <div className={"card card-selected"} key={x}>
-                    <div className={"checked"}>
-                        <img src={checked} alt={"checked"}/>
+            {
+                serviceTypes.map(x => {
+                    return <div className={"card" + (checkState == x ? " card-selected" : "")} key={x} onClick={() => setCheckedState(x)}>
+
+                        {
+                            checkState && checkState == x && <div className={"checked"}>
+                                <img src={checked} alt={"checked"}/>
+                            </div>
+                        }
+
+
+
+                        <img src={rackServer} alt={""}/>
+                        <h3>{x}</h3>
                     </div>
-                    <img src={rackServer} alt={""}/>
-                    <h3>{x}</h3>
-                </div>
-            })
-        }
+                })
+            }
         </div>
     </div>
 
