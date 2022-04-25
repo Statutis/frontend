@@ -23,7 +23,7 @@ const TeamList = () => {
             return <div className={"card"} key={x.ref}>
                 <div className={"card-content vstack stack-vcenter"}>
                     <img src={RackServer} alt={x.name}/>
-                    <h2 className="h4">{x.name}</h2>
+                    <Link className="h3" to={"/teams/" + x.id}>{x.name}</Link>
                     <div className="hstack stack-vcenter stack-center text-muted">
                         <div className="hstack stack-vcenter" title="Nombre d'utilisateurs">
                             <span className="material-icons mx-0">person</span>

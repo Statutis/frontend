@@ -27,6 +27,7 @@ import Footer from "./components/Footer";
 import GroupForm from "./pages/Group/GroupForm";
 import GroupDelete from "./pages/Group/GroupDelete";
 import TeamList from "./pages/Team/TeamList";
+import TeamDetails from "./pages/Team/TeamDetails";
 
 const GroupOverview = React.lazy(() => import("./pages/Group/GroupOverview"))
 
@@ -71,6 +72,7 @@ ReactDOM.render(
                                     <Route path="/groups/:id/edit" element={<GroupForm/>}/>
                                     <Route path="/groups/add" element={<GroupForm/>}/>
                                     <Route path="/profil" element={<Profil/>}/>
+                                    <Route path="/teams/:id" element={<TeamDetails/>}/>
                                 </Route>
 
                             </Route>
