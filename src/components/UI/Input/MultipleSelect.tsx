@@ -22,7 +22,7 @@ type BaseProps<Value> = {
 const isAllowed = (v: unknown): v is Allowed =>
     typeof v === "string" || typeof v === "number";
 
-function Select<Value>({
+function MultiSelect<Value>({
                            value = undefined,
                            onChange = undefined,
                            options = [],
@@ -147,4 +147,4 @@ function Select<Value>({
     </div>
 }
 
-export default Select;
+export default MultiSelect;

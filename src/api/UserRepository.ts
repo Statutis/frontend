@@ -56,3 +56,7 @@ export async function updatePassword(user: User, password: string): Promise<void
         "password": password,
     })
 }
+
+export async function getUsers() : Promise<User[]>{
+    return (await axios.get<User[]>(`api/users`)).data.map(serialize)
+}
