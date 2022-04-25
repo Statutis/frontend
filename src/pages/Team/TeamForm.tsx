@@ -122,7 +122,7 @@ const TeamForm = () => {
             </div>
 
             <div className="hstack stack-end mt-5">
-                <Link to={addMode ? "/search" : "/teams/" + id} className="btn btn-red">
+                <Link to={addMode ? "/teams" : "/teams/" + id} className="btn btn-red">
                     <span className="material-icons">cancel</span>&nbsp;
                     Annuler
                 </Link>
