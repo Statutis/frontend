@@ -26,6 +26,7 @@ import NavTop from "./components/NavTop";
 import Footer from "./components/Footer";
 import GroupForm from "./pages/Group/GroupForm";
 import ServicePickUpCheckType from "./pages/Service/ServicePickUpCheckType";
+import ServiceAddDns from "./pages/Service/ServiceAddDns";
 
 const GroupOverview = React.lazy(() => import("./pages/Group/GroupOverview"))
 
@@ -69,6 +70,7 @@ ReactDOM.render(
                                     <Route path="/groups/add" element={<GroupForm/>}/>
                                     <Route path="/profil" element={<Profil/>}/>
                                     <Route path="/services/add/checktype" element={<ServicePickUpCheckType/>}/>
+                                    <Route path="/services/add/dns" element={<ServiceAddDns/>}/>
                                 </Route>
 
                             </Route>
