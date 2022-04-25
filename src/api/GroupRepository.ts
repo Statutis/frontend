@@ -20,6 +20,7 @@ function serialize(data: Group): Group {
         s.host = y.host;
         s.state = y.state;
         s.lastCheck = new Date(y.lastCheck);
+        s.historyRef = y.historyRef;
         return s;
     })
 
@@ -63,6 +64,10 @@ export async function add(group: Group): Promise<Group> {
     });
     return serialize(response.data)
 
+}
+
+export async function remove(group: Group): Promise<void> {
+    await axios.delete<void>(group.ref ?? "");
 }
 
 
