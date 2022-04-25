@@ -26,14 +26,14 @@ const Footer = function () {
                 <div className={"footer-separator"}/>
                 <div>
                     <ul>
-                        <li><a href="">Accueil</a></li>
-                        <li><a href="">À propos</a></li>
+                        <li><Link to="/">Accueil</Link></li>
+                        <li><a href="/a-propos">À propos</a></li>
                         <li><Link to="/login">Connexion</Link></li>
                         <li><Link to="/legal/notice">Mentions Légales</Link></li>
                         <li><Link to="/register">Inscription</Link></li>
-                        <li><a href="">Liste des équipes</a></li>
-                        <li><a href="">Dépôts</a></li>
-                        <li><a href="">Support</a></li>
+                        <li><Link to="/teams">Liste des équipes</Link></li>
+                        <li><Link to="https://github.com/Statutis/frontend">Dépôts</Link></li>
+                        <li><a href="mailto:contact@silvain.eu">Support</a></li>
                     </ul>
                 </div>
                 <div className={"footer-separator"}/>
