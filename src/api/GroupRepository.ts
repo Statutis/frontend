@@ -65,4 +65,8 @@ export async function add(group: Group): Promise<Group> {
 
 }
 
+export async function remove(group: Group): Promise<void> {
+    await axios.delete<void>(group.ref ?? "");
+}
+
 
