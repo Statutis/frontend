@@ -20,6 +20,7 @@ function serialize(data: Group): Group {
         s.host = y.host;
         s.state = y.state;
         s.lastCheck = new Date(y.lastCheck);
+        s.historyRef = y.historyRef;
         return s;
     })
 
