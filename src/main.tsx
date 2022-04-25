@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
-import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import {BrowserRouter, Outlet, Route, Routes} from 'react-router-dom'
 import Index from "./pages/Index";
 import UI from "./pages/UI";
 import "@fontsource/roboto"
@@ -22,9 +22,11 @@ import AppBase from "./components/AppBase";
 import Register from "./pages/Register";
 import ProtectedPath from "./ProtectedPath";
 import Profil from "./pages/Profil";
-// import GroupOverview from "./pages/Group/GroupOverview";
+import NavTop from "./components/NavTop";
+import Footer from "./components/Footer";
+import GroupForm from "./pages/Group/GroupForm";
 
-const GroupOverview = React.lazy(()=> import("./pages/Group/GroupOverview"))
+const GroupOverview = React.lazy(() => import("./pages/Group/GroupOverview"))
 
 axios.defaults.baseURL = import.meta.env.APP_API_URL
 
@@ -50,17 +52,26 @@ ReactDOM.render(
             <AppProvider>
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/" element={<Index/>}/>
-                        <Route element={<RouteBase/>}>
-                            <Route path="/_ui" element={<UI/>}/>
-                            <Route path="/search" element={<Search/>}/>
-                            <Route path="/login" element={<Login/>}/>
-                            <Route path="/register" element={<Register/>}/>
-                            <Route path="/legal/notice" element={<LegalNotice/>}/>
-                            <Route path="/groups/:id" element={<React.Suspense fallback={<>...</>}><GroupOverview/></React.Suspense>}/>
-                            <Route path="/profil" element={<ProtectedPath><Profil/></ProtectedPath>}/>
+                        <Route element={<><NavTop/><Outlet/><Footer/></>}>
+                            <Route path="/" element={<Index/>}/>
+                            <Route element={<RouteBase/>}>
+                                <Route path="/_ui" element={<UI/>}/>
+                                <Route path="/search" element={<Search/>}/>
+                                <Route path="/login" element={<Login/>}/>
+                                <Route path="/register" element={<Register/>}/>
+                                <Route path="/legal/notice" element={<LegalNotice/>}/>
+                                <Route path="/groups/:id"
+                                       element={<React.Suspense fallback={<>...</>}><GroupOverview/></React.Suspense>}/>
+
+                                <Route element={<ProtectedPath><Outlet/></ProtectedPath>}>
+                                    <Route path="/groups/:id/edit" element={<GroupForm/>}/>
+                                    <Route path="/groups/add" element={<GroupForm/>}/>
+                                    <Route path="/profil" element={<Profil/>}/>
+                                </Route>
+
+                            </Route>
+                            <Route path="*" element={<AppBase><Error code={404}/></AppBase>}/>
                         </Route>
-                        <Route path="*" element={<AppBase><Error code={404}/></AppBase>}/>
                     </Routes>
                 </BrowserRouter>
             </AppProvider>

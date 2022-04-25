@@ -4,6 +4,7 @@ import RackServerImage from "../img/rack_server.png";
 import ProgressBar from "./ProgressBar";
 import Group from "../api/Models/Group";
 import {displayDelay} from "../Utils/DateManager";
+import {Link} from "react-router-dom";
 
 
 const defaultValue = new Group()
@@ -24,7 +25,7 @@ const GroupServiceCard = function ({value = defaultValue}) {
             <img src={RackServerImage} alt="Rack Server"/>
         </div>
         <div className={"card-content"}>
-            <h2>{value.name}</h2>
+            <Link className="h2" to={"/groups/" + value.id}>{value.name}</Link>
             <p>{value.description}</p>
         </div>
         <div className="card-footer">

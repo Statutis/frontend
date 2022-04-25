@@ -8,6 +8,7 @@ import Select from "../components/UI/Input/Select";
 import Switch from "../components/UI/Input/Switch";
 import Group from "../api/Models/Group";
 import {Service, ServiceState} from "../api/Models/Service/Service";
+import MultipleSelect from "../components/UI/Input/MultipleSelect";
 
 const UI = function () {
 
@@ -124,6 +125,10 @@ const UI = function () {
                 <div className={"form-group"}>
                     <label htmlFor="text">Mon Select : </label>
                     <Select placeholder={"Choisir une valeur"} options={serviceTypes}/>
+                </div>
+                <div className={"form-group"}>
+                    <label htmlFor="text">Mon Select multiple : </label>
+                    <MultipleSelect placeholder={"Choisir une valeur"} options={serviceTypes}/>
                 </div>
             </div>
             <h3 className="h3 mt-5">Switch</h3>

@@ -12,11 +12,15 @@ import {getCheckTypes} from "../api/ServiceRepository";
 import Group from "../api/Models/Group";
 import ServiceType from "../api/Models/Service/ServiceType";
 import Team from "../api/Models/Team";
+import {Link} from "react-router-dom";
+import {useAppSelector} from "../Store/store";
 
 
 const Search = function () {
 
     useDocumentTitle("Liste des groupes de services")
+
+    const user = useAppSelector(state => state.auth.user)
 
     const [groups, setGroups] = useState<Group[]>([])
     const [serviceTypes, setServiceTypes] = useState<ServiceType[]>([])
@@ -35,7 +39,7 @@ const Search = function () {
         getTeams().then(setTeams)
         getGroups().then(setGroups)
         getCheckTypes().then(setCheckTypes)
-    }, [])
+    }, [user])
 
     return <div className="fluid-content">
         <div className="grid4">
@@ -44,7 +48,7 @@ const Search = function () {
                 <div className="form-group">
                     <label>Recherche :</label>
                     <Input placeholder="Titre de services ou mots clès" icon="search"
-                           value={searchValue} onChange={x=> setSearchValue(x.currentTarget.value)}/>
+                           value={searchValue} onChange={x => setSearchValue(x.currentTarget.value)}/>
                 </div>
                 <div className="form-group">
                     <label>Type du service :</label>
@@ -67,6 +71,13 @@ const Search = function () {
                         label="Afficher les groupes en lignes"/>
                 <Switch value={displayPublicGroup} onChange={setDisplayPublicGroup}
                         label="Masquer les groupes publics"/>
+
+                <div className="hstack stack-end stack-vcenter">
+                    {user && <Link to={"/groups/add"} className="btn">
+                        <span className={"material-icons"}>add</span>&nbsp;
+                        Ajouter un groupe
+                    </Link>}
+                </div>
             </div>
             <div className="grid-cspan-3">
                 <div id='service-group-list'>
