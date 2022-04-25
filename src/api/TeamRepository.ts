@@ -13,11 +13,15 @@ const serialize = (data: Team): Team => {
 }
 
 export async function getTeams(): Promise<Team[]> {
-    const response = await axios.get<Team[]>("/api/team")
+    const response = await axios.get<Team[]>("/api/teams")
     return response.data.map(serialize);
 }
 
 export async function getTeamsByRef(ref: string): Promise<Team> {
     const res = await axios.get<Team>(ref);
     return serialize(res.data);
+}
+
+export function getTeam(guid: string): Promise<Team> {
+    return getTeamsByRef(`/api/teams/${guid}`)
 }
