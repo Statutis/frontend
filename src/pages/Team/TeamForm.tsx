@@ -116,7 +116,7 @@ const TeamForm = () => {
                 <label>Utilisateurs :</label>
                 <MultipleSelect options={users} value={form.values.users} mapOptionToValue={x => x.ref ?? ""}
                                 placeholder={"Choisissez au moins une équipe"}
-                                mapOptionToLabel={x => x.name ?? ""} onChange={x => form.setFieldValue("users", x)}/>
+                                mapOptionToLabel={x => x.completeName() ?? ""} onChange={x => form.setFieldValue("users", x)}/>
 
                 {form.errors.users ? <p className="text-danger">{form.errors.users.toString()}</p> : null}
             </div>
