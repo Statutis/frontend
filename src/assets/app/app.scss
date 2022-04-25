@@ -145,3 +145,36 @@ footer {
   }
 
 }
+
+#btn-top-window {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 62px;
+  padding: 0 0 0 2px;
+  height: 64px;
+
+  cursor: pointer;
+  outline: none;
+
+  &:hover {
+
+    border-color: rgba(0, 0, 0, 0.5);
+
+    .material-icons {
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .material-icons {
+    font-size: 48px;
+    color: rgba(0, 0, 0, 0.3);
+    transition: color 0.3s linear;
+
+  }
+
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  background: white;
+  border-radius: 50px;
+  transition: border 0.3s linear;
+}
