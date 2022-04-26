@@ -1,0 +1,16 @@
+#team-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  width: 100%;
+
+  & > .card {
+    margin: 15px 20px;
+    width: 256px;
+    img{
+      width: 100px;
+    }
+  }
+}

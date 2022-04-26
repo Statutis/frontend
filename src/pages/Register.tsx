@@ -8,6 +8,8 @@ import FieldInput from "../components/UI/Input/FieldInput";
 
 interface RegisterForm {
     "username": string;
+    "name": string;
+    "firstname": string;
     "password": string;
     "confirmPassword": string;
     "email": string;
@@ -19,12 +21,20 @@ const Register = () => {
 
     const form = useFormik<RegisterForm>({
             initialValues: {
+                name: "",
+                firstname: "",
                 username: "",
                 email: "",
                 password: "",
                 confirmPassword: "",
             },
             validationSchema: Yup.object({
+                name: Yup.string()
+                    .min(3, 'Doit être faire au moins 3 caractères.')
+                    .required("Ce champs est requis."),
+                firstname: Yup.string()
+                    .min(3, 'Doit être faire au moins 3 caractères.')
+                    .required("Ce champs est requis."),
                 username: Yup.string()
                     .min(3, 'Doit être faire au moins 3 caractères.')
                     .required("Ce champs est requis."),
@@ -42,7 +52,9 @@ const Register = () => {
                 const registerState = await register({
                     email: values.email,
                     password: values.password,
-                    username: values.username
+                    username: values.username,
+                    name: values.name,
+                    firstname: values.firstname,
                 })
 
                 if (!registerState) {
@@ -62,10 +74,13 @@ const Register = () => {
 
         <div className="grid2">
             <FieldInput formik={form} field={"username"} label={"Nom d'utilisateur"} placeholder={"Nom d'utilisateur"}/>
-            <FieldInput formik={form} field={"email"} label={"Adresse mail"} placeholder={"Adresse mail"}/>
-            <FieldInput formik={form} field={"password"} label={"Mot de passe"} placeholder={"Mot de passe"} type="password"/>
+            <FieldInput formik={form} field={"email"} label={"Adresse mail"} placeholder={"Adresse mail"} icon="alternate_email"/>
+            <FieldInput formik={form} field={"name"} label={"Nom"} placeholder={"Nom"} icon="badge"/>
+            <FieldInput formik={form} field={"firstname"} label={"Prénom"} placeholder={"Prénom"} icon="badge"/>
+            <FieldInput formik={form} field={"password"} label={"Mot de passe"} placeholder={"Mot de passe"}
+                        type="password" icon="password"/>
             <FieldInput formik={form} field={"confirmPassword"} label={"Confirmer votre mot de passe"} type="password"
-                        placeholder={"Confirmer votre mot de passe"}/>
+                        icon="password" placeholder={"Confirmer votre mot de passe"}/>
         </div>
 
         <div className="vstack stack-vend">
