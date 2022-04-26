@@ -67,7 +67,10 @@ const TeamDetails = () => {
 
     return <div className="fluid-content" id="team-details">
         <div className="overview">
-            <h2>{team.name}</h2>
+            <div id="team-header" className="mb-4">
+                <TeamAvatar team={team}/>
+                <h2>{team.name}</h2>
+            </div>
             <div className="hstack">
                 <Badge value={team.userRef.length + " utilisateurs"} icon={"person"} color={"grey"}
                        customClass={"badge-reverse"}/>
@@ -91,14 +94,11 @@ const TeamDetails = () => {
             </div>
 
             <h3 className="mt-6">Avatar de l'équipe : </h3>
-            <div className="card" id="avatarProfil">
-                <div className="card-content vstack stack-vcenter stack-center">
-                    <TeamAvatar team={team}/>
-                </div>
-            </div>
-            <div className={"hstack stack-center stack-vcenter mt-4"}>
+            <p>Cet avatar est visible par autres utilisateurs (et publiquement si cela est activé). Cela permet de
+                mettre en avant une identité visuel, afin de faciliter la reconnaissance faites par les utilisateurs </p>
+            <div className={"hstack stack-end stack-vcenter mt-4"}>
                 {hasRight() && <>
-                    <button className="btn btn-red" onClick={clearAvatar}>
+                    <button className="btn btn-orange" onClick={clearAvatar}>
                         <span className="material-icons">delete</span>
                         <span>Supprimer</span>
                     </button>

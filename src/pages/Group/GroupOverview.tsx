@@ -137,7 +137,10 @@ const GroupOverview = () => {
 
     return <div className={"fluid-content group-overview-card"}>
         <div className={"overview"}>
-            <h2>{groups.name}</h2>
+            <div id="group-header" className="mb-4">
+                <GroupAvatar group={groups}/>
+                <h2>{groups.name}</h2>
+            </div>
             <p>{groups.description}</p>
             <div className={"badges"}>
                 {
@@ -211,14 +214,11 @@ const GroupOverview = () => {
             </div>
 
             <h3 className="mt-6">Avatar de l'équipe : </h3>
-            <div className="card" id="avatarProfil">
-                <div className="card-content vstack stack-vcenter stack-center">
-                    <GroupAvatar group={groups}/>
-                </div>
-            </div>
-            <div className={"hstack stack-center stack-vcenter mt-4"}>
+            <p>Cet avatar est visible par autres utilisateurs (et publiquement si cela est activé). Cela permet de
+                mettre en avant une identité visuel, afin de faciliter la reconnaissance faites par les utilisateurs </p>
+            <div className={"hstack stack-end stack-vcenter mt-4"}>
                 {hasRight() && <>
-                    <button className="btn btn-red" onClick={clearAvatar}>
+                    <button className="btn btn-orange" onClick={clearAvatar}>
                         <span className="material-icons">delete</span>
                         <span>Supprimer</span>
                     </button>
