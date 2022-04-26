@@ -1,24 +1,31 @@
 .content {
   align-items: center;
   &>.checkType {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(100px, 250px));
-    grid-gap: 40px;
+    display: flex;
+    gap: 40px;
     &>.card {
+      width: 175px;
       cursor: pointer;
       display: flex;
       align-items: center;
       &>img {
         width: 111px;
+        flex-grow: 1;
+        object-fit: contain;
       }
       &>h3 {
         font-size: 26px;
         color: #767C7C;
         text-align: center;
       }
+
+      transition: background-color 0.3s;
+      &:not(.card-selected):hover{
+        background: rgba(0,0,0,0.01);
+      }
     }
     &>.card-selected {
-      background: rgba(0,0,0,0.04);
+      background: rgba(0,0,0,0.05);
       position: relative;
       &>.checked {
         position: absolute;

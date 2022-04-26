@@ -14,13 +14,13 @@ const ServicePickUpCheckType = function () {
     const navigationHelper = useNavigate();
 
     const navigation = () => {
-        if(checkState === "DNS") {
+        if (checkState === "DNS") {
             return navigationHelper("/services/add/dns")
-        } else if(checkState === "HTTP") {
+        } else if (checkState === "HTTP") {
             return navigationHelper("/services/add/http")
-        } else if(checkState === "ping") {
+        } else if (checkState === "ping") {
             return navigationHelper("/services/add/ping")
-        } else if(checkState === "Atlassian Status Page") {
+        } else if (checkState === "Atlassian Status Page") {
             return navigationHelper("/services/add/atlassian_status_page")
         } else {
             return;
@@ -31,13 +31,14 @@ const ServicePickUpCheckType = function () {
 
 
     const serviceTypes = {"DNS": DnsLogo, "HTTP": HttpLogo, "Ping": PingLogo, "Atlassian Status Page": AtlassianLogo}
-    const [checkState, setCheckedState] = useState<string|undefined>(undefined);
+    const [checkState, setCheckedState] = useState<string | undefined>(undefined);
 
     return <div className={"content"}>
         <div className={"checkType"}>
             {
                 Object.entries(serviceTypes).map(([x, value]) => {
-                    return <div className={"card" + (checkState == x ? " card-selected" : "")} key={x} onClick={() => setCheckedState(x)}>
+                    return <div className={"card" + (checkState == x ? " card-selected" : "")} key={x}
+                                onClick={() => setCheckedState(x)}>
 
                         {
                             checkState && checkState == x && <div className={"checked"}>
@@ -52,9 +53,15 @@ const ServicePickUpCheckType = function () {
             }
         </div>
 
-        <button className={"btn btn-green"} onClick={() => navigation()}>
-            Étape suivante <span className={"material-icons"}>start</span>
-        </button>
+        <div className="vstack stack-center mt-6">
+            {!checkState && <p className={"text-muted"}><span className="material-icons">arrow_upward</span> Choisissez un mode de vérification <span className="material-icons">arrow_upward</span></p>}
+
+            <div className={"hstack stack-center"}>
+                <button className={"btn btn-green hstack stack-vcenter"} onClick={() => navigation()} disabled={!checkState}>
+                    Étape suivante <span className={"material-icons"}>start</span>
+                </button>
+            </div>
+        </div>
     </div>
 
 }
