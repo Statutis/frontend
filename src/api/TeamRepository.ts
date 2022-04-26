@@ -57,7 +57,7 @@ export async function updateAvatar(file: File | undefined, team: Team): Promise<
     if (file)
         formData.append("form", file);
 
-    await axios.put(team.avatarRef ?? "", formData, {
+    await axios.put(team.avatarRef ?? `api/teams/avatar/${team.id}`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
