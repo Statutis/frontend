@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Team from "../api/Models/Team";
 import ImageLoader from "./UI/ImageLoader";
 import DefaultAvatar from "../img/team_avatar.png";
+import {TeamAvatarUpdateEvent, TeamServiceEvent} from "../Services/TeamService";
 
 
 interface TeamAvatarProps {
@@ -15,14 +16,14 @@ const TeamAvatar = ({team, defaultMsg}: TeamAvatarProps) => {
 
     useEffect(() => {
 
-        // const handlerAvatarUpdate = (event: AvatarUpdateEvent) => {
-        //
-        // }
-
-        // document.addEventListener(UserServiceEvent.UpdateAvatar, handlerAvatarUpdate as EventListener)
-        // return () => {
-        //     document.removeEventListener(UserServiceEvent.UpdateAvatar, handlerAvatarUpdate as EventListener)
-        // }
+        const handlerAvatarUpdate = (event: TeamAvatarUpdateEvent) => {
+            if (team.ref == event.team.ref)
+                setUpdatedAvatar(event.avatarData)
+        }
+        document.addEventListener(TeamServiceEvent.UpdateAvatar, handlerAvatarUpdate as EventListener)
+        return () => {
+            document.removeEventListener(TeamServiceEvent.UpdateAvatar, handlerAvatarUpdate as EventListener)
+        }
     })
 
     if (updatedAvatar)

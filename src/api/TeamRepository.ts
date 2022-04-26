@@ -51,3 +51,15 @@ export async function add(group: Team): Promise<Team> {
 export function remove(group: Team): Promise<void> {
     return axios.delete(group.ref ?? "");
 }
+
+export async function updateAvatar(file: File | undefined, team: Team): Promise<void> {
+    const formData = new FormData();
+    if (file)
+        formData.append("form", file);
+
+    await axios.put(team.avatarRef ?? "", formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
+}
