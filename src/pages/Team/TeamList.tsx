@@ -4,9 +4,9 @@ import './../../assets/app/pages/Team/list.scss'
 import useDocumentTitle from "../../useDocumentTitle";
 import Team from "../../api/Models/Team";
 import {getTeams} from "../../api/TeamRepository";
-import RackServer from './../../img/rack_server.png'
 import {Link} from "react-router-dom";
 import {useAppSelector} from "../../Store/store";
+import TeamAvatar from "../../components/TeamAvatar";
 
 const TeamList = () => {
 
@@ -22,7 +22,7 @@ const TeamList = () => {
         {teams.map(x => {
             return <div className={"card"} key={x.ref}>
                 <div className={"card-content vstack stack-vcenter"}>
-                    <img src={RackServer} alt={x.name}/>
+                    <TeamAvatar team={x}/>
                     <Link className="h3" to={"/teams/" + x.id}>{x.name}</Link>
                     <div className="hstack stack-vcenter stack-center text-muted">
                         <div className="hstack stack-vcenter" title="Nombre d'utilisateurs">

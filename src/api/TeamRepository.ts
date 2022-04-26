@@ -9,6 +9,7 @@ const serialize = (data: Team): Team => {
     s.ref = data.ref
     s.groupRef = data.groupRef
     s.userRef = data.userRef
+    s.avatarRef = data.avatarRef
     return s;
 }
 
