@@ -49,9 +49,9 @@ function NavTop() {
         <div className={"nav-spacer"}/>
         <nav>
             <ul>
-                <li><Link to={"/_ui"}>Accueil</Link></li>
+                <li><Link to={"/"}>Accueil</Link></li>
                 <li><Link to={"/teams"}>Equipes</Link></li>
-                <li><a href="">A propos</a></li>
+                <li><Link to={"/"}>A propos</Link></li>
                 {connectionSection(user)}
             </ul>
         </nav>
