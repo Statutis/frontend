@@ -1,0 +1,31 @@
+#team-details {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  grid-gap: 25px;
+
+  #group-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+  }
+
+  #user-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+
+    & > .card > .card-content {
+      display: grid;
+      grid-template-columns: minmax(50px, 150px) 1fr;
+      grid-gap: 10px;
+
+      img {
+        width: 150px;
+        max-height: 100px;
+        object-fit: contain;
+        border-radius: 50%;
+      }
+    }
+  }
+
+}

@@ -2,6 +2,19 @@ import User from "./Models/User";
 import axios from "axios";
 
 
+const serialize = (data: User): User => {
+    const u = new User();
+    u.ref = data.ref
+    u.avatarRef = data.avatarRef
+    u.name = data.name
+    u.firstname = data.firstname
+    u.username = data.username
+    u.email = data.email
+    u.roles = data.roles
+    u.teamsRef = data.teamsRef
+    return u
+}
+
 export async function getMe(): Promise<User | undefined> {
     let response;
     try {
@@ -10,18 +23,12 @@ export async function getMe(): Promise<User | undefined> {
         return undefined;
     }
 
+    return serialize(response.data)
+}
 
-    const u = new User();
-    u.ref = response.data.ref
-    u.avatarRef = response.data.avatarRef
-    u.name = response.data.name
-    u.firstname = response.data.firstname
-    u.username = response.data.username
-    u.email = response.data.email
-    u.roles = response.data.roles
-    u.teamsRef = response.data.teamsRef
-
-    return u
+export async function getUserByRef(ref: string): Promise<User> {
+    const response = await axios.get<User>(ref);
+    return serialize(response.data);
 }
 
 export async function updateAvatar(file: File | undefined, user: User): Promise<void> {
@@ -43,8 +50,13 @@ export async function update(user: User): Promise<void> {
         "firstname": user.firstname,
     })
 }
-export async function updatePassword(user: User, password :string): Promise<void> {
+
+export async function updatePassword(user: User, password: string): Promise<void> {
     await axios.patch(`api/users/${user.email}`, {
         "password": password,
     })
+}
+
+export async function getUsers() : Promise<User[]>{
+    return (await axios.get<User[]>(`api/users`)).data.map(serialize)
 }

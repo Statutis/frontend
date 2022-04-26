@@ -26,6 +26,10 @@ import NavTop from "./components/NavTop";
 import Footer from "./components/Footer";
 import GroupForm from "./pages/Group/GroupForm";
 import GroupDelete from "./pages/Group/GroupDelete";
+import TeamList from "./pages/Team/TeamList";
+import TeamDetails from "./pages/Team/TeamDetails";
+import TeamForm from "./pages/Team/TeamForm";
+import TeamDelete from "./pages/Team/TeamDelete";
 
 const GroupOverview = React.lazy(() => import("./pages/Group/GroupOverview"))
 
@@ -64,11 +68,16 @@ ReactDOM.render(
                                 <Route path="/groups/:id"
                                        element={<React.Suspense fallback={<>...</>}><GroupOverview/></React.Suspense>}/>
 
+                                <Route path="/teams" element={<TeamList/>}/>
                                 <Route element={<ProtectedPath><Outlet/></ProtectedPath>}>
                                     <Route path="/groups/:id/delete" element={<GroupDelete/>}/>
                                     <Route path="/groups/:id/edit" element={<GroupForm/>}/>
                                     <Route path="/groups/add" element={<GroupForm/>}/>
                                     <Route path="/profil" element={<Profil/>}/>
+                                    <Route path="/teams/:id/edit" element={<TeamForm/>}/>
+                                    <Route path="/teams/:id/delete" element={<TeamDelete/>}/>
+                                    <Route path="/teams/add" element={<TeamForm/>}/>
+                                    <Route path="/teams/:id" element={<TeamDetails/>}/>
                                 </Route>
 
                             </Route>

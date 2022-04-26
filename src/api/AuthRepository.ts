@@ -18,6 +18,8 @@ interface LoginModel {
 interface RegistrationForm {
     "username": string;
     "password": string;
+    "firstname": string;
+    "name": string;
     "email": string;
 }
 
