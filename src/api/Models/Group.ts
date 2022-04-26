@@ -8,6 +8,7 @@ export default class Group {
     name = "??";
     isPublic = true;
     description: string | undefined = undefined;
+    avatarRef: string | undefined = undefined;
     lastCheck: Date = new Date()
     services: Array<Service> = []
     teamsRef: string[] = []
