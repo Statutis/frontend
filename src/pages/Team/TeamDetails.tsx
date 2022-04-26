@@ -58,6 +58,12 @@ const TeamDetails = () => {
 
     const clearAvatar = () => TeamService.updateAvatar(undefined, team)
 
+    const hasRight = (): boolean => {
+        if (!user || !team || !team.ref)
+            return false;
+
+        return user.isAdmin() || user.teamsRef.includes(team.ref)
+    }
 
     return <div className="fluid-content" id="team-details">
         <div className="overview">
@@ -71,7 +77,7 @@ const TeamDetails = () => {
 
 
             <div className={"hstack stack-end stack-vcenter"}>
-                {user && <>
+                {hasRight() && <>
                     <Link to={"/teams/" + team.id + "/delete"} className="btn btn-red">
                         <span className="material-icons">delete</span>
                         Supprimer l'équipe
@@ -91,14 +97,16 @@ const TeamDetails = () => {
                 </div>
             </div>
             <div className={"hstack stack-center stack-vcenter mt-4"}>
-                <button className="btn btn-red" onClick={clearAvatar}>
-                    <span className="material-icons">delete</span>
-                    <span>Supprimer</span>
-                </button>
-                <FileInput onFileChange={fileChange} contentTypes={imagesContentType}>
-                    <span className="material-icons">cloud_upload</span>
-                    <span>&nbsp; Changer</span>
-                </FileInput>
+                {hasRight() && <>
+                    <button className="btn btn-red" onClick={clearAvatar}>
+                        <span className="material-icons">delete</span>
+                        <span>Supprimer</span>
+                    </button>
+                    <FileInput onFileChange={fileChange} contentTypes={imagesContentType}>
+                        <span className="material-icons">cloud_upload</span>
+                        <span>&nbsp; Changer</span>
+                    </FileInput>
+                </>}
             </div>
         </div>
         <div>
@@ -128,7 +136,7 @@ const TeamDetails = () => {
             </div>
 
             <div className={"hstack stack-end mt-5"}>
-                {user && <Link to={"/groups/add"} className="btn btn-green">
+                {hasRight() && <Link to={"/groups/add"} className="btn btn-green">
                     <span className="material-icons">add</span> &nbsp;
                     Ajouter un groupe
                 </Link>

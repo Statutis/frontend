@@ -9,8 +9,13 @@
   & > .card {
     margin: 15px 20px;
     width: 256px;
+    &>.card-content{
+      height: 100%;
+    }
     img{
+      object-fit: contain;
       width: 100px;
+      flex-grow: 1;
     }
   }
 }

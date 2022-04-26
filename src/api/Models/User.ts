@@ -23,6 +23,8 @@ export default class User {
         return (typeof role === "string" && this.roles.includes(role)) || (Array.isArray(role) && role.every(x => this.roles.includes(x)));
     }
 
+    isAdmin = () => this.isGranted("ROLE_ADMIN")
+
 
     completeName(): string {
         return !this.firstname || !this.name ? this.username : this.firstname + " " + this.name;
