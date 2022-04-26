@@ -30,6 +30,8 @@ import TeamList from "./pages/Team/TeamList";
 import TeamDetails from "./pages/Team/TeamDetails";
 import TeamForm from "./pages/Team/TeamForm";
 import TeamDelete from "./pages/Team/TeamDelete";
+import ServicePickUpCheckType from "./pages/Service/ServicePickUpCheckType";
+import ServiceAddDns from "./pages/Service/ServiceAddDns";
 
 const GroupOverview = React.lazy(() => import("./pages/Group/GroupOverview"))
 
@@ -78,6 +80,8 @@ ReactDOM.render(
                                     <Route path="/teams/:id/delete" element={<TeamDelete/>}/>
                                     <Route path="/teams/add" element={<TeamForm/>}/>
                                     <Route path="/teams/:id" element={<TeamDetails/>}/>
+                                    <Route path="/services/add/checktype" element={<ServicePickUpCheckType/>}/>
+                                    <Route path="/services/add/dns" element={<ServiceAddDns/>}/>
                                 </Route>
 
                             </Route>

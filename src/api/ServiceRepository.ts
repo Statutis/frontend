@@ -1,5 +1,6 @@
 import axios from "axios";
 import {ServiceState} from "./Models/Service/Service";
+import DnsService from "./Models/Service/DnsService";
 
 export class MainState {
     lastUpdate: Date = new Date();
@@ -19,4 +20,32 @@ export async function getMainState(): Promise<MainState> {
 export async function getCheckTypes() : Promise<string[]> {
     const response = await axios.get<string[]>("/api/services/checks")
     return response.data;
+}
+
+export async function addDns(service:DnsService) : Promise<DnsService> {
+    const response = await axios.post<DnsService>("/api/services/add/dns", {
+        Type: service.type,
+        Result: service.result,
+        Name: service.name,
+        GroupRef: service.groupRef,
+        Description: service.description,
+        Host: service.host,
+        ServiceTypeRef: service.serviceTypeRef
+    });
+
+    const resp:DnsService = new DnsService();
+    resp.ref = response.data.ref;
+    resp.name = response.data.name;
+    resp.type = response.data.type;
+    resp.host = response.data.host;
+    resp.result = response.data.result;
+    resp.groupRef = response.data.groupRef;
+    resp.serviceTypeRef = response.data.serviceTypeRef;
+    resp.description = response.data.description;
+    resp.historyRef = response.data.historyRef;
+    resp.checkType = response.data.checkType;
+    resp.lastCheck = response.data.lastCheck;
+    resp.state = response.data.state;
+
+    return resp;
 }
