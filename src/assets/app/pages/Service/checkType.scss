@@ -1,5 +1,4 @@
 .content {
-  align-items: center;
   &>.checkType {
     display: flex;
     gap: 40px;
@@ -39,8 +38,5 @@
         }
       }
     }
-  }
-  &>button {
-    margin: 30px 0;
   }
 }

@@ -34,7 +34,7 @@ const ServicePickUpCheckType = function () {
     const [checkState, setCheckedState] = useState<string | undefined>(undefined);
 
     return <div className={"content"}>
-        <div className={"checkType"}>
+        <div className={"checkType hstack stack-center"}>
             {
                 Object.entries(serviceTypes).map(([x, value]) => {
                     return <div className={"card" + (checkState == x ? " card-selected" : "")} key={x}
@@ -54,10 +54,15 @@ const ServicePickUpCheckType = function () {
         </div>
 
         <div className="vstack stack-center mt-6">
-            {!checkState && <p className={"text-muted"}><span className="material-icons">arrow_upward</span> Choisissez un mode de vérification <span className="material-icons">arrow_upward</span></p>}
+            {!checkState && <p className={"text-muted"} style={{textAlign: "center"}}>
+                <span className="material-icons">arrow_upward</span>
+                Choisissez un mode de vérification
+                <span className="material-icons">arrow_upward</span>
+            </p>}
 
             <div className={"hstack stack-center"}>
-                <button className={"btn btn-green hstack stack-vcenter"} onClick={() => navigation()} disabled={!checkState}>
+                <button className={"btn btn-green hstack stack-vcenter"} onClick={() => navigation()}
+                        disabled={!checkState}>
                     Étape suivante <span className={"material-icons"}>start</span>
                 </button>
             </div>
