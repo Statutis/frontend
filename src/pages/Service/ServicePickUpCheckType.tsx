@@ -1,9 +1,13 @@
 import React, {useState} from "react";
 import useDocumentTitle from "../../useDocumentTitle";
 import "../../assets/app/pages/Service/checkType.scss"
-import rackServer from "../../img/rack_server.png"
 import checked from "../../img/done.png"
 import {useNavigate} from "react-router-dom";
+
+import DnsLogo from "../../img/dnsLogo.png"
+import HttpLogo from "../../img/HttpLogo.png"
+import PingLogo from "../../img/pingLogo.png"
+import AtlassianLogo from "../../img/atlassianLogo.png"
 
 const ServicePickUpCheckType = function () {
 
@@ -26,13 +30,13 @@ const ServicePickUpCheckType = function () {
     useDocumentTitle("Type de vérification")
 
 
-    const [serviceTypes,] = useState<string[]>(["DNS", "HTTP", "PING", "Atlassian Status Page"]);
+    const serviceTypes = {"DNS": DnsLogo, "HTTP": HttpLogo, "Ping": PingLogo, "Atlassian Status Page": AtlassianLogo}
     const [checkState, setCheckedState] = useState<string|undefined>(undefined);
 
     return <div className={"content"}>
         <div className={"checkType"}>
             {
-                serviceTypes.map(x => {
+                Object.entries(serviceTypes).map(([x, value]) => {
                     return <div className={"card" + (checkState == x ? " card-selected" : "")} key={x} onClick={() => setCheckedState(x)}>
 
                         {
@@ -41,7 +45,7 @@ const ServicePickUpCheckType = function () {
                             </div>
                         }
 
-                        <img src={rackServer} alt={""}/>
+                        <img src={value} alt={""}/>
                         <h3>{x}</h3>
                     </div>
                 })
