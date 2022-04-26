@@ -92,12 +92,13 @@ const TeamDetails = () => {
                 </>
                 }
             </div>
+            {hasRight() && <>
+                <h3 className="mt-6">Avatar de l'équipe : </h3>
+                <p>Cet avatar est visible par autres utilisateurs (et publiquement si cela est activé). Cela permet de
+                    mettre en avant une identité visuel, afin de faciliter la reconnaissance faites par les
+                    utilisateurs </p>
+                <div className={"hstack stack-end stack-vcenter mt-4"}>
 
-            <h3 className="mt-6">Avatar de l'équipe : </h3>
-            <p>Cet avatar est visible par autres utilisateurs (et publiquement si cela est activé). Cela permet de
-                mettre en avant une identité visuel, afin de faciliter la reconnaissance faites par les utilisateurs </p>
-            <div className={"hstack stack-end stack-vcenter mt-4"}>
-                {hasRight() && <>
                     <button className="btn btn-orange" onClick={clearAvatar}>
                         <span className="material-icons">delete</span>
                         <span>Supprimer</span>
@@ -106,8 +107,9 @@ const TeamDetails = () => {
                         <span className="material-icons">cloud_upload</span>
                         <span>&nbsp; Changer</span>
                     </FileInput>
-                </>}
-            </div>
+
+                </div>
+            </>}
         </div>
         <div>
             <h3>Liste des utilisateurs : </h3>
