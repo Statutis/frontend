@@ -17,6 +17,7 @@ export class Service {
     state: ServiceState;
     lastCheck: Date;
     historyRef: string;
+    groupRef: string|undefined;
 
     constructor() {
         this.ref = undefined;
@@ -28,5 +29,14 @@ export class Service {
         this.description = undefined;
         this.state = ServiceState.Unknown;
         this.lastCheck = new Date()
+        this.groupRef = undefined;
+    }
+
+    getId() {
+        return this.ref?.split('/').reverse()[0];
+    }
+
+    getGroupId() {
+        return this.groupRef?.split('/').reverse()[0];
     }
 }

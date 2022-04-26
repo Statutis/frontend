@@ -199,7 +199,7 @@ const GroupOverview = () => {
                     })
             }
             <div className={"hstack stack-end mt-5"}>
-                {user && <Link to={"/groups/" + groups.id + "/service/add"} className="btn btn-green">
+                {user && <Link to={"/services/add/checktype"} className="btn btn-green">
                     <span className="material-icons">add</span> &nbsp;
                     Ajouter un service
                 </Link>
