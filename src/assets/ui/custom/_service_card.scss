@@ -3,10 +3,25 @@
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  &>p {
+
+  .circle-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50px;
+    margin: auto 0 auto 15px;
+    background-color: var(--color-primary);
+    @each $class, $color in $colors {
+      &.circle-dot-#{$class}{
+        background-color: var(--color-#{$class});
+      }
+    }
+  }
+
+  & > p {
     margin: 0 10px;
   }
-  &>.chart {
+
+  & > .chart {
     width: 100px;
     height: 60px;
   }
