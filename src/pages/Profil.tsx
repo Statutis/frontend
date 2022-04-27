@@ -1,4 +1,4 @@
-import React, {createRef, LegacyRef, SyntheticEvent, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import './../assets/app/pages/profil.scss'
 import useDocumentTitle from "../useDocumentTitle";
 import {useAppSelector} from "../Store/store";
@@ -10,27 +10,18 @@ import {getTeamsByRef} from "../api/TeamRepository";
 import Badge from "../components/UI/Badge";
 import ChangePersonalData from "../components/Profil/ChangePersonalData";
 import ChangePassword from "../components/Profil/ChangePassword";
+import FileInput from "../components/UI/Input/FileInput";
 
 const imagesContentType = ["image/gif", "image/png", "image/jpeg", "image/bmp", "image/webp"]
 
 const Profil = () => {
     const user: User = useAppSelector(state => state.auth.user) as User
-    const inputFileRef: LegacyRef<HTMLInputElement> = createRef()
-
-
     const [teams, setTeams] = useState<Team[]>([]);
 
     useDocumentTitle("Votre profil")
 
-    const fileChange = async (event: SyntheticEvent<HTMLInputElement>) => {
-        event.stopPropagation()
-        event.preventDefault()
-
-        const files = event.currentTarget.files ?? [];
-
-        if (files.length > 0 && imagesContentType.includes(files[0].type)) {
-            await UserService.updateAvatar(files[0], user)
-        }
+    const fileChange = async (file: File | undefined) => {
+        await UserService.updateAvatar(file, user)
     }
 
     const clearAvatar = () => UserService.updateAvatar(undefined, user)
@@ -58,16 +49,14 @@ const Profil = () => {
                 </div>
             </div>
             <div className={"hstack stack-center stack-vcenter mt-4"}>
-                <input type="file" hidden style={{display: "none"}} ref={inputFileRef} onChange={fileChange}/>
                 <button className="btn btn-red" onClick={clearAvatar}>
                     <span className="material-icons">delete</span>
                     <span>Supprimer</span>
                 </button>
-                <button className="btn" onClick={() => inputFileRef?.current?.click()}>
+                <FileInput onFileChange={fileChange} contentTypes={imagesContentType}>
                     <span className="material-icons">cloud_upload</span>
-                    &nbsp;
-                    <span>Changer votre photo de profil</span>
-                </button>
+                    <span>&nbsp; Changer votre photo de profil</span>
+                </FileInput>
             </div>
 
         </div>

@@ -16,6 +16,12 @@ import {ResponsiveLineCanvas, Serie} from "@nivo/line";
 import {BasicTooltip} from '@nivo/tooltip';
 import {useAppSelector} from "../../Store/store";
 import Error from "../Error";
+import GroupService from "../../Services/GroupService";
+import FileInput from "../../components/UI/Input/FileInput";
+import GroupAvatar from "../../components/GroupAvatar";
+
+
+const imagesContentType = ["image/gif", "image/png", "image/jpeg", "image/bmp", "image/webp"]
 
 const convertDate = (date: Date) => {
     return date.getFullYear().toString() + "-" + date.getMonth().toString() + "-" + date.getUTCDate().toString() + " " + date.getHours() + "h" + date.getMinutes() + "m";
@@ -115,9 +121,26 @@ const GroupOverview = () => {
         return <Error code={404}/>
 
 
+    const fileChange = async (file: File | undefined) => {
+        await GroupService.updateAvatar(file, groups)
+    }
+
+    const clearAvatar = () => GroupService.updateAvatar(undefined, groups)
+
+    const hasRight = (): boolean => {
+        if (!user)
+            return false;
+
+        return user.isAdmin() || groups.teamsRef.filter(x => user.teamsRef.includes(x)).length != 0
+    }
+
+
     return <div className={"fluid-content group-overview-card"}>
         <div className={"overview"}>
-            <h2>{groups.name}</h2>
+            <div id="group-header" className="mb-4">
+                <GroupAvatar group={groups}/>
+                <h2>{groups.name}</h2>
+            </div>
             <p>{groups.description}</p>
             <div className={"badges"}>
                 {
@@ -177,7 +200,7 @@ const GroupOverview = () => {
 
 
             <div className={"hstack stack-end stack-vcenter"}>
-                {user && <>
+                {hasRight() && <>
                     <Link to={"/groups/" + groups.id + "/delete"} className="btn btn-red">
                         <span className="material-icons">delete</span>
                         Supprimer le groupe
@@ -189,6 +212,25 @@ const GroupOverview = () => {
                 </>
                 }
             </div>
+
+            {hasRight() && <>
+                <h3 className="mt-6">Avatar de l'équipe : </h3>
+                <p>Cet avatar est visible par autres utilisateurs (et publiquement si cela est activé). Cela permet de
+                    mettre en avant une identité visuel, afin de faciliter la reconnaissance faites par les
+                    utilisateurs </p>
+                <div className={"hstack stack-end stack-vcenter mt-4"}>
+
+                    <button className="btn btn-orange" onClick={clearAvatar}>
+                        <span className="material-icons">delete</span>
+                        <span>Supprimer</span>
+                    </button>
+                    <FileInput onFileChange={fileChange} contentTypes={imagesContentType}>
+                        <span className="material-icons">cloud_upload</span>
+                        <span>&nbsp; Changer</span>
+                    </FileInput>
+
+                </div>
+            </>}
         </div>
         <div className={"services mt-4"}>
             <h3>Liste de services : </h3>
@@ -199,7 +241,7 @@ const GroupOverview = () => {
                     })
             }
             <div className={"hstack stack-end mt-5"}>
-                {user && <Link to={"/services/add/checktype"} className="btn btn-green">
+                {hasRight() && <Link to={"/services/add/checktype"} className="btn btn-green">
                     <span className="material-icons">add</span> &nbsp;
                     Ajouter un service
                 </Link>

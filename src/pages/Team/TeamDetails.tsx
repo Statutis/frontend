@@ -13,6 +13,11 @@ import {getGroupByRef} from "../../api/GroupRepository";
 import GroupServiceCard from "../../components/GroupServiceCard";
 import {getUserByRef} from "../../api/UserRepository";
 import UserAvatar from "../../components/UserAvatar";
+import FileInput from "../../components/UI/Input/FileInput";
+import TeamService from "../../Services/TeamService";
+import TeamAvatar from "../../components/TeamAvatar";
+
+const imagesContentType = ["image/gif", "image/png", "image/jpeg", "image/bmp", "image/webp"]
 
 const TeamDetails = () => {
     useDocumentTitle("Details sur une équipe")
@@ -47,17 +52,35 @@ const TeamDetails = () => {
         return <Error code={404}/>
 
 
+    const fileChange = async (file: File | undefined) => {
+        await TeamService.updateAvatar(file, team)
+    }
+
+    const clearAvatar = () => TeamService.updateAvatar(undefined, team)
+
+    const hasRight = (): boolean => {
+        if (!user || !team || !team.ref)
+            return false;
+
+        return user.isAdmin() || user.teamsRef.includes(team.ref)
+    }
+
     return <div className="fluid-content" id="team-details">
         <div className="overview">
-            <h2>{team.name}</h2>
+            <div id="team-header" className="mb-4">
+                <TeamAvatar team={team}/>
+                <h2>{team.name}</h2>
+            </div>
             <div className="hstack">
                 <Badge value={team.userRef.length + " utilisateurs"} icon={"person"} color={"grey"}
                        customClass={"badge-reverse"}/>
                 <Badge value={team.groupRef.length + " groupes"} icon={"style"} color={"grey"}
                        customClass={"badge-reverse"}/>
             </div>
+
+
             <div className={"hstack stack-end stack-vcenter"}>
-                {user && <>
+                {hasRight() && <>
                     <Link to={"/teams/" + team.id + "/delete"} className="btn btn-red">
                         <span className="material-icons">delete</span>
                         Supprimer l'équipe
@@ -69,34 +92,53 @@ const TeamDetails = () => {
                 </>
                 }
             </div>
+            {hasRight() && <>
+                <h3 className="mt-6">Avatar de l'équipe : </h3>
+                <p>Cet avatar est visible par autres utilisateurs (et publiquement si cela est activé). Cela permet de
+                    mettre en avant une identité visuel, afin de faciliter la reconnaissance faites par les
+                    utilisateurs </p>
+                <div className={"hstack stack-end stack-vcenter mt-4"}>
+
+                    <button className="btn btn-orange" onClick={clearAvatar}>
+                        <span className="material-icons">delete</span>
+                        <span>Supprimer</span>
+                    </button>
+                    <FileInput onFileChange={fileChange} contentTypes={imagesContentType}>
+                        <span className="material-icons">cloud_upload</span>
+                        <span>&nbsp; Changer</span>
+                    </FileInput>
+
+                </div>
+            </>}
         </div>
         <div>
             <h3>Liste des utilisateurs : </h3>
             <div id="user-list">
-                {users.length >0? users.map(x =><div className="card" key={x.ref}>
-                         <div className="card-content">
-                             <UserAvatar user={x}/>
-                             <div>
-                                 <h4>{x.completeName()}</h4>
-                                 <div className="hstack">
-                                     <Badge value={x.email} icon={"alternate_email"} color={"grey"}
-                                            customClass={"badge-reverse"}/>
-                                     <Badge value={x.username} icon={"sell"} color={"grey"}
-                                            customClass={"badge-reverse"}/>
-                                 </div>
-                             </div>
-                         </div>
+                {users.length > 0 ? users.map(x => <div className="card" key={x.ref}>
+                        <div className="card-content">
+                            <UserAvatar user={x}/>
+                            <div>
+                                <h4>{x.completeName()}</h4>
+                                <div className="hstack">
+                                    <Badge value={x.email} icon={"alternate_email"} color={"grey"}
+                                           customClass={"badge-reverse"}/>
+                                    <Badge value={x.username} icon={"sell"} color={"grey"}
+                                           customClass={"badge-reverse"}/>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 ) : <p>Aucun utilisateur n'est liè à cette équipe.</p>}
             </div>
 
             <h3 className="mt-5">Liste des groupes : </h3>
             <div id="group-list">
-                {groups.length >0? groups.map(x => <GroupServiceCard key={x.ref} value={x}/>) : <p>Aucun groupe n'est liè à cette équipe.</p>}
+                {groups.length > 0 ? groups.map(x => <GroupServiceCard key={x.ref} value={x}/>) :
+                    <p>Aucun groupe n'est liè à cette équipe.</p>}
             </div>
 
             <div className={"hstack stack-end mt-5"}>
-                {user && <Link to={"/groups/add"} className="btn btn-green">
+                {hasRight() && <Link to={"/groups/add"} className="btn btn-green">
                     <span className="material-icons">add</span> &nbsp;
                     Ajouter un groupe
                 </Link>

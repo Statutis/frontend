@@ -5,6 +5,21 @@
   &>.overview {
     width: 400px;
     padding: 0 50px 0 0 ;
+    #group-header{
+      display: grid;
+      grid-template-columns: 50px 1fr;
+      grid-gap: 10px;
+      align-items: end;
+
+      & > * {
+        margin: 0;
+      }
+
+      & > img {
+        width: 50px;
+      }
+    }
+    
     &>p {
       font-family: "Roboto Light", sans-serif;
       font-size: 14px;

@@ -2,6 +2,9 @@ import React from "react";
 import LogoTitleImage from '../img/LogoTitle.png'
 import FooterCornerImage from '../img/TrafficLight_Perdu_Dans_la_nature.png'
 import {Link} from "react-router-dom";
+import GithubIcon from './../img/brand/github.png'
+import TwitterIcon from './../img/brand/twitter.png'
+import SilvainEuIcon from './../img/brand/silvain.eu.png'
 
 const Footer = function () {
     return <>
@@ -47,10 +50,10 @@ const Footer = function () {
                         ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
                     </p>
                     <div className={"footer-list-icon"}>
-                        <a href=""><span className={"material-icons"}>credit_card</span></a>
-                        <a href=""><span className={"material-icons"}>credit_card</span></a>
-                        <a href=""><span className={"material-icons"}>credit_card</span></a>
-                        <a href=""><span className={"material-icons"}>credit_card</span></a>
+                        <a target="_blank" href="https://github.com/Statutis" rel="noreferrer"><img src={GithubIcon} alt="github"/></a>
+                        <a target="_blank" href="https://twitter.com" rel="noreferrer"><img src={TwitterIcon} alt="twitter"/></a>
+                        <a target="_blank" href="https://silvain.eu" rel="noreferrer"><img src={SilvainEuIcon} alt="Silvain.eu"/></a>
+                        <a target="_blank" href="https://paypal.com" rel="noreferrer"><span className={"material-icons"}>credit_card</span></a>
                     </div>
                 </div>
             </div>

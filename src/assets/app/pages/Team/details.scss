@@ -3,6 +3,25 @@
   grid-template-columns: 400px 1fr;
   grid-gap: 25px;
 
+  & > .overview > p {
+    text-align: justify;
+  }
+
+  #team-header {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    grid-gap: 10px;
+    align-items: end;
+
+    & > * {
+      margin: 0;
+    }
+
+    & > img {
+      width: 50px;
+    }
+  }
+
   #group-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

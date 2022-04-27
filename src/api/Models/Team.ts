@@ -5,4 +5,5 @@ export default class Team {
     color: string | undefined = undefined
     groupRef: string[] = []
     userRef: string[] = []
+    avatarRef: string | undefined
 }

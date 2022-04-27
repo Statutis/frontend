@@ -10,6 +10,7 @@ function serialize(data: Group): Group {
     g.description = data.description
     g.isPublic = data.isPublic;
     g.lastCheck = new Date(data.lastCheck)
+    g.avatarRef = data.avatarRef
     g.services = data.services.map(y => {
         const s = new Service()
         s.ref = y.ref;
@@ -71,3 +72,14 @@ export async function remove(group: Group): Promise<void> {
 }
 
 
+export async function updateAvatar(file: File | undefined, group: Group): Promise<void> {
+    const formData = new FormData();
+    if (file)
+        formData.append("form", file);
+
+    await axios.put(group.avatarRef ?? `api/groups/avatar/${group.id}`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
+}
