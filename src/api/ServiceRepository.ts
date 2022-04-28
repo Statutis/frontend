@@ -1,6 +1,7 @@
 import axios from "axios";
 import {ServiceState} from "./Models/Service/Service";
 import DnsService from "./Models/Service/DnsService";
+import HttpService from "./Models/Service/HttpService";
 
 export class MainState {
     lastUpdate: Date = new Date();
@@ -23,7 +24,7 @@ export async function getCheckTypes() : Promise<string[]> {
 }
 
 export async function addDns(service:DnsService) : Promise<DnsService> {
-    const response = await axios.post<DnsService>("/api/services/add/dns", {
+    const response = await axios.post<DnsService>("/api/services/dns", {
         Type: service.type,
         Result: service.result,
         Name: service.name,
@@ -46,6 +47,32 @@ export async function addDns(service:DnsService) : Promise<DnsService> {
     resp.checkType = response.data.checkType;
     resp.lastCheck = response.data.lastCheck;
     resp.state = response.data.state;
+
+    return resp;
+}
+
+export async function addHttp(service:HttpService) : Promise<HttpService> {
+    const response = await axios.post<HttpService>("/api/services/http", {
+        Name: service.name,
+        GroupRef: service.groupRef,
+        Description: service.description,
+        Host: service.host,
+        ServiceTypeRef: service.serviceTypeRef,
+        port: service.port,
+        code: service.code,
+        redirectUrl: service.redirectUrl
+
+    });
+
+    const resp:HttpService = new HttpService();
+    resp.name = response.data.name;
+    resp.groupRef = response.data.groupRef;
+    resp.description = response.data.description;
+    resp.host = response.data.host;
+    resp.serviceTypeRef = response.data.serviceTypeRef;
+    resp.port = response.data.port;
+    resp.code = response.data.code;
+    resp.redirectUrl = response.data.redirectUrl;
 
     return resp;
 }
