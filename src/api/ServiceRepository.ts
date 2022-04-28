@@ -2,6 +2,7 @@ import axios from "axios";
 import {ServiceState} from "./Models/Service/Service";
 import DnsService from "./Models/Service/DnsService";
 import HttpService from "./Models/Service/HttpService";
+import PingService from "./Models/Service/PingService";
 
 export class MainState {
     lastUpdate: Date = new Date();
@@ -18,12 +19,12 @@ export async function getMainState(): Promise<MainState> {
     return state;
 }
 
-export async function getCheckTypes() : Promise<string[]> {
+export async function getCheckTypes(): Promise<string[]> {
     const response = await axios.get<string[]>("/api/services/checks")
     return response.data;
 }
 
-export async function addDns(service:DnsService) : Promise<DnsService> {
+export async function addDns(service: DnsService): Promise<DnsService> {
     const response = await axios.post<DnsService>("/api/services/dns", {
         Type: service.type,
         Result: service.result,
@@ -34,7 +35,7 @@ export async function addDns(service:DnsService) : Promise<DnsService> {
         ServiceTypeRef: service.serviceTypeRef
     });
 
-    const resp:DnsService = new DnsService();
+    const resp: DnsService = new DnsService();
     resp.ref = response.data.ref;
     resp.name = response.data.name;
     resp.type = response.data.type;
@@ -51,7 +52,7 @@ export async function addDns(service:DnsService) : Promise<DnsService> {
     return resp;
 }
 
-export async function addHttp(service:HttpService) : Promise<HttpService> {
+export async function addHttp(service: HttpService): Promise<HttpService> {
     const response = await axios.post<HttpService>("/api/services/http", {
         Name: service.name,
         GroupRef: service.groupRef,
@@ -64,7 +65,7 @@ export async function addHttp(service:HttpService) : Promise<HttpService> {
 
     });
 
-    const resp:HttpService = new HttpService();
+    const resp: HttpService = new HttpService();
     resp.name = response.data.name;
     resp.groupRef = response.data.groupRef;
     resp.description = response.data.description;
@@ -75,4 +76,25 @@ export async function addHttp(service:HttpService) : Promise<HttpService> {
     resp.redirectUrl = response.data.redirectUrl;
 
     return resp;
+}
+
+export default async function addPing(form: PingService): Promise<PingService> {
+
+    const response = await axios.post<PingService>("/api/services/ping", {
+        name: form.name,
+        groupRef: form.groupRef,
+        description: form.description,
+        host: form.host,
+        serviceTypeRef: form.serviceTypeRef
+    });
+
+    const resp:PingService = new PingService();
+    resp.name = response.data.name;
+    resp.groupRef = response.data.groupRef;
+    resp.description = response.data.description;
+    resp.host = response.data.host;
+    resp.serviceTypeRef = response.data.serviceTypeRef;
+
+    return resp;
+
 }
