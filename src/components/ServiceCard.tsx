@@ -45,10 +45,21 @@ const ServiceCard = function ({value = defaultValue}) {
 
     }, [history])
 
+    const circleDotColor = (state: ServiceState) => {
+        switch (state) {
+            case ServiceState.Online:
+                return "green";
+            case ServiceState.Error:
+            case ServiceState.Unreachable:
+                return "red";
+        }
+        return "primary"
+    }
 
     return <div className={"service card"}>
         <div className={"vstack"}>
             <div className="hstack stack-vend">
+                <div className={"circle-dot circle-dot-" + circleDotColor(value.state)}/>
                 <Link className="h4" to="#">{value.name} </Link>
                 <span className="text-muted">{value.checkType}</span>
             </div>
