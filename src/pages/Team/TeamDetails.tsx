@@ -92,7 +92,7 @@ const TeamDetails = () => {
                 </>
                 }
             </div>
-            {hasRight() && <>
+            {user != undefined && <>
                 <h3 className="mt-6">Avatar de l'équipe : </h3>
                 <p>Cet avatar est visible par autres utilisateurs (et publiquement si cela est activé). Cela permet de
                     mettre en avant une identité visuel, afin de faciliter la reconnaissance faites par les
@@ -112,24 +112,27 @@ const TeamDetails = () => {
             </>}
         </div>
         <div>
-            <h3>Liste des utilisateurs : </h3>
-            <div id="user-list">
-                {users.length > 0 ? users.map(x => <div className="card" key={x.ref}>
-                        <div className="card-content">
-                            <UserAvatar user={x}/>
-                            <div>
-                                <h4>{x.completeName()}</h4>
-                                <div className="hstack">
-                                    <Badge value={x.email} icon={"alternate_email"} color={"grey"}
-                                           customClass={"badge-reverse"}/>
-                                    <Badge value={x.username} icon={"sell"} color={"grey"}
-                                           customClass={"badge-reverse"}/>
+            {hasRight() && <>
+                <h3>Liste des utilisateurs : </h3>
+                <div id="user-list">
+                    {users.length > 0 ? users.map(x => <div className="card" key={x.ref}>
+                            <div className="card-content">
+                                <UserAvatar user={x}/>
+                                <div>
+                                    <h4>{x.completeName()}</h4>
+                                    <div className="hstack">
+                                        <Badge value={x.email} icon={"alternate_email"} color={"grey"}
+                                               customClass={"badge-reverse"}/>
+                                        <Badge value={x.username} icon={"sell"} color={"grey"}
+                                               customClass={"badge-reverse"}/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                ) : <p>Aucun utilisateur n'est liè à cette équipe.</p>}
-            </div>
+                    ) : <p>Aucun utilisateur n'est liè à cette équipe.</p>}
+                </div>
+            </>
+            }
 
             <h3 className="mt-5">Liste des groupes : </h3>
             <div id="group-list">

@@ -73,6 +73,7 @@ ReactDOM.render(
                                        element={<React.Suspense fallback={<>...</>}><GroupOverview/></React.Suspense>}/>
 
                                 <Route path="/teams" element={<TeamList/>}/>
+                                <Route path="/teams/:id" element={<TeamDetails/>}/>
                                 <Route element={<ProtectedPath><Outlet/></ProtectedPath>}>
                                     <Route path="/groups/:id/delete" element={<GroupDelete/>}/>
                                     <Route path="/groups/:id/edit" element={<GroupForm/>}/>
@@ -81,7 +82,6 @@ ReactDOM.render(
                                     <Route path="/teams/:id/edit" element={<TeamForm/>}/>
                                     <Route path="/teams/:id/delete" element={<TeamDelete/>}/>
                                     <Route path="/teams/add" element={<TeamForm/>}/>
-                                    <Route path="/teams/:id" element={<TeamDetails/>}/>
                                     <Route path="/services/add/checktype" element={<ServicePickUpCheckType/>}/>
                                     <Route path="/services/add/dns" element={<ServiceAddDns/>}/>
                                     <Route path="/services/add/http" element={<ServiceAddHttp/>}/>

@@ -78,8 +78,8 @@ const ServiceCard = function ({value = defaultValue}) {
 
         <div className={"chart"}>
 
-            <ResponsiveLineCanvas data={data} enableGridX={false} enableGridY={false}
-                                  yScale={{type: 'linear', min: 0, max: 1}} enableArea={true} enableCrosshair={false}
+            <ResponsiveLineCanvas data={data} enableGridX={false} enableGridY={false} enablePoints={false}
+                                  yScale={{type: 'linear', min: 0, max: 1.2}} enableArea={true} enableCrosshair={false}
                                   isInteractive={false}/>
 
         </div>

@@ -171,6 +171,7 @@ const GroupOverview = () => {
                                               enableCrosshair={false}
                                               curve="monotoneX"
                                               xScale={{type: 'point'}}
+                                              enablePoints={false}
                                               legends={[
                                                   {
                                                       anchor: 'bottom-right',

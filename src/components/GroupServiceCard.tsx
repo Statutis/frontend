@@ -21,12 +21,9 @@ const GroupServiceCard = function ({value = defaultValue}) {
     }, [percent])
 
     return <div className={"card group-card"}>
-        <div className={"card-media"}>
-            <GroupAvatar group={value}/>
-        </div>
         <div className={"card-content"}>
+            <GroupAvatar group={value}/>
             <Link className="h2" to={"/groups/" + value.id}>{value.name}</Link>
-            <p>{value.description}</p>
         </div>
         <div className="card-footer">
             <div className="hstack stack-nowrap stack-vcenter w-100">
