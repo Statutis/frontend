@@ -92,7 +92,7 @@ const TeamDetails = () => {
                 </>
                 }
             </div>
-            {hasRight() && <>
+            {user != undefined && <>
                 <h3 className="mt-6">Avatar de l'équipe : </h3>
                 <p>Cet avatar est visible par autres utilisateurs (et publiquement si cela est activé). Cela permet de
                     mettre en avant une identité visuel, afin de faciliter la reconnaissance faites par les
