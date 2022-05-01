@@ -3,6 +3,7 @@ import {Service, ServiceState} from "./Models/Service/Service";
 import DnsService from "./Models/Service/DnsService";
 import HttpService from "./Models/Service/HttpService";
 import PingService from "./Models/Service/PingService";
+import AtlassianStatusPageService from "./Models/Service/AtlassianStatusPageService";
 
 export class MainState {
     lastUpdate: Date = new Date();
@@ -37,6 +38,7 @@ export async function getServiceByGuid(id:string) : Promise<Service> {
     service.lastCheck = response.data.lastCheck;
     service.checkType = response.data.checkType;
     service.historyRef = response.data.historyRef;
+    service.detailRef = response.data.detailRef
     return service;
 }
 
@@ -119,4 +121,99 @@ export default async function addPing(form: PingService): Promise<PingService> {
 export async function removeService(guid:string):Promise<void>{
     const response = await axios.delete<void>(`/api/services/${guid}`);
     return response.data;
+}
+
+export async function getDns(ref:string) : Promise<DnsService>{
+    const response = await axios.get<DnsService>(ref);
+    return response.data;
+}
+
+export async function getHttp(ref:string) : Promise<HttpService>{
+    const response = await axios.get<HttpService>(ref);
+    return response.data;
+}
+
+export async function getPing(ref:string) : Promise<PingService>{
+    const response = await axios.get<PingService>(ref);
+    return response.data;
+}
+
+export async function getAtlassianStatusPage(ref:string) : Promise<AtlassianStatusPageService>{
+    const response = await axios.get<AtlassianStatusPageService>(ref);
+    return response.data;
+}
+
+export async function updateDns(url:string, service: DnsService): Promise<DnsService> {
+    const response = await axios.put<DnsService>(url, {
+        Type: service.type,
+        Result: service.result,
+        Name: service.name,
+        GroupRef: service.groupRef,
+        Description: service.description,
+        Host: service.host,
+        ServiceTypeRef: service.serviceTypeRef
+    });
+
+    const resp: DnsService = new DnsService();
+    resp.ref = response.data.ref;
+    resp.name = response.data.name;
+    resp.type = response.data.type;
+    resp.host = response.data.host;
+    resp.result = response.data.result;
+    resp.groupRef = response.data.groupRef;
+    resp.serviceTypeRef = response.data.serviceTypeRef;
+    resp.description = response.data.description;
+    resp.historyRef = response.data.historyRef;
+    resp.checkType = response.data.checkType;
+    resp.lastCheck = response.data.lastCheck;
+    resp.state = response.data.state;
+
+    return resp;
+}
+
+export async function updateHttp(url:string, data: HttpService): Promise<HttpService> {
+    const response = await axios.put<HttpService>(url, {
+        Name: data.name,
+        GroupRef: data.groupRef,
+        Description: data.description,
+        Host: data.host,
+        ServiceTypeRef: data.serviceTypeRef,
+        port: data.port,
+        code: data.code,
+        redirectUrl: data.redirectUrl
+
+    });
+
+    const resp: HttpService = new HttpService();
+    resp.name = response.data.name;
+    resp.groupRef = response.data.groupRef;
+    resp.description = response.data.description;
+    resp.host = response.data.host;
+    resp.serviceTypeRef = response.data.serviceTypeRef;
+    resp.port = response.data.port;
+    resp.code = response.data.code;
+    resp.redirectUrl = response.data.redirectUrl;
+
+    return resp;
+}
+
+export async function updatePing(url:string, form: PingService): Promise<PingService> {
+
+    const response = await axios.put<PingService>(url, {
+        name: form.name,
+        groupRef: form.groupRef,
+        description: form.description,
+        host: form.host,
+        serviceTypeRef: form.serviceTypeRef
+    });
+
+    const resp:PingService = new PingService();
+    resp.name = response.data.name;
+    resp.groupRef = response.data.groupRef;
+    resp.description = response.data.description;
+    resp.host = response.data.host;
+    resp.serviceTypeRef = response.data.serviceTypeRef;
+
+    return resp;
+
 }

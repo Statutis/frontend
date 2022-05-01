@@ -84,9 +84,16 @@ ReactDOM.render(
                                     <Route path="/teams/:id/delete" element={<TeamDelete/>}/>
                                     <Route path="/teams/add" element={<TeamForm/>}/>
                                     <Route path="/services/add/checktype" element={<ServicePickUpCheckType/>}/>
+
                                     <Route path="/services/add/dns" element={<ServiceAddDns/>}/>
+                                    <Route path="/services/edit/dns/:id" element={<ServiceAddDns/>}/>
+
                                     <Route path="/services/add/http" element={<ServiceAddHttp/>}/>
+                                    <Route path="/services/edit/http/:id" element={<ServiceAddHttp/>}/>
+
                                     <Route path="/services/add/ping" element={<ServiceAddPing/>}/>
+                                    <Route path="/services/edit/ping/:id" element={<ServiceAddPing/>}/>
+
                                     <Route path="/services/delete/:guid" element={<ServiceDelete/>}/>
                                 </Route>
 

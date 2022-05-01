@@ -8,8 +8,9 @@ import {getGroups} from "../../api/GroupRepository";
 import {getServiceTypes} from "../../api/ServiceTypesRepository";
 import useDocumentTitle from "../../useDocumentTitle";
 import PingService from "../../api/Models/Service/PingService";
-import {useNavigate} from "react-router-dom";
-import addPing from "../../api/ServiceRepository";
+import {useNavigate, useParams} from "react-router-dom";
+import addPing, {getDns, getServiceByGuid, updatePing} from "../../api/ServiceRepository";
+import {Service} from "../../api/Models/Service/Service";
 
 interface PingForm {
     name: string;
@@ -23,13 +24,31 @@ const ServiceAddPing = () => {
 
     useDocumentTitle("Ajout d'un service Type Ping");
 
+    const id: string | undefined = useParams<"id">().id;
+    const isEditMode = id !== undefined;
+
     const [groups, setGroups] = useState<Group[]>([]);
     const [serviceType, setServiceType] = useState<ServiceType[]>([]);
+    const [service, setService] = useState<Service>();
 
     const navigator = useNavigate();
 
     useEffect(() => {
-
+        if (isEditMode) {
+            getServiceByGuid(id).then((x) => {
+                console.log(x.detailRef)
+                getDns(x.detailRef).then((val) => {
+                    setService(x)
+                    form.setFieldValue("name", val.name ?? "");
+                    form.setFieldValue("groupRef", val.groupRef ?? "");
+                    form.setFieldValue("description", val.description ?? "");
+                    form.setFieldValue("host", val.host ?? "");
+                    form.setFieldValue("serviceTypeRef", val.serviceTypeRef ?? "");
+                    form.setFieldValue("type", val.type?.toString() ?? "");
+                    form.setFieldValue("result", val.result ?? "");
+                })
+            });
+        }
         getGroups().then(setGroups);
         getServiceTypes().then(setServiceType);
 
@@ -45,21 +64,30 @@ const ServiceAddPing = () => {
         },
         onSubmit: (values) => {
 
-            const data:PingService = new PingService();
-            data.name = values.name;
-            data.groupRef = values.groupRef;
-            data.host = values.host;
-            data.serviceTypeRef = values.serviceTypeRef;
-            data.description = values.description;
+            const pingDataForm:PingService = new PingService();
+            pingDataForm.name = values.name;
+            pingDataForm.groupRef = values.groupRef;
+            pingDataForm.host = values.host;
+            pingDataForm.serviceTypeRef = values.serviceTypeRef;
+            pingDataForm.description = values.description;
 
 
-            addPing(data).then((resp) => {
-                if(resp.groupRef === undefined)
+            if (isEditMode) {
+                if (service === undefined || service.ref == undefined)
                     return;
+                updatePing(service?.detailRef, pingDataForm).then((data) => {
+                    if (data.groupRef === undefined)
+                        return
+                    navigator(`/groups/${data.getGroupId()}`);
+                });
+            } else {
 
-                navigator(`/groups/${resp.getGroupId()}`)
-            });
-
+                addPing(pingDataForm).then((data) => {
+                    if (data.groupRef === undefined)
+                        return
+                    navigator(`/groups/${data.getGroupId()}`);
+                });
+            }
         }
     });
 
@@ -71,14 +99,16 @@ const ServiceAddPing = () => {
 
             <div className="form-group">
                 <label htmlFor="description">Description :</label>
-                <textarea id="description" onChange={form.handleChange} placeholder={"Entrez une description du service"}/>
+                <textarea id="description" onChange={form.handleChange} placeholder={"Entrez une description du service"} value={form.values.description}/>
                 {form.errors.description ? <p className="text-danger">{form.errors.description}</p> : null}
             </div>
 
             <div className={"form-group"}>
                 <label>Sélectionnez un label</label>
                 <Select options={serviceType} mapOptionToLabel={x => x.name}
-                        mapOptionToValue={x => x.ref ?? ""} onChange={(x:ServiceType|undefined) => form.setFieldValue("serviceTypeRef", x?.ref)}
+                        mapOptionToValue={x => x.ref ?? ""}
+                        onChange={(x: ServiceType | undefined) => form.setFieldValue("serviceTypeRef", x?.ref)}
+                        value={serviceType.filter(x => x.ref === form.values.serviceTypeRef)[0] ?? undefined}
                         placeholder={"Choisissez un label"} icon={"label"}
                 />
             </div>
@@ -86,7 +116,9 @@ const ServiceAddPing = () => {
             <div className={"form-group"}>
                 <label>Sélectionnez un groupe</label>
                 <Select options={groups} mapOptionToLabel={x => x.name}
-                        mapOptionToValue={x => x.ref ?? ""} onChange={(x:Group|undefined) => form.setFieldValue("groupRef", x?.ref)}
+                        mapOptionToValue={x => x.ref ?? ""}
+                        onChange={(x: Group | undefined) => form.setFieldValue("groupRef", x?.ref)}
+                        value={groups.filter(x => x.ref === form.values.groupRef)[0] ?? undefined}
                         placeholder={"Choisissez un groupe"}
                 />
             </div>

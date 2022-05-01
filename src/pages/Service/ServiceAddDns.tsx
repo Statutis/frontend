@@ -9,8 +9,9 @@ import "../../assets/app/pages/Service/addService.scss"
 import ServiceType from "../../api/Models/Service/ServiceType";
 import {getServiceTypes} from "../../api/ServiceTypesRepository";
 import DnsService from "../../api/Models/Service/DnsService";
-import {addDns} from "../../api/ServiceRepository";
-import {useNavigate} from "react-router-dom";
+import {addDns, getDns, getServiceByGuid, updateDns} from "../../api/ServiceRepository";
+import {useNavigate, useParams} from "react-router-dom";
+import {Service} from "../../api/Models/Service/Service";
 
 interface dnsServiceForm {
     name: string,
@@ -26,13 +27,31 @@ const ServiceAddDns = () => {
 
     useDocumentTitle("Ajout d'un service Type DNS")
 
+    const id: string | undefined = useParams<"id">().id;
+    const isEditMode = id !== undefined;
+
     const navigation = useNavigate();
 
     const [groups, setGroups] = useState<Group[]>([]);
     const [serviceType, setServiceType] = useState<ServiceType[]>([]);
+    const [service, setService] = useState<Service>();
 
     useEffect(() => {
-
+        if (isEditMode) {
+            getServiceByGuid(id).then((x) => {
+                console.log(x.detailRef)
+                getDns(x.detailRef).then((val) => {
+                    setService(x)
+                    form.setFieldValue("name", val.name ?? "");
+                    form.setFieldValue("groupRef", val.groupRef ?? "");
+                    form.setFieldValue("description", val.description ?? "");
+                    form.setFieldValue("host", val.host ?? "");
+                    form.setFieldValue("serviceTypeRef", val.serviceTypeRef ?? "");
+                    form.setFieldValue("type", val.type?.toString() ?? "");
+                    form.setFieldValue("result", val.result ?? "");
+                })
+            });
+        }
         getGroups().then(setGroups);
         getServiceTypes().then(setServiceType);
 
@@ -49,7 +68,7 @@ const ServiceAddDns = () => {
             result: ""
         },
         onSubmit: values => {
-            const dnsService:DnsService = new DnsService();
+            const dnsService: DnsService = new DnsService();
             dnsService.name = values.name;
             dnsService.groupRef = values.groupRef;
             dnsService.description = values.description;
@@ -58,7 +77,22 @@ const ServiceAddDns = () => {
 
             dnsService.result = values.result;
             dnsService.type = values.type;
-            addDns(dnsService).then((resp) => navigation(`/groups/${resp.getGroupId()}`))
+            if (isEditMode) {
+                if (service === undefined || service.ref == undefined)
+                    return;
+                updateDns(service?.detailRef, dnsService).then((data) => {
+                    if (data.groupRef === undefined)
+                        return
+                    navigation(`/groups/${data.getGroupId()}`);
+                });
+            } else {
+
+                addDns(dnsService).then((data) => {
+                    if (data.groupRef === undefined)
+                        return
+                    navigation(`/groups/${data.getGroupId()}`);
+                });
+            }
         }
     });
 
@@ -70,14 +104,17 @@ const ServiceAddDns = () => {
 
             <div className="form-group">
                 <label htmlFor="description">Description :</label>
-                <textarea id="description" onChange={form.handleChange} placeholder={"Entrez une description du service"}/>
+                <textarea id="description" onChange={form.handleChange}
+                          placeholder={"Entrez une description du service"} value={form.values.description}/>
                 {form.errors.description ? <p className="text-danger">{form.errors.description}</p> : null}
             </div>
 
             <div className={"form-group"}>
                 <label>Sélectionnez un label</label>
                 <Select options={serviceType} mapOptionToLabel={x => x.name}
-                        mapOptionToValue={x => x.ref ?? ""} onChange={(x:ServiceType|undefined) => form.setFieldValue("serviceTypeRef", x?.ref)}
+                        mapOptionToValue={x => x.ref ?? ""}
+                        onChange={(x: ServiceType | undefined) => form.setFieldValue("serviceTypeRef", x?.ref)}
+                        value={serviceType.filter(x => x.ref === form.values.serviceTypeRef)[0] ?? undefined}
                         placeholder={"Choisissez un label"} icon={"label"}
                 />
             </div>
@@ -85,13 +122,18 @@ const ServiceAddDns = () => {
             <div className={"form-group"}>
                 <label>Sélectionnez un groupe</label>
                 <Select options={groups} mapOptionToLabel={x => x.name}
-                        mapOptionToValue={x => x.ref ?? ""} onChange={(x:Group|undefined) => form.setFieldValue("groupRef", x?.ref)}
+                        mapOptionToValue={x => x.ref ?? ""}
+                        onChange={(x: Group | undefined) => form.setFieldValue("groupRef", x?.ref)}
+                        value={groups.filter(x => x.ref === form.values.groupRef)[0] ?? undefined}
                         placeholder={"Choisissez un groupe"}
                 />
             </div>
-            <FieldInput formik={form} field={"host"} label={"Hôte (IP ou FQDN)"} icon={"crisis_alert"} placeholder={"0.0.0.0 ou domain.tld"}/>
-            <FieldInput formik={form} field={"type"} label={"Type de vérification (A, AAA, CNAME)"} icon={"dns"} placeholder={"A / AAA / CNAME"}/>
-            <FieldInput formik={form} field={"result"} label={"Résultat attendue"} icon={"check_circle"} placeholder={"Résultat attendue"}/>
+            <FieldInput formik={form} field={"host"} label={"Hôte (IP ou FQDN)"} icon={"crisis_alert"}
+                        placeholder={"0.0.0.0 ou domain.tld"}/>
+            <FieldInput formik={form} field={"type"} label={"Type de vérification (A, AAA, CNAME)"} icon={"dns"}
+                        placeholder={"A / AAA / CNAME"}/>
+            <FieldInput formik={form} field={"result"} label={"Résultat attendue"} icon={"check_circle"}
+                        placeholder={"Résultat attendue"}/>
 
             <button type={"submit"} className={"btn btn-green"}>
                 <span className={"material-icons"}>save</span> Sauvegarder
