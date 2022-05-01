@@ -9,10 +9,12 @@ const ServiceDelete = function () {
 
     const guid:string|undefined = useParams<"guid">().guid;
 
-    if(guid === undefined)
-        return
-
     const navigator = useNavigate();
+
+    if(guid === undefined) {
+        navigator("/")
+        return <></>
+    }
 
     const cancelFn = () => {
         navigator(`/groups/${service?.groupRef?.split("/").reverse()[0]}`);
