@@ -34,6 +34,7 @@ import ServicePickUpCheckType from "./pages/Service/ServicePickUpCheckType";
 import ServiceAddDns from "./pages/Service/ServiceAddDns";
 import ServiceAddHttp from "./pages/Service/ServiceAddHttp";
 import ServiceAddPing from "./pages/Service/ServiceAddPing";
+import ServiceDelete from "./pages/Service/ServiceDelete";
 
 const GroupOverview = React.lazy(() => import("./pages/Group/GroupOverview"))
 
@@ -86,6 +87,7 @@ ReactDOM.render(
                                     <Route path="/services/add/dns" element={<ServiceAddDns/>}/>
                                     <Route path="/services/add/http" element={<ServiceAddHttp/>}/>
                                     <Route path="/services/add/ping" element={<ServiceAddPing/>}/>
+                                    <Route path="/services/delete/:guid" element={<ServiceDelete/>}/>
                                 </Route>
 
                             </Route>

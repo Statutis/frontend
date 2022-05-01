@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ServiceState} from "./Models/Service/Service";
+import {Service, ServiceState} from "./Models/Service/Service";
 import DnsService from "./Models/Service/DnsService";
 import HttpService from "./Models/Service/HttpService";
 import PingService from "./Models/Service/PingService";
@@ -22,6 +22,22 @@ export async function getMainState(): Promise<MainState> {
 export async function getCheckTypes(): Promise<string[]> {
     const response = await axios.get<string[]>("/api/services/checks")
     return response.data;
+}
+
+export async function getServiceByGuid(id:string) : Promise<Service> {
+    const response = await axios.get<Service>(`/api/services/${id}`);
+    const service:Service = new Service();
+    service.serviceTypeRef = response.data.serviceTypeRef;
+    service.groupRef = response.data.groupRef;
+    service.ref = response.data.ref;
+    service.name = response.data.name;
+    service.host = response.data.host;
+    service.description = response.data.description;
+    service.state = response.data.state;
+    service.lastCheck = response.data.lastCheck;
+    service.checkType = response.data.checkType;
+    service.historyRef = response.data.historyRef;
+    return service;
 }
 
 export async function addDns(service: DnsService): Promise<DnsService> {
@@ -97,4 +113,10 @@ export default async function addPing(form: PingService): Promise<PingService> {
 
     return resp;
 
+}
+
+
+export async function removeService(guid:string):Promise<void>{
+    const response = await axios.delete<void>(`/api/services/${guid}`);
+    return response.data;
 }

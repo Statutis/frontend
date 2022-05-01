@@ -7,11 +7,17 @@ import {ResponsiveLineCanvas, Serie} from "@nivo/line";
 import ServiceType from "../api/Models/Service/ServiceType";
 import {getServiceTypeByRef} from "../api/ServiceTypesRepository";
 import Badge from "./UI/Badge";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const defaultValue: Service = new Service();
 
 const ServiceCard = function ({value = defaultValue}) {
+
+    const navigator = useNavigate();
+
+    const deleteFn = function () {
+        navigator("/services/delete/"+value.ref?.split("/").reverse()[0]);
+    }
 
     const [history, setHistory] = useState<HistoryEntry[]>();
     const [data, setdata] = useState<Serie[]>([]);
@@ -62,6 +68,8 @@ const ServiceCard = function ({value = defaultValue}) {
                 <div className={"circle-dot circle-dot-" + circleDotColor(value.state)}/>
                 <Link className="h4" to="#">{value.name} </Link>
                 <span className="text-muted">{value.checkType}</span>
+                <span className={"text-button material-icons text-button-hover-orange"}>edit_note</span>
+                <span className={"text-button material-icons text-button-hover-red"} onClick={deleteFn}>delete</span>
             </div>
 
             <div className={"hstack stack-vcenter"}>
