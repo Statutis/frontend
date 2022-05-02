@@ -8,6 +8,8 @@ import ServiceType from "../api/Models/Service/ServiceType";
 import {getServiceTypeByRef} from "../api/ServiceTypesRepository";
 import Badge from "./UI/Badge";
 import {Link} from "react-router-dom";
+import {useAppSelector} from "../Store/store";
+import User from "../api/Models/User";
 
 const defaultValue: Service = new Service();
 
@@ -20,7 +22,7 @@ const ServiceCard = function ({value = defaultValue}) {
             case "Requête Http":
                 return `/services/edit/http/${value.ref?.split("/").reverse()[0]}`
             case "Atlassian Status Page":
-                break;
+                return `/services/edit/atlassian_status_page/${value.ref?.split("/").reverse()[0]}`
             case "DNS":
                 return`/services/edit/dns/${value.ref?.split("/").reverse()[0]}`
             case "Ping":
@@ -28,6 +30,8 @@ const ServiceCard = function ({value = defaultValue}) {
         }
         return ""
     }, [value]);
+
+    const user:User|undefined = useAppSelector(state => state.auth.user);
 
     const [history, setHistory] = useState<HistoryEntry[]>();
     const [data, setdata] = useState<Serie[]>([]);
@@ -78,8 +82,10 @@ const ServiceCard = function ({value = defaultValue}) {
                 <div className={"circle-dot circle-dot-" + circleDotColor(value.state)}/>
                 <Link className="h4" to={updateFn}>{value.name} </Link>
                 <span className="text-muted">{value.checkType}</span>
-                <Link to={updateFn} className={"text-button material-icons text-button-hover-orange"} >edit_note</Link>
-                <Link to={deleteFn} className={"text-button material-icons text-button-hover-red"}>delete</Link>
+                {
+                    user && <><Link to={updateFn} className={"text-button material-icons text-button-hover-orange"} >edit_note</Link>
+                    <Link to={deleteFn} className={"text-button material-icons text-button-hover-red"}>delete</Link></>
+                }
             </div>
 
             <div className={"hstack stack-vcenter"}>
