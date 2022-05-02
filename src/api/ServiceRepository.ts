@@ -215,5 +215,45 @@ export async function updatePing(url:string, form: PingService): Promise<PingSer
     resp.serviceTypeRef = response.data.serviceTypeRef;
 
     return resp;
+}
+
+export async function updateAtlassianStatusPage(url:string, form: AtlassianStatusPageService): Promise<AtlassianStatusPageService> {
+
+    const response = await axios.put<AtlassianStatusPageService>(url, {
+        name: form.name,
+        groupRef: form.groupRef,
+        description: form.description,
+        host: form.host,
+        serviceTypeRef: form.serviceTypeRef
+    });
+
+    const resp:AtlassianStatusPageService = new AtlassianStatusPageService();
+    resp.name = response.data.name;
+    resp.groupRef = response.data.groupRef;
+    resp.description = response.data.description;
+    resp.host = response.data.host;
+    resp.serviceTypeRef = response.data.serviceTypeRef;
+
+    return resp;
+}
+
+export async function addAtlassianStatusPage(form: AtlassianStatusPageService): Promise<AtlassianStatusPageService> {
+
+    const response = await axios.post<AtlassianStatusPageService>("/api/services/atlassian_status_page", {
+        name: form.name,
+        groupRef: form.groupRef,
+        description: form.description,
+        host: form.host,
+        serviceTypeRef: form.serviceTypeRef
+    });
+
+    const resp:AtlassianStatusPageService = new AtlassianStatusPageService();
+    resp.name = response.data.name;
+    resp.groupRef = response.data.groupRef;
+    resp.description = response.data.description;
+    resp.host = response.data.host;
+    resp.serviceTypeRef = response.data.serviceTypeRef;
+
+    return resp;
 
 }

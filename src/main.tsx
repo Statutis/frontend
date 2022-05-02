@@ -35,6 +35,7 @@ import ServiceAddDns from "./pages/Service/ServiceAddDns";
 import ServiceAddHttp from "./pages/Service/ServiceAddHttp";
 import ServiceAddPing from "./pages/Service/ServiceAddPing";
 import ServiceDelete from "./pages/Service/ServiceDelete";
+import ServiceAddAtlassianStatusPage from "./pages/Service/ServiceAddAtlassianStatusPage";
 
 const GroupOverview = React.lazy(() => import("./pages/Group/GroupOverview"))
 
@@ -93,6 +94,9 @@ ReactDOM.render(
 
                                     <Route path="/services/add/ping" element={<ServiceAddPing/>}/>
                                     <Route path="/services/edit/ping/:id" element={<ServiceAddPing/>}/>
+
+                                    <Route path="/services/add/atlassian_status_page" element={<ServiceAddAtlassianStatusPage/>}/>
+                                    <Route path="/services/edit/atlassian_status_page/:id" element={<ServiceAddAtlassianStatusPage/>}/>
 
                                     <Route path="/services/delete/:guid" element={<ServiceDelete/>}/>
                                 </Route>

@@ -87,7 +87,7 @@ const Register = () => {
             {error && <p className="text-danger">{error}</p>}
         </div>
         <div className="hstack stack-center mt-5">
-            <Link to="/login" className="btn btn-secondary">Connection</Link>
+            <Link to="/login" className="btn btn-secondary">Connexion</Link>
             <button className="btn btn-primary" type="submit">S'inscrire</button>
         </div>
     </form>
