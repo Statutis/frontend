@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import {Service, ServiceState} from "../api/Models/Service/Service";
 import {HistoryEntry} from "../api/Models/History/HistoryEntry";
@@ -7,35 +7,27 @@ import {ResponsiveLineCanvas, Serie} from "@nivo/line";
 import ServiceType from "../api/Models/Service/ServiceType";
 import {getServiceTypeByRef} from "../api/ServiceTypesRepository";
 import Badge from "./UI/Badge";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const defaultValue: Service = new Service();
 
 const ServiceCard = function ({value = defaultValue}) {
 
-    const navigator = useNavigate();
+    const deleteFn = useMemo<string>(() => "/services/delete/" + value.ref?.split("/").reverse()[0], [value])
 
-    const deleteFn = function () {
-        navigator("/services/delete/" + value.ref?.split("/").reverse()[0]);
-    }
-
-    const updateFn = function () {
+    const updateFn = useMemo<string>(() => {
         switch (value.checkType) {
             case "Requête Http":
-                navigator(`/services/edit/http/${value.ref?.split("/").reverse()[0]}`)
-                break;
+                return `/services/edit/http/${value.ref?.split("/").reverse()[0]}`
             case "Atlassian Status Page":
                 break;
             case "DNS":
-                navigator(`/services/edit/dns/${value.ref?.split("/").reverse()[0]}`)
-
-                break;
+                return`/services/edit/dns/${value.ref?.split("/").reverse()[0]}`
             case "Ping":
-                navigator(`/services/edit/ping/${value.ref?.split("/").reverse()[0]}`)
-
-                break;
+                return `/services/edit/ping/${value.ref?.split("/").reverse()[0]}`
         }
-    }
+        return ""
+    }, [value]);
 
     const [history, setHistory] = useState<HistoryEntry[]>();
     const [data, setdata] = useState<Serie[]>([]);
@@ -84,11 +76,10 @@ const ServiceCard = function ({value = defaultValue}) {
         <div className={"vstack"}>
             <div className="hstack stack-vend">
                 <div className={"circle-dot circle-dot-" + circleDotColor(value.state)}/>
-                <Link className="h4" to="#">{value.name} </Link>
+                <Link className="h4" to={updateFn}>{value.name} </Link>
                 <span className="text-muted">{value.checkType}</span>
-                <span className={"text-button material-icons text-button-hover-orange"}
-                      onClick={updateFn}>edit_note</span>
-                <span className={"text-button material-icons text-button-hover-red"} onClick={deleteFn}>delete</span>
+                <Link to={updateFn} className={"text-button material-icons text-button-hover-orange"} >edit_note</Link>
+                <Link to={deleteFn} className={"text-button material-icons text-button-hover-red"}>delete</Link>
             </div>
 
             <div className={"hstack stack-vcenter"}>
