@@ -79,6 +79,9 @@ const GroupOverview = () => {
                 color: "black"
             }
             let maxYTmp = 0;
+
+            const rememberService:[x:string,y:string][] = []
+
             x.forEach((elt) => {
 
                 const idserie = serie.data.findIndex(x => {
@@ -86,10 +89,14 @@ const GroupOverview = () => {
                 });
 
                 if (idserie !== -1) {
+                    console.log(rememberService);
+                    if(rememberService.find(w => w[0] == convertDate(new Date(elt.dateTime)) && w[1] == elt.serviceRef))
+                        return
 
                     const checkY = serie.data[idserie].y
                     if (typeof (checkY) === "number") {
                         serie.data[idserie].y = checkY + 1
+                        rememberService.push([convertDate(new Date(elt.dateTime)), elt.serviceRef])
                         if (checkY + 1 > maxYTmp) {
                             maxYTmp = checkY + 1
                         }
@@ -101,6 +108,8 @@ const GroupOverview = () => {
                         x: convertDate(new Date(elt.dateTime)),
                         y: (elt.state === ServiceState.Online) ? 1 : 0
                     })
+
+                    rememberService.push([convertDate(new Date(elt.dateTime)), elt.serviceRef])
                 }
             })
 
