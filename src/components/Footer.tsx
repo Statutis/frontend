@@ -30,7 +30,6 @@ const Footer = function () {
                 <div>
                     <ul>
                         <li><Link to="/">Accueil</Link></li>
-                        <li><a href="/a-propos">À propos</a></li>
                         <li><Link to="/login">Connexion</Link></li>
                         <li><Link to="/legal/notice">Mentions Légales</Link></li>
                         <li><Link to="/register">Inscription</Link></li>
