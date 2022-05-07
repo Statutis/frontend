@@ -36,7 +36,7 @@ function NavTop() {
                 </Link>
             </li>
             <li>
-                <button className={"btn btn-secondary"} onClick={handleLogout}>Déconnection</button>
+                <button className={"btn btn-secondary"} onClick={handleLogout}>Déconnexion</button>
             </li>
         </>
     }

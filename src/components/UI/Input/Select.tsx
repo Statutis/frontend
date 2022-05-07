@@ -57,6 +57,7 @@ function Select<Value>({
 
     useEffect(() => {
         setSelectValue(value)
+        setInputSelect(value != undefined ? toLabel(value) : "");
     }, [value])
 
 
