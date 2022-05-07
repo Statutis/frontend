@@ -19,11 +19,10 @@ const Footer = function () {
                 <div>
                     <img src={LogoTitleImage} alt="Logo Image avec titre"/>
                     <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-                        ut
-                        labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
-                        dolores
-                        et ea rebum.
+                        L'appplication Statutis a pour objectif de vérifier la disponibilité de vos services (exemple :
+                        Site web), ainsi que ce dernier fonctionne correctement. Pour cela, ce logiciel se base su
+                        différent mode de vérification comme des requêtes HTTP ou DNS, et vous permez d'en controller le
+                        résultat (dans une certaine mesure)
                     </p>
                 </div>
                 <div className={"footer-separator"}/>
@@ -34,25 +33,27 @@ const Footer = function () {
                         <li><Link to="/legal/notice">Mentions Légales</Link></li>
                         <li><Link to="/register">Inscription</Link></li>
                         <li><Link to="/teams">Liste des équipes</Link></li>
-                        <li><Link to="https://github.com/Statutis/frontend">Dépôts</Link></li>
+                        <li><a href="https://github.com/Statutis">Dépôts</a></li>
                         <li><a href="mailto:contact@silvain.eu">Support</a></li>
                     </ul>
                 </div>
                 <div className={"footer-separator"}/>
                 <div>
                     <p>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-                        ut
-                        labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
-                        dolores
-                        et
-                        ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                        Ce projet à été développé par <a href="https://github.com/miithrandiir">Simon HEBAN</a> & <a
+                        href="https://github.com/silvainlud">Ludwig SILVAIN</a> dans le cadre du module d'initiation
+                        au WebService lors de la première année de master WedSci de l'Université du Littoral Cote
+                        d'opale.
                     </p>
                     <div className={"footer-list-icon"}>
-                        <a target="_blank" href="https://github.com/Statutis" rel="noreferrer"><img src={GithubIcon} alt="github"/></a>
-                        <a target="_blank" href="https://twitter.com" rel="noreferrer"><img src={TwitterIcon} alt="twitter"/></a>
-                        <a target="_blank" href="https://silvain.eu" rel="noreferrer"><img src={SilvainEuIcon} alt="Silvain.eu"/></a>
-                        <a target="_blank" href="https://paypal.com" rel="noreferrer"><span className={"material-icons"}>credit_card</span></a>
+                        <a target="_blank" href="https://github.com/Statutis" rel="noreferrer"><img src={GithubIcon}
+                                                                                                    alt="github"/></a>
+                        <a target="_blank" href="https://twitter.com" rel="noreferrer"><img src={TwitterIcon}
+                                                                                            alt="twitter"/></a>
+                        <a target="_blank" href="https://silvain.eu" rel="noreferrer"><img src={SilvainEuIcon}
+                                                                                           alt="Silvain.eu"/></a>
+                        <a target="_blank" href="https://paypal.com" rel="noreferrer"><span
+                            className={"material-icons"}>credit_card</span></a>
                     </div>
                 </div>
             </div>
