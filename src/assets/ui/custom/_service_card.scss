@@ -4,6 +4,21 @@
   align-items: center;
   flex-direction: row;
 
+  &>.vstack>.hstack {
+    &> .text-button {
+      color: var(--color-muted);
+      cursor: pointer;
+    }
+    @each $class, $color in $colors {
+      &>.text-button-hover-#{$class} {
+        transition: 500ms ease-in-out;
+      }
+      &>.text-button-hover-#{$class}:hover{
+        color: var(--color-#{$class});
+      }
+    }
+  }
+
   .circle-dot {
     width: 16px;
     height: 16px;

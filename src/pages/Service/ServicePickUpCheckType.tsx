@@ -18,7 +18,7 @@ const ServicePickUpCheckType = function () {
             return navigationHelper("/services/add/dns")
         } else if (checkState === "HTTP") {
             return navigationHelper("/services/add/http")
-        } else if (checkState === "ping") {
+        } else if (checkState === "Ping") {
             return navigationHelper("/services/add/ping")
         } else if (checkState === "Atlassian Status Page") {
             return navigationHelper("/services/add/atlassian_status_page")
