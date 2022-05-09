@@ -1,40 +1,37 @@
 import React, {useEffect, useState} from "react";
-import useDocumentTitle from "../../useDocumentTitle";
 import {useFormik} from "formik";
 import FieldInput from "../../components/UI/Input/FieldInput";
 import Select from "../../components/UI/Input/Select";
+import ServiceType from "../../api/Models/Service/ServiceType";
 import Group from "../../api/Models/Group";
 import {getGroups} from "../../api/GroupRepository";
-import "../../assets/app/pages/Service/addService.scss"
-import ServiceType from "../../api/Models/Service/ServiceType";
 import {getServiceTypes} from "../../api/ServiceTypesRepository";
-import DnsService from "../../api/Models/Service/DnsService";
-import {addDns, getDns, getServiceByGuid, updateDns} from "../../api/ServiceRepository";
+import useDocumentTitle from "../../useDocumentTitle";
+import PingService from "../../api/Models/Service/PingService";
 import {useNavigate, useParams} from "react-router-dom";
+import addPing, {getDns, getServiceByGuid, updatePing} from "../../api/ServiceRepository";
 import {Service} from "../../api/Models/Service/Service";
 
-interface dnsServiceForm {
-    name: string,
-    groupRef: string,
-    description: string,
-    host: string,
-    serviceTypeRef: string,
-    type: string,
-    result: string
+interface PingForm {
+    name: string;
+    groupRef: string;
+    description: string;
+    host: string;
+    serviceTypeRef: string;
 }
 
-const ServiceAddDns = () => {
+const ServiceAddPing = () => {
 
-    useDocumentTitle("Ajout d'un service Type DNS")
+    useDocumentTitle("Ajout d'un service Type Ping");
 
     const id: string | undefined = useParams<"id">().id;
     const isEditMode = id !== undefined;
 
-    const navigation = useNavigate();
-
     const [groups, setGroups] = useState<Group[]>([]);
     const [serviceType, setServiceType] = useState<ServiceType[]>([]);
     const [service, setService] = useState<Service>();
+
+    const navigator = useNavigate();
 
     useEffect(() => {
         if (isEditMode) {
@@ -57,55 +54,52 @@ const ServiceAddDns = () => {
 
     }, [])
 
-    const form = useFormik<dnsServiceForm>({
+    const form = useFormik<PingForm>({
         initialValues: {
             name: "",
             groupRef: "",
             description: "",
             host: "",
-            serviceTypeRef: "",
-            type: "",
-            result: ""
+            serviceTypeRef: ""
         },
-        onSubmit: values => {
-            const dnsService: DnsService = new DnsService();
-            dnsService.name = values.name;
-            dnsService.groupRef = values.groupRef;
-            dnsService.description = values.description;
-            dnsService.host = values.host;
-            dnsService.serviceTypeRef = values.serviceTypeRef;
+        onSubmit: (values) => {
 
-            dnsService.result = values.result;
-            dnsService.type = values.type;
+            const pingDataForm:PingService = new PingService();
+            pingDataForm.name = values.name;
+            pingDataForm.groupRef = values.groupRef;
+            pingDataForm.host = values.host;
+            pingDataForm.serviceTypeRef = values.serviceTypeRef;
+            pingDataForm.description = values.description;
+
+
             if (isEditMode) {
                 if (service === undefined || service.ref == undefined)
                     return;
-                updateDns(service?.detailRef, dnsService).then((data) => {
+                updatePing(service?.detailRef, pingDataForm).then((data) => {
                     if (data.groupRef === undefined)
                         return
-                    navigation(`/groups/${data.getGroupId()}`);
+                    navigator(`/groups/${data.getGroupId()}`);
                 });
             } else {
 
-                addDns(dnsService).then((data) => {
+                addPing(pingDataForm).then((data) => {
                     if (data.groupRef === undefined)
                         return
-                    navigation(`/groups/${data.getGroupId()}`);
+                    navigator(`/groups/${data.getGroupId()}`);
                 });
             }
         }
     });
 
     return <div className={"content"}>
-        <form onSubmit={form.handleSubmit} className={""}>
 
+        <form onSubmit={form.handleSubmit} className={""}>
             <FieldInput formik={form} field={"name"} label={"Nom du service"} placeholder={"Nom du service"}/>
 
 
             <div className="form-group">
                 <label htmlFor="description">Description :</label>
-                <textarea id="description" onChange={form.handleChange}
-                          placeholder={"Entrez une description du service"} value={form.values.description}/>
+                <textarea id="description" onChange={form.handleChange} placeholder={"Entrez une description du service"} value={form.values.description}/>
                 {form.errors.description ? <p className="text-danger">{form.errors.description}</p> : null}
             </div>
 
@@ -128,21 +122,16 @@ const ServiceAddDns = () => {
                         placeholder={"Choisissez un groupe"}
                 />
             </div>
-            <FieldInput formik={form} field={"host"} label={"Hôte (IP ou FQDN)"} icon={"crisis_alert"}
-                        placeholder={"0.0.0.0 ou domain.tld"}/>
-            <FieldInput formik={form} field={"type"} label={"Type de vérification (A, AAA, CNAME)"} icon={"dns"}
-                        placeholder={"A / AAA / CNAME"}/>
-            <FieldInput formik={form} field={"result"} label={"Résultat attendue"} icon={"check_circle"}
-                        placeholder={"Résultat attendue"}/>
+
+            <FieldInput formik={form} field={"host"} label={"Hôte (IP ou FQDN)"} icon={"crisis_alert"} placeholder={"0.0.0.0 ou domain.tld"}/>
+
 
             <button type={"submit"} className={"btn btn-green"}>
                 <span className={"material-icons"}>save</span> Sauvegarder
             </button>
         </form>
-    </div>
 
+    </div>
 }
 
-export default ServiceAddDns;
-
-
+export default ServiceAddPing;

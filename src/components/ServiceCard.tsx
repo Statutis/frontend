@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import {Service, ServiceState} from "../api/Models/Service/Service";
 import {HistoryEntry} from "../api/Models/History/HistoryEntry";
@@ -8,10 +8,30 @@ import ServiceType from "../api/Models/Service/ServiceType";
 import {getServiceTypeByRef} from "../api/ServiceTypesRepository";
 import Badge from "./UI/Badge";
 import {Link} from "react-router-dom";
+import {useAppSelector} from "../Store/store";
+import User from "../api/Models/User";
 
 const defaultValue: Service = new Service();
 
 const ServiceCard = function ({value = defaultValue}) {
+
+    const deleteFn = useMemo<string>(() => "/services/delete/" + value.ref?.split("/").reverse()[0], [value])
+
+    const updateFn = useMemo<string>(() => {
+        switch (value.checkType) {
+            case "Requête Http":
+                return `/services/edit/http/${value.ref?.split("/").reverse()[0]}`
+            case "Atlassian Status Page":
+                return `/services/edit/atlassian_status_page/${value.ref?.split("/").reverse()[0]}`
+            case "DNS":
+                return`/services/edit/dns/${value.ref?.split("/").reverse()[0]}`
+            case "Ping":
+                return `/services/edit/ping/${value.ref?.split("/").reverse()[0]}`
+        }
+        return ""
+    }, [value]);
+
+    const user:User|undefined = useAppSelector(state => state.auth.user);
 
     const [history, setHistory] = useState<HistoryEntry[]>();
     const [data, setdata] = useState<Serie[]>([]);
@@ -60,8 +80,12 @@ const ServiceCard = function ({value = defaultValue}) {
         <div className={"vstack"}>
             <div className="hstack stack-vend">
                 <div className={"circle-dot circle-dot-" + circleDotColor(value.state)}/>
-                <Link className="h4" to="#">{value.name} </Link>
+                <Link className="h4" to={updateFn}>{value.name} </Link>
                 <span className="text-muted">{value.checkType}</span>
+                {
+                    user && <><Link to={updateFn} className={"text-button material-icons text-button-hover-orange"} >edit_note</Link>
+                    <Link to={deleteFn} className={"text-button material-icons text-button-hover-red"}>delete</Link></>
+                }
             </div>
 
             <div className={"hstack stack-vcenter"}>
