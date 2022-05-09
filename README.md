@@ -23,3 +23,11 @@ Dans le fichier `.env` vous pourrez retrouver plusieurs variables nécessaire au
 
 - `APP_URL` : Permet de connaître le lien pour les redirections HTTP
 - `APP_API_URL` : Permet de connaître l'adresse de l'API utilisé pour `Statutis`
+
+
+## Mise en place de l'environnement de développement
+
+Pour monter l'environnement de développement, rien de plus simple : 
+
+- `yarn` (Permet de récupérer tous les packages nécessaires au fonctionnement)
+- `yarn run dev` (Lance l'application en mode développement)
